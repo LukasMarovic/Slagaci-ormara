@@ -36,13 +36,13 @@ Web aplikacija nudi mogućnost unosa artikla odjeće i obuće u virtualne ormare
 
 # Članovi tima 
 <ul>
-  <li>[Lukas Marović](https://github.com/LukasMarovic)</li>
-  <li>[Toni Bajan](https://github.com/bajan-bato)</li>
-  <li>[Maja Miličević](https://github.com/MayaMili)</li>
-  <li>[Lara Šimić](https://github.com/laralara12)</li>
-  <li>[Dražen Pešut](https://github.com/DrazenPesut)</li>
-  <li>[Filip Vrbanac](https://github.com/fvrba95)</li>
-  <li>[Patrik Kapetan](https://github.com/Patrik556)</li>
+  <li><a href="https://github.com/LukasMarovic">Lukas Marović</a> </li>
+  <li><a href="https://github.com/bajan-bato">Toni Bajan</a></li>
+  <li><a href="https://github.com/MayaMili">Maja Miličević</a></li>
+  <li><a href="https://github.com/laralara12">Lara Šimić</a></li>
+  <li><a href="https://github.com/DrazenPesut">Dražen Pešut</a></li>
+  <li><a href="https://github.com/fvrba95">Filip Vrbanac</a></li>
+  <li><a href="https://github.com/Patrik556">Patrik Kapetan</a></li>
 </ul>
 
 # Kontribucije
