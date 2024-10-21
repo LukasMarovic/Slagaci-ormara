@@ -13,6 +13,7 @@ Web aplikacija nudi mogućnost unosa artikla odjeće i obuće u virtualne ormare
   <li>Mogućnost registracije i prijave korisnika</li>
   <li>Podržava rad tri tipa korisnika - registriranih, neregistriranih te oglašivača</li>
   <li>Registrirani korisnici mogu dodavati i uklanjati bilo koji broj virtualnih ormara</li>
+  <li>Interaktivno sučelje za interakciju s ormarom</li>
   <li>Ormarima se može mijenjati struktura - dodavanje polica, ladica, šipka za odjeću</li>
   <li>U ormare se mogu dodavati i uklanjati artikli odjeće i obuće</li>
   <li>Artikli imaju karakteristike prema kojima se može pretraživati</li>
