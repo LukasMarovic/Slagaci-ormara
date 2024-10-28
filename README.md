@@ -27,6 +27,7 @@ Web aplikacija nudi mogućnost unosa artikla odjeće i obuće u virtualne ormare
   <li>Podaci korisnika će biti pohranjeni u sigurnoj bazi podataka</li>
   <li>Aplikacija će imati responzivan dizajn</li>
   <li>Sustav će podržavati rad više korisnika u stvarnom vremenu</li>
+  <li>Koristi OAuth 2.0 za autorizaciju</li>
 </ul>
 
 # Tehnologije
