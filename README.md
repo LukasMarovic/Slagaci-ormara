@@ -32,8 +32,8 @@ Web aplikacija nudi mogućnost unosa artikla odjeće i obuće u virtualne ormare
 
 # Tehnologije
 <ul>
-  <li><b>Front-end: </b>HTML5, CSS, React</li>
-  <li><b>Back-end: </b>JavaScript, Node.js</li>
+  <li><b>Front-end: </b>React, CSS, Bootstrap, React-Bootstrap </li>
+  <li><b>Back-end: </b>Java Spring</li>
 </ul>
 
 # Članovi tima 
