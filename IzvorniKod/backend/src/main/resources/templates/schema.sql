@@ -6,8 +6,9 @@ CREATE TABLE IF NOT EXISTS ORMAR (
 
 CREATE TABLE IF NOT EXISTS ARTIKL (
     id_artikla int auto_increment,
-    naziv_artikla varchar(30)/*,
-    slika_artikla varchar(30),
+    naziv_artikla varchar(30),
+    /*opis_artikla blob,
+    slika_artikla varchar(10),
     opca_kategorija varchar(30),
     kategorija_lezernosti varchar(30),
     glavna_boja varchar(30),

@@ -10,20 +10,22 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idArtikla;
     private String nazivArtikla;
-   /* private String slikaArtikla;
+    /*private byte[] slikaArtikla;
+    private String opisArtikla;
     private String opcaKategorija;
     private String kategorijaLezernosti;
     private String glavnaBoja;
     private String sporednaBoja;
     private String stanjeArtikla;
-    private String sifOglasivaca;*/
+    private String sifOglasivaca;
+    */
 
     public Article() {}
-    public Article (Integer idArtikla, String nazivArtikla/*, String slikaArtikla, String opcaKategorija, String kategorijaLezernosti,
+    public Article (Integer idArtikla, String nazivArtikla/*, byte[] slikaArtikla, String opisArtikla, String opcaKategorija, String kategorijaLezernosti,
                                   String glavnaBoja, String sporednaBoja, String stanjeArtikla, String sifOglasivaca*/) {
         this.idArtikla = idArtikla;
         this.nazivArtikla = nazivArtikla;
-      /*  this.slikaArtikla = slikaArtikla;
+      /*  this.slikaArtikla = slikaArtikl
         this.opcaKategorija = opcaKategorija;
         this.kategorijaLezernosti = kategorijaLezernosti;
         this.glavnaBoja = glavnaBoja;
@@ -46,13 +48,20 @@ public class Article {
     public void setNazivArtikla(String nazivArtikla) {
         this.nazivArtikla = nazivArtikla;
     }
-
-  /*  public String getSlikaArtikla() {
+/*
+    public byte[] getSlikaArtikla() {
         return slikaArtikla;
     }
 
-    public void setSlikaArtikla(String slikaArtikla) {
+    public void setSlikaArtikla(byte[] slikaArtikla) {
         this.slikaArtikla = slikaArtikla;
+    }
+
+    public String getOpisArtikla() {
+        return opisArtikla;
+    }
+    public void setOpisArtikla(String opisArtikla) {
+        this.opisArtikla = opisArtikla;
     }
 
     public String getOpcaKategorija() {

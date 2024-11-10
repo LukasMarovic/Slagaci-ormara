@@ -11,9 +11,10 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    //vraća 8 nasumičnih artikala iz baze
     @GetMapping("/")
     public Iterable<Article> getArticles() {
-        return articleService.getAll();
+        return articleService.getFeatured();
     }
 
     @GetMapping("/getArticle/{id}")
