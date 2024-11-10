@@ -8,6 +8,7 @@ import Spacer from './Components/Spacer';
 import FeaturesContainer from './Components/FeaturesContainer';
 import FeaturedArticles from './Components/FeaturedArticles';
 import Footer from './Components/Footer';
+import Advertiser from './Components/Advertiser';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <SearchBar></SearchBar>
       <RegisterPromo></RegisterPromo>
       <FeaturesContainer></FeaturesContainer>
+      <Advertiser></Advertiser>
       <FeaturedArticles></FeaturedArticles>
       <Footer></Footer>
     </>
