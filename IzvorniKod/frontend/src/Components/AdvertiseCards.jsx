@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button'
+import { Col, Button } from 'react-bootstrap';
+import './CustomCss/NavigationButton.css';
 
 const images = [
     "/src/assets/images/plcholder1.jpg",
     "/src/assets/images/plcholder2.jpg",
     "/src/assets/images/plcholder3.jpg",
-    "/src/assets/images/plcholder4.avif",
+    "/src/assets/images/plcholder4.jpg",
 ];
 
 function AdvertiseCards() {
