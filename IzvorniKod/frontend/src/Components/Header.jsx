@@ -31,7 +31,7 @@ function Header(){
                     <Nav.Link className='nav-link' href="#footer">Contact</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link className='register' href="#login">
+                    <Nav.Link className='register' href="/login">
                         Register or Log in
                         <FaUser className="user-icon"></FaUser>
                     </Nav.Link>

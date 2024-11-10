@@ -1,10 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import React, {useEffect} from 'react';
 
 function ArticleCard(){
+    
+
     return(
        <Row xs={1} sm={2} md={3} lg={4} className="card-container g-3">
        {Array.from({ length: 8 }).map((_, idx) => (

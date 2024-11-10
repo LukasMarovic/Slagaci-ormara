@@ -1,25 +1,21 @@
 import { useState } from 'react';
 import './App.css';
-
-import Header from './Components/Header';
-import SearchBar from './Components/SearchBar';
-import RegisterPromo from './Components/RegisterPromo';
-import Spacer from './Components/Spacer';
-import FeaturesContainer from './Components/FeaturesContainer';
-import FeaturedArticles from './Components/FeaturedArticles';
-import Footer from './Components/Footer';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './Components/HomePage';
+import Login from './Components/Login';
 
 function App() {
   return (
-    <>
-      <Header></Header>
-      <SearchBar></SearchBar>
-      <RegisterPromo></RegisterPromo>
-      <FeaturesContainer></FeaturesContainer>
-      <FeaturedArticles></FeaturedArticles>
-      <Footer></Footer>
-    </>
-  )
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login></Login>} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App
