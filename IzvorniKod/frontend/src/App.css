@@ -265,11 +265,11 @@
 .advertiser-section{
   font-family: 'Montserrat';
   padding: 0;
-  margin: 0;
+  margin-top: 5rem;
 }
 .advertiser-section .header{
   color:hsla(0, 7%, 3%, 0.8);
-  font-size: 4em;
+  font-size: 62px;
   font-weight: bold;
   margin-bottom: 10vh;
   line-height: 1.2;
@@ -279,7 +279,7 @@
 }
 .advertiser-section .description {
   margin-top: 40px; 
-  font-size: 1.8rem;
+  font-size: 22px;
   color: #6c6c6c;
   margin-left: 7vw;
 
@@ -318,7 +318,7 @@
 
   .advertiser-section .description {
     margin-top: 20px; 
-    font-size: 1.6rem;
+    font-size: 20px;
 }
 
 .advertiser-section .advertiser-button {
@@ -335,7 +335,7 @@
 
   .advertiser-section .description {
     margin-top: 20px; 
-    font-size: 1.6rem;
+    font-size: 18px;
 }
 
 .advertiser-section .advertiser-button {
@@ -347,7 +347,7 @@
 
 @media (max-width: 768px) {
   .advertiser-section .header {
-      font-size: 2em; 
+      font-size: 2rem; 
       margin-bottom: 30px; 
   }
 
@@ -581,4 +581,26 @@
 
 .overlay .overlay-button:active {
   background-color: #6a4c10 !important;
+}
+
+
+.back-arrow{
+  width: 35px;
+  height: 35px;
+  color: #b88e2f;
+}
+
+.login-container{
+  font-family: 'Poppins';
+}
+
+.login-container .login-button {
+  background-color: #b88e2f !important;
+  border: 0 !important;
+}
+
+.login-container .register-login-link{
+  color: #b88e2f;
+  font-size: 18px;
+  text-decoration: none;
 }

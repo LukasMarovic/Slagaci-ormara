@@ -1,6 +1,7 @@
 import { Card, Form, Button, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa'; 
+import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
+import { FaArrowCircleLeft } from 'react-icons/fa'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -15,10 +16,13 @@ function Login(){
     };
   
     return (
-        <Container fluid className="d-flex justify-content-center align-items-center vh-100"
+        <Container fluid className="login-container d-flex justify-content-center align-items-center vh-100"
             style={{backgroundColor:' hsla(32, 60%, 84%, 0.991)'}}>
-        <Card style={{ width: '100%', maxWidth: '400px', height:'30rem'}} className="p-4 shadow">
+        <Card style={{ width: '100%', maxWidth: '400px', height:'34rem'}} className="p-4 shadow">
           <Card.Body>
+          <a href='/'>
+            <FaArrowCircleLeft className='back-arrow'>
+            </FaArrowCircleLeft></a>
             <h2 className="text-center mb-4">Login</h2>
             <Form onSubmit={handleLogin}>
               <Form.Group controlId="formBasicEmail">
@@ -43,7 +47,7 @@ function Login(){
                 />
               </Form.Group>
   
-              <Button variant="primary" type="submit" className="w-100 mt-4">
+              <Button type="submit" className="login-button w-100 mt-4">
                 Login
               </Button>
             </Form>
@@ -59,6 +63,9 @@ function Login(){
               <Button variant="light" className="flex-fill mx-1" style={{ border: '1px solid #1da1f2' }}>
                 <FaTwitter color="#1da1f2" /> 
               </Button>
+            </div>
+            <div className='no-account m-3'>
+              Don't have an account? <br/><a href="/register" className='register-login-link'> Register now </a>
             </div>
           </div>
           </Card.Body>

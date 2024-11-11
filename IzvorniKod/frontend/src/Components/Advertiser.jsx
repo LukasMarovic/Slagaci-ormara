@@ -12,7 +12,10 @@ function Advertiser() {
                 <Col md={5} className="d-flex flex-column justify-content-center align-items-start"
                     style={{ paddingTop: '30px' }}>
                     <h2 className='header'>Become an <br />Advertiser</h2>
-                    <p className="description">Lorem ipsum dolor sit amet,<br /> consectetur adipiscing elit.</p>
+                    <p className="description">
+                        Promote your articles on other user's pages. <br/>
+                        Reach people who are actively interested in <br/> your products or services.
+                    </p>
                     <Button variant="warning" className="advertiser-button text-white mt-3">
                         Register as Advertiser
                     </Button>
