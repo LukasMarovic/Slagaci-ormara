@@ -1,5 +1,6 @@
 import { Card, Form, Button, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa'; 
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,15 +11,24 @@ function Register(){
     const [password, setPassword] = useState('');
     const [f_name, setF_Name] = useState('');
     const [l_name, setL_Name] = useState('');
-    const [city, setCity] = useState('');
+    // const [city, setCity] = useState('');
+
+    const navigate = useNavigate();
   
     const handleLogin = (e) => {
       e.preventDefault();
-      console.log("Email:", email);
-      console.log("Password:", password);
-      console.log("First Name:", f_name);
-      console.log("Last Name:", l_name);
-      console.log("City:", city);
+      fetch("http://localhost:8080/api/addUser", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "imeKorisnika": f_name+l_name,
+          "email": email,
+          "lozinka": password
+        })
+      }).then(() => navigate("/"))
     };
   
     return (
@@ -55,16 +65,16 @@ function Register(){
                 />
               </Form.Group>
 
-              <Form.Group controlId="formBasicEmail" className="mt-3">
+              {/* <Form.Group controlId="formBasicEmail" className="mt-3">
                 <Form.Label> Grad </Form.Label>
                 <Form.Control 
                   type="text" 
                   placeholder="Enter your city" 
                   value={city} 
-                  onChange={(e) => setF_Name(e.target.value)} 
+                  onChange={(e) => setCity(e.target.value)} 
                   required 
                 />
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group controlId="formBasicEmail" className="mt-3">
                 <Form.Label>Email address</Form.Label>

@@ -1,14 +1,13 @@
 package com.progi.progi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "ORMAR")
 public class Ormar {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer sifOrmara;
     private String nazivOrmara;
     private Integer sifKorisnika;

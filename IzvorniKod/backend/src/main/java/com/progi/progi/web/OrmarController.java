@@ -17,7 +17,7 @@ public class OrmarController {
     }
 
     @PostMapping("/addOrmar/{naziv}")
-    public Ormar addOrmar(@RequestBody String naziv) {
+    public Ormar addOrmar(@PathVariable String naziv) {
         return ormarService.add(naziv);
     }
 

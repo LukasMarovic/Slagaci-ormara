@@ -12,7 +12,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     //vraća 8 nasumičnih artikala iz baze
-    @GetMapping("/")
+    @GetMapping("/getFeatured")
     public Iterable<Article> getArticles() {
         return articleService.getFeatured();
     }
@@ -22,7 +22,7 @@ public class ArticleController {
         return articleService.get(id);
     }
 
-    @PostMapping("/postArticle/{naziv}")
+    @PostMapping("/addArticle/{naziv}")
     public Article postArticle(@PathVariable String naziv) {
         return articleService.add(naziv);
     }

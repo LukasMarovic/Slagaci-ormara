@@ -1,5 +1,6 @@
 import { Card, Form, Button, Container, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa';
 import { FaArrowCircleLeft } from 'react-icons/fa'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,11 +9,30 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
   
     const handleLogin = (e) => {
       e.preventDefault();
-      console.log("Email:", email);
-      console.log("Password:", password);
+      fetch("http://localhost:8080/api/auth/sign-in", {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          "imeKorisnika": "",
+          "email": email,
+          "lozinka": password
+        })
+      }).then(response => {
+        if (response.status == 200) {
+          console.log("success!");
+          navigate('/')
+        } else {
+          console.log("failure!");
+        }
+      })
     };
   
     return (
