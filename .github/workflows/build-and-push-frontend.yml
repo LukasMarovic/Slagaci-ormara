@@ -1,6 +1,7 @@
 name: Build and Push Frontend Image
 
 on:
+  pull_request:
   push:
     branches:
       - master
