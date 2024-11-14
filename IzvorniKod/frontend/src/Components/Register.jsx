@@ -11,13 +11,13 @@ function Register(){
     const [password, setPassword] = useState('');
     const [f_name, setF_Name] = useState('');
     const [l_name, setL_Name] = useState('');
-    // const [city, setCity] = useState('');
+    const [city, setCity] = useState('');
 
     const navigate = useNavigate();
   
     const handleLogin = (e) => {
       e.preventDefault();
-      fetch("http://localhost:8080/api/addUser", {
+      fetch("/api/addUser", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -26,7 +26,8 @@ function Register(){
         body: JSON.stringify({
           "imeKorisnika": f_name+l_name,
           "email": email,
-          "lozinka": password
+          "lozinka": password,
+          "geolokacija": city
         })
       }).then(() => navigate("/"))
     };
@@ -65,7 +66,7 @@ function Register(){
                 />
               </Form.Group>
 
-              {/* <Form.Group controlId="formBasicEmail" className="mt-3">
+              <Form.Group controlId="formBasicEmail" className="mt-3">
                 <Form.Label> Grad </Form.Label>
                 <Form.Control 
                   type="text" 
@@ -74,7 +75,7 @@ function Register(){
                   onChange={(e) => setCity(e.target.value)} 
                   required 
                 />
-              </Form.Group> */}
+              </Form.Group>
 
               <Form.Group controlId="formBasicEmail" className="mt-3">
                 <Form.Label>Email address</Form.Label>

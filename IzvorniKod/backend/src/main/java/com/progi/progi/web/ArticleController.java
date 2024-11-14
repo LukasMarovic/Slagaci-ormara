@@ -3,7 +3,12 @@ package com.progi.progi.web;
 import com.progi.progi.model.Article;
 import com.progi.progi.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
 
 @RestController
 public class ArticleController {
@@ -22,9 +27,14 @@ public class ArticleController {
         return articleService.get(id);
     }
 
-    @PostMapping("/addArticle/{naziv}")
-    public Article postArticle(@PathVariable String naziv) {
-        return articleService.add(naziv);
+    @GetMapping(value = "/getImage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImage(@PathVariable Integer id) throws IOException {
+        return Files.readAllBytes(new ClassPathResource("/static/images/" + id + ".jpg").getFile().toPath());
+    }
+
+    @PostMapping("/addArticle")
+    public Article postArticle(@RequestBody Article article) {
+        return articleService.add(article);
     }
 
     @DeleteMapping("/removeArticle/{id}")

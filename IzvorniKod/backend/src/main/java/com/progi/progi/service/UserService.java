@@ -17,11 +17,12 @@ public class UserService {
     }
     public List<User> getByEmail(String email) { return userRepository.findByEmail(email); }
 
-    public User add(String ime, String email, String lozinka) {
+    public User add(String ime, String email, String lozinka, String geolokacija) {
         User user = new User();
         user.setImeKorisnika(ime);
         user.setEmail(email);
         user.setLozinka(lozinka);
+        user.setGeolokacija(geolokacija);
         return userRepository.save(user);
     }
 

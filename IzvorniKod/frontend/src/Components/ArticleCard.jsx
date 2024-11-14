@@ -10,7 +10,7 @@ function ArticleCard(){
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
-      fetch("http://localhost:8080/api/getFeatured")
+      fetch("/api/getFeatured")
         .then(response => response.json())
         .then(data => setArticles(data))
     }, []);
@@ -19,13 +19,14 @@ function ArticleCard(){
        {articles.map((artikl, idx) => (
          <Col key={idx}>
            <Card className='article-card'>
-             <Card.Img variant="top" src="/src/assets/images/react.svg" className='card-image' />
+             <Card.Img variant="top" src={"/api/getImage/" + artikl.sifArtikla} className='card-image' />
              <Card.Body className='card-body'>
                <Card.Title className='card-title'>{artikl.nazivArtikla}</Card.Title>
                <Card.Text className='card-text'>
-                 This is a longer card with supporting text below as a natural
-                 lead-in to additional content. This content is a little bit
-                 longer.
+                 {artikl.opcaKategorija}<br />{artikl.kategorijaLezernosti}<br />{artikl.stanjeArtikla}
+               </Card.Text>
+               <Card.Text className='card-text'>
+                Posted by: {artikl.sifKorisnika}
                </Card.Text>
              </Card.Body>
            </Card>

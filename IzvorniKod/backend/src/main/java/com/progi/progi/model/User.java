@@ -12,15 +12,17 @@ public class User {
     private String imeKorisnika;
     private String email;
     private String lozinka;
+    private String geolokacija;
 
     public User() {
     }
 
-    public User(Integer sifKorisnika, String imeKorisnika, String email, String lozinka) {
+    public User(Integer sifKorisnika, String imeKorisnika, String email, String lozinka, String geolokacija) {
         this.sifKorisnika = sifKorisnika;
         this.imeKorisnika = imeKorisnika;
         this.email = email;
         this.lozinka = lozinka;
+        this.geolokacija = geolokacija;
     }
 
     public Integer getSifKorisnika() {
@@ -53,5 +55,13 @@ public class User {
 
     public void setLozinka(String lozinka) {
         this.lozinka = lozinka;
+    }
+
+    public String getGeolokacija() {
+        return geolokacija;
+    }
+
+    public void setGeolokacija(String geolokacija) {
+        this.geolokacija = geolokacija;
     }
 }

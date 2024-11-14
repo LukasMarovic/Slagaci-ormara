@@ -19,9 +19,21 @@ public class ArticleService {
         return articleRepository.findById(id).orElse(null);
     }
 
-    public Article add(String naziv) {
+    public Article add(String nazivArtikla, byte[] slikaArtikla, String opcaKategorija, String kategorijaGoddoba, String kategorijaLezernosti, String glavnaBoja, String sporednaBoja, String stanjeArtikla, Integer sifKorisnika) {
         Article article = new Article();
-        article.setNazivArtikla(naziv);
+        article.setNazivArtikla(nazivArtikla);
+        article.setSlikaArtikla(slikaArtikla);
+        article.setOpcaKategorija(opcaKategorija);
+        article.setKategorijaGoddoba(kategorijaGoddoba);
+        article.setKategorijaLezernosti(kategorijaLezernosti);
+        article.setGlavnaBoja(glavnaBoja);
+        article.setSporednaBoja(sporednaBoja);
+        article.setStanjeArtikla(stanjeArtikla);
+        article.setSifKorisnika(sifKorisnika);
+        return articleRepository.save(article);
+    }
+
+    public Article add(Article article) {
         return articleRepository.save(article);
     }
 

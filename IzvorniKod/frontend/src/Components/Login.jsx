@@ -13,7 +13,7 @@ function Login(){
   
     const handleLogin = (e) => {
       e.preventDefault();
-      fetch("http://localhost:8080/api/auth/sign-in", {
+      fetch("/api/auth/sign-in", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -23,7 +23,8 @@ function Login(){
         body: JSON.stringify({
           "imeKorisnika": "",
           "email": email,
-          "lozinka": password
+          "lozinka": password,
+          "geolokacija": ""
         })
       }).then(response => {
         if (response.status == 200) {

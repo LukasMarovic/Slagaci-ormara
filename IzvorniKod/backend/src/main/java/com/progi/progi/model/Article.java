@@ -8,37 +8,41 @@ import jakarta.persistence.*;
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idArtikla;
+    private Integer sifArtikla;
     private String nazivArtikla;
-    /*private byte[] slikaArtikla;
-    private String opisArtikla;
+
+    @Lob
+    private byte[] slikaArtikla;
     private String opcaKategorija;
+    private String kategorijaGoddoba;
     private String kategorijaLezernosti;
     private String glavnaBoja;
     private String sporednaBoja;
     private String stanjeArtikla;
-    private String sifOglasivaca;
-    */
+    private Integer sifKorisnika;
 
-    public Article() {}
-    public Article (Integer idArtikla, String nazivArtikla/*, byte[] slikaArtikla, String opisArtikla, String opcaKategorija, String kategorijaLezernosti,
-                                  String glavnaBoja, String sporednaBoja, String stanjeArtikla, String sifOglasivaca*/) {
-        this.idArtikla = idArtikla;
+    public Article() {
+    }
+
+    public Article(Integer sifArtikla, String nazivArtikla, byte[] slikaArtikla, String opcaKategorija, String kategorijaGoddoba, String kategorijaLezernosti, String glavnaBoja, String sporednaBoja, String stanjeArtikla, Integer sifKorisnika) {
+        this.sifArtikla = sifArtikla;
         this.nazivArtikla = nazivArtikla;
-      /*  this.slikaArtikla = slikaArtikl
+        this.slikaArtikla = slikaArtikla;
         this.opcaKategorija = opcaKategorija;
+        this.kategorijaGoddoba = kategorijaGoddoba;
         this.kategorijaLezernosti = kategorijaLezernosti;
         this.glavnaBoja = glavnaBoja;
         this.sporednaBoja = sporednaBoja;
         this.stanjeArtikla = stanjeArtikla;
-        this.sifOglasivaca = sifOglasivaca;*/
+        this.sifKorisnika = sifKorisnika;
     }
 
-    public Integer getIdArtikla() {
-        return idArtikla;
+    public Integer getSifArtikla() {
+        return sifArtikla;
     }
-    public void setIdArtikla(Integer idArtikla) {
-        this.idArtikla = idArtikla;
+
+    public void setSifArtikla(Integer sifArtikla) {
+        this.sifArtikla = sifArtikla;
     }
 
     public String getNazivArtikla() {
@@ -48,7 +52,7 @@ public class Article {
     public void setNazivArtikla(String nazivArtikla) {
         this.nazivArtikla = nazivArtikla;
     }
-/*
+
     public byte[] getSlikaArtikla() {
         return slikaArtikla;
     }
@@ -57,19 +61,20 @@ public class Article {
         this.slikaArtikla = slikaArtikla;
     }
 
-    public String getOpisArtikla() {
-        return opisArtikla;
-    }
-    public void setOpisArtikla(String opisArtikla) {
-        this.opisArtikla = opisArtikla;
-    }
-
     public String getOpcaKategorija() {
         return opcaKategorija;
     }
 
     public void setOpcaKategorija(String opcaKategorija) {
         this.opcaKategorija = opcaKategorija;
+    }
+
+    public String getKategorijaGoddoba() {
+        return kategorijaGoddoba;
+    }
+
+    public void setKategorijaGoddoba(String kategorijaGoddoba) {
+        this.kategorijaGoddoba = kategorijaGoddoba;
     }
 
     public String getKategorijaLezernosti() {
@@ -104,11 +109,11 @@ public class Article {
         this.stanjeArtikla = stanjeArtikla;
     }
 
-    public String getSifOglasivaca() {
-        return sifOglasivaca;
+    public Integer getSifKorisnika() {
+        return sifKorisnika;
     }
 
-    public void setSifOglasivaca(String sifOglasivaca) {
-        this.sifOglasivaca = sifOglasivaca;
-    }*/
+    public void setSifKorisnika(Integer sifKorisnika) {
+        this.sifKorisnika = sifKorisnika;
+    }
 }
