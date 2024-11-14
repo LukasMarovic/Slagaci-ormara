@@ -45,7 +45,7 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: .IzvorniKod/backend
+          context: ./IzvorniKod/backend
           push: true
           tags: ghcr.io/lukasmarovic/slagaci-ormara/izvornikod/backend:latest
 
