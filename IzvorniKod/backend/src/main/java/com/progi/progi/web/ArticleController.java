@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin(origins = "https://closetly-721y.onrender.com")
 public class ArticleController {
 
     @Autowired
