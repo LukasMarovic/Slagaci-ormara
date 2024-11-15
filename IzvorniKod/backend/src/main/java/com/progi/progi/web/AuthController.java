@@ -34,6 +34,7 @@ public class AuthController {
                 sessionCookie.setMaxAge(24 * 60 * 60);
 
                 response.addCookie(sessionCookie);
+                response.addHeader("Access-Control-Allow-Origin", "https://closetly-721y.onrender.com");
                 return ResponseEntity.ok("Logged in");
                 //return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
             } else {
