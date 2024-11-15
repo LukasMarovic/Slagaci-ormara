@@ -8,7 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Objects;
 
 @RestController
 public class ArticleController {
@@ -28,8 +31,9 @@ public class ArticleController {
     }
 
     @GetMapping(value = "/getImage/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage(@PathVariable Integer id) throws IOException {
-        return Files.readAllBytes(new ClassPathResource("/static/images/" + id + ".jpg").getFile().toPath());
+    public @ResponseBody byte[] getImage(@PathVariable Integer id) throws IOException, URISyntaxException {
+        return Files.readAllBytes(Path.of(Objects.requireNonNull(this.getClass().getResource("/static/images/" + id + ".jpg")).toURI()));
+        // return Files.readAllBytes(new ClassPathResource("/static/images/" + id + ".jpg").getFile().toPath());
     }
 
     @PostMapping("/addArticle")
