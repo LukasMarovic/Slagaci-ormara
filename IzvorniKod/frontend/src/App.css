@@ -41,7 +41,7 @@
   width: 100vw;
   height: 1000px;
   border: 1px solid white;
-  background-image: url('src/assets/images/main_img.png');
+  background-image: url('/assets/images/main_img.png');
   background-size: cover;
   background-repeat: no-repeat;
   animation: slide 12s infinite;
@@ -49,14 +49,14 @@
 
 @keyframes slide {
   0% {
-    background-image: url('src/assets/images/main_img.png');
+    background-image: url('/assets/images/main_img.png');
   }
-  50% {background-image: url('src/assets/images/main_img2.jpg');}
+  50% {background-image: url('/assets/images/main_img2.jpg');}
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('src/assets/fonts/Montserrat.ttf');
+  src: url('/assets/fonts/Montserrat.ttf');
 }
 
 .image-container .search-title{
@@ -108,7 +108,7 @@
 
 @font-face {
   font-family: 'Poppins';
-  src: url("src/assets/fonts/Poppins.ttf");
+  src: url("/assets/fonts/Poppins.ttf");
 }
 
 .register-promo-container .register-undertitle{

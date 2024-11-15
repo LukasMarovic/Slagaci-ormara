@@ -4,7 +4,7 @@ function ExploreAndShareArticles(){
     return(
         <div className="feature-container m-4 p-0 d-flex align-items-center">
             <div className='feature-image p-0 d-flex'>
-                <img src='src/assets/images/feature_img1.png' className='feature-illustration'>
+                <img src='/assets/images/feature_img1.png' className='feature-illustration'>
                 </img>
             </div>
             <p className='feature-title fw-bold m-0 p-0 text-center d-flex flex-column justify-content-center'>

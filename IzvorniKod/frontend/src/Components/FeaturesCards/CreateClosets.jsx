@@ -11,7 +11,7 @@ function CreateClosets(){
                 </span>
             </p>
             <div className='feature-image p-0 d-flex'>
-                <img src='src/assets/images/feature_img2.png' className='feature-illustration'></img>
+                <img src='/assets/images/feature_img2.png' className='feature-illustration'></img>
             </div>
         </div>
     );

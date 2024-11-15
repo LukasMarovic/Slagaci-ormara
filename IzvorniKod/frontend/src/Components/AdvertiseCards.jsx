@@ -3,10 +3,10 @@ import { Col, Button } from 'react-bootstrap';
 import './CustomCss/NavigationButton.css';
 
 const images = [
-    "/src/assets/images/plcholder1.jpg",
-    "/src/assets/images/plcholder2.jpg",
-    "/src/assets/images/plcholder3.jpg",
-    "/src/assets/images/plcholder4.jpg",
+    "/assets/images/plcholder1.jpg",
+    "/assets/images/plcholder2.jpg",
+    "/assets/images/plcholder3.jpg",
+    "/assets/images/plcholder4.jpg",
 ];
 
 function AdvertiseCards() {
