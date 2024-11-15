@@ -8,25 +8,27 @@ import React, {useEffect} from 'react';
 
 function ArticleCard(){
     const [articles, setArticles] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
       fetch("/api/getFeatured")
         .then(response => response.json())
         .then(data => setArticles(data))
     }, []);
+    
     return(
        <Row xs={1} sm={2} md={3} lg={4} className="card-container g-3">
        {articles.map((artikl, idx) => (
          <Col key={idx}>
            <Card className='article-card'>
-             <Card.Img variant="top" src={"/api/getImage/" + artikl.sifArtikla} className='card-image' />
+             <Card.Img variant="top" src={"/api/getImage/" + artikl[5]} className='card-image' />
              <Card.Body className='card-body'>
-               <Card.Title className='card-title'>{artikl.nazivArtikla}</Card.Title>
+               <Card.Title className='card-title'>{artikl[0]}</Card.Title>
                <Card.Text className='card-text'>
-                 {artikl.opcaKategorija}<br />{artikl.kategorijaLezernosti}<br />{artikl.stanjeArtikla}
+                 {artikl[1]}<br />{artikl[2]}<br />{artikl[3]}
                </Card.Text>
                <Card.Text className='card-text'>
-                Posted by: {artikl.sifKorisnika}
+                Posted by: {artikl[4]}
                </Card.Text>
              </Card.Body>
            </Card>

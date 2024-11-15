@@ -5,15 +5,17 @@ import com.progi.progi.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private UserService userService;
 
     public Article get(Integer id) {
         return articleRepository.findById(id).orElse(null);
@@ -46,7 +48,7 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public List<Article> getFeatured() {
+    public Map<Article, String> getFeatured() {
         List<Article> allArticles = (List<Article>) articleRepository.findAll();
 
         List<Article> randomArticles = new ArrayList<>();
@@ -61,6 +63,6 @@ public class ArticleService {
             }
         }
 
-        return randomArticles;
+        return randomArticles.stream().collect(Collectors.toMap(key -> key, key -> userService.get(key.getSifKorisnika()).getImeKorisnika()));
     }
 }

@@ -24,7 +24,7 @@ function Register(){
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "imeKorisnika": f_name+l_name,
+          "imeKorisnika": f_name+" "+l_name,
           "email": email,
           "lozinka": password,
           "geolokacija": city

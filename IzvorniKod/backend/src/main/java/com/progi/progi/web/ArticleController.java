@@ -11,7 +11,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "https://closetly-721y.onrender.com")
@@ -22,8 +23,17 @@ public class ArticleController {
 
     //vraća 8 nasumičnih artikala iz baze
     @GetMapping("/getFeatured")
-    public Iterable<Article> getArticles() {
-        return articleService.getFeatured();
+    public Iterable<ArrayList<String>> getArticles() {
+        return articleService.getFeatured().entrySet().stream().map((el) -> {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(el.getKey().getNazivArtikla());
+            list.add(el.getKey().getOpcaKategorija());
+            list.add(el.getKey().getKategorijaLezernosti());
+            list.add(el.getKey().getStanjeArtikla());
+            list.add(el.getValue());
+            list.add(el.getKey().getSifArtikla().toString());
+            return list;
+        }).collect(Collectors.toList());
     }
 
     @GetMapping("/getArticle/{id}")
