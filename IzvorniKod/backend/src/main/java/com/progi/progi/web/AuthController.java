@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "https://closetly-721y.onrender.com")
 @RequestMapping("/auth")
 public class AuthController {
 
