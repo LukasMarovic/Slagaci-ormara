@@ -1,4 +1,5 @@
 import Container from 'react-bootstrap/Container'
+import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Navbar from 'react-bootstrap/Navbar'
@@ -8,6 +9,8 @@ import { FaUser } from 'react-icons/fa'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { NavLink } from 'react-bootstrap'
+
+import UserProfile from './UserProfile'
 
 function Header(){
     return(
@@ -31,17 +34,7 @@ function Header(){
                     <Nav.Link className='nav-link' href="#footer">Contact</Nav.Link>
                 </Nav>
                 <Nav>
-                    { !document.cookie ? (
-                        <Nav.Link className='register' href="/login">
-                            Register or Log in
-                            <FaUser className="user-icon"></FaUser>
-                        </Nav.Link>
-                        ) : (
-                            <div className='nav-link'>
-                                <p>Welcome back <br></br>{document.cookie}</p>
-                            </div>
-                        )
-                    }
+                    <UserProfile />
                 </Nav>
             </Navbar.Collapse>
             </Container>
