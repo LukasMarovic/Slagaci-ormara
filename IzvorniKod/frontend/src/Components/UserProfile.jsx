@@ -28,7 +28,6 @@ function UserProfile() {
     };
 
     useEffect(() => {
-        // console.log(user);
         const fetchUserDetails = async () => {
             if (document.cookie) {
                 try {
