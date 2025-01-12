@@ -27,7 +27,7 @@ function UserProfile() {
           })
     };
 
-    useEffect(() => {
+    useEffect(() => { 
         const fetchUserDetails = async () => {
             if (document.cookie) {
                 try {
