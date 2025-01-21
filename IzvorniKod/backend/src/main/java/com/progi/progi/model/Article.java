@@ -1,119 +1,134 @@
 package com.progi.progi.model;
 
-
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ARTIKL")
+@Table(name = "ARTICLE")
 public class Article {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer sifArtikla;
-    private String nazivArtikla;
+    @Column(name = "ARTICLEID", nullable = false)
+    private Integer id;
 
-    @Lob
-    private byte[] slikaArtikla;
-    private String opcaKategorija;
-    private String kategorijaGoddoba;
-    private String kategorijaLezernosti;
-    private String glavnaBoja;
-    private String sporednaBoja;
-    private String stanjeArtikla;
-    private Integer sifKorisnika;
+    @Column(name = "ARTICLENAME", length = 50)
+    private String articlename;
 
-    public Article() {
+    @Column(name = "ARTICLEPICTURE", length = 200)
+    private String articlepicture;
+
+    @Column(name = "CATEGORY", length = 50)
+    private String category;
+
+    @Column(name = "SEASONALITY", length = 50)
+    private String seasonality;
+
+    @Column(name = "FORMALITY", length = 50)
+    private String formality;
+
+    @Column(name = "MAINCOLOR", length = 20)
+    private String maincolor;
+
+    @Column(name = "SECONDARYCOLOR", length = 20)
+    private String secondarycolor;
+
+    @Column(name = "AVAILABILITY", length = 50)
+    private String availability;
+
+    @Column(name = "PRICE", precision = 5, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "USERID")
+    private Integer userid;
+
+    public Integer getId() {
+        return id;
     }
 
-    public Article(Integer sifArtikla, String nazivArtikla, byte[] slikaArtikla, String opcaKategorija, String kategorijaGoddoba, String kategorijaLezernosti, String glavnaBoja, String sporednaBoja, String stanjeArtikla, Integer sifKorisnika) {
-        this.sifArtikla = sifArtikla;
-        this.nazivArtikla = nazivArtikla;
-        this.slikaArtikla = slikaArtikla;
-        this.opcaKategorija = opcaKategorija;
-        this.kategorijaGoddoba = kategorijaGoddoba;
-        this.kategorijaLezernosti = kategorijaLezernosti;
-        this.glavnaBoja = glavnaBoja;
-        this.sporednaBoja = sporednaBoja;
-        this.stanjeArtikla = stanjeArtikla;
-        this.sifKorisnika = sifKorisnika;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getSifArtikla() {
-        return sifArtikla;
+    public String getArticlename() {
+        return articlename;
     }
 
-    public void setSifArtikla(Integer sifArtikla) {
-        this.sifArtikla = sifArtikla;
+    public void setArticlename(String articlename) {
+        this.articlename = articlename;
     }
 
-    public String getNazivArtikla() {
-        return nazivArtikla;
+    public String getArticlepicture() {
+        return articlepicture;
     }
 
-    public void setNazivArtikla(String nazivArtikla) {
-        this.nazivArtikla = nazivArtikla;
+    public void setArticlepicture(String articlepicture) {
+        this.articlepicture = articlepicture;
     }
 
-    public byte[] getSlikaArtikla() {
-        return slikaArtikla;
+    public String getCategory() {
+        return category;
     }
 
-    public void setSlikaArtikla(byte[] slikaArtikla) {
-        this.slikaArtikla = slikaArtikla;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getOpcaKategorija() {
-        return opcaKategorija;
+    public String getSeasonality() {
+        return seasonality;
     }
 
-    public void setOpcaKategorija(String opcaKategorija) {
-        this.opcaKategorija = opcaKategorija;
+    public void setSeasonality(String seasonality) {
+        this.seasonality = seasonality;
     }
 
-    public String getKategorijaGoddoba() {
-        return kategorijaGoddoba;
+    public String getFormality() {
+        return formality;
     }
 
-    public void setKategorijaGoddoba(String kategorijaGoddoba) {
-        this.kategorijaGoddoba = kategorijaGoddoba;
+    public void setFormality(String formality) {
+        this.formality = formality;
     }
 
-    public String getKategorijaLezernosti() {
-        return kategorijaLezernosti;
+    public String getMaincolor() {
+        return maincolor;
     }
 
-    public void setKategorijaLezernosti(String kategorijaLezernosti) {
-        this.kategorijaLezernosti = kategorijaLezernosti;
+    public void setMaincolor(String maincolor) {
+        this.maincolor = maincolor;
     }
 
-    public String getGlavnaBoja() {
-        return glavnaBoja;
+    public String getSecondarycolor() {
+        return secondarycolor;
     }
 
-    public void setGlavnaBoja(String glavnaBoja) {
-        this.glavnaBoja = glavnaBoja;
+    public void setSecondarycolor(String secondarycolor) {
+        this.secondarycolor = secondarycolor;
     }
 
-    public String getSporednaBoja() {
-        return sporednaBoja;
+    public String getAvailability() {
+        return availability;
     }
 
-    public void setSporednaBoja(String sporednaBoja) {
-        this.sporednaBoja = sporednaBoja;
+    public void setAvailability(String availability) {
+        this.availability = availability;
     }
 
-    public String getStanjeArtikla() {
-        return stanjeArtikla;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setStanjeArtikla(String stanjeArtikla) {
-        this.stanjeArtikla = stanjeArtikla;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
-    public Integer getSifKorisnika() {
-        return sifKorisnika;
+    public Integer getUserid() {
+        return userid;
     }
 
-    public void setSifKorisnika(Integer sifKorisnika) {
-        this.sifKorisnika = sifKorisnika;
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
+
 }

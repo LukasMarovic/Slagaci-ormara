@@ -1,324 +1,165 @@
-CREATE TABLE Korisnik (
-	sifKorisnika INTEGER,
-	imeKorisnika VARCHAR(50),
-	email VARCHAR(50),
-	lozinka VARCHAR(30),
-	PRIMARY KEY(sifKorisnika)
+CREATE TABLE Users (
+                       userID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Automatski primarni ključ
+                       username VARCHAR(50),
+                       email VARCHAR(50),
+                       password VARCHAR(30)
 );
 
-CREATE TABLE Ormar (
-	sifOrmara INTEGER,
-	nazivOrmara VARCHAR(50),
-	sifKorisnika INTEGER,
-	PRIMARY KEY(sifOrmara),
-	FOREIGN KEY(sifKorisnika) REFERENCES korisnik(sifKorisnika)
+CREATE TABLE Closet (
+                        closetID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Automatski primarni ključ
+                        closetName VARCHAR(50),
+                        userID INTEGER,
+                        FOREIGN KEY(userID) REFERENCES Users(userID)
 );
 
-CREATE TABLE Registrirani_korisnik (
-	sifKorisnika INTEGER,
-	geolokacija VARCHAR(50),
-	PRIMARY KEY(sifKorisnika),
-	FOREIGN KEY(sifKorisnika) REFERENCES korisnik(sifKorisnika)
+CREATE TABLE RegisteredUser (
+                                userID INTEGER PRIMARY KEY, -- Veza na Users.userID (bez automatskog generiranja)
+                                geolocation VARCHAR(50),
+                                FOREIGN KEY(userID) REFERENCES Users(userID)
 );
 
-CREATE TABLE Oglasivac (
-	sifKorisnika INTEGER,
-	logo VARCHAR(30),
-	PRIMARY KEY(sifKorisnika),
-	FOREIGN KEY(sifKorisnika) REFERENCES korisnik(sifKorisnika)
+CREATE TABLE Seller (
+                        userID INTEGER PRIMARY KEY, -- Veza na Users.userID (bez automatskog generiranja)
+                        logo VARCHAR(30),
+                        FOREIGN KEY(userID) REFERENCES Users(userID)
 );
 
-CREATE TABLE Artikl(
-	sifArtikla INTEGER,
-	nazivArtikla VARCHAR(50),
-	slikaArtikla BYTEA,
-	opcaKategorija VARCHAR(50),
-	kategorijaGodDoba VARCHAR(50),
-	kategorijaLezernosti VARCHAR(50),
-	glavnaBoja VARCHAR(20),
-	sporednaBoja VARCHAR(20),
-	stanjeArtikla VARCHAR(50),
-	sifKorisnika INTEGER, 
-	PRIMARY KEY (sifArtikla),
-	FOREIGN KEY (sifKorisnika) REFERENCES korisnik(sifKorisnika)
+CREATE TABLE Article (
+                         articleID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Automatski primarni ključ
+                         articleName VARCHAR(50),
+                         articlePicture VARCHAR(200),
+                         category VARCHAR(50),
+                         seasonality VARCHAR(50),
+                         formality VARCHAR(50),
+                         mainColor VARCHAR(20),
+                         secondaryColor VARCHAR(20),
+                         availability VARCHAR(50),
+                         price NUMERIC(5,2),
+                         userID INTEGER,
+                         FOREIGN KEY(userID) REFERENCES Users(userID)
 );
 
-CREATE TABLE Obuca (
-	sifArtikla INTEGER,
-	kategorijaOtvorenosti VARCHAR(50),
-	PRIMARY KEY (sifArtikla),
-	FOREIGN KEY (sifArtikla) REFERENCES artikl(sifArtikla)
+CREATE TABLE Footwear (
+                          articleID INTEGER PRIMARY KEY, -- Veza na Article.articleID
+                          openness VARCHAR(50),
+                          FOREIGN KEY(articleID) REFERENCES Article(articleID)
 );
 
-CREATE TABLE Odjeca (
-	sifArtikla INTEGER,
-	PRIMARY KEY (sifArtikla),
-	FOREIGN KEY (sifArtikla) REFERENCES artikl(sifArtikla)
+CREATE TABLE Clothes (
+                         articleID INTEGER PRIMARY KEY, -- Veza na Article.articleID
+                         FOREIGN KEY(articleID) REFERENCES Article(articleID)
 );
 
-
-CREATE TABLE Lokacija (
-	brojLokacije INTEGER,
-	sifOrmara INTEGER,
-	vrstaLokacije VARCHAR(20),
-	PRIMARY KEY(brojLokacije, sifOrmara),
-	FOREIGN KEY(sifOrmara) REFERENCES ormar(sifOrmara)
+CREATE TABLE Location (
+                          locationID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Automatski primarni ključ
+                          closetID INTEGER,
+                          locationType VARCHAR(20),
+                          FOREIGN KEY(closetID) REFERENCES Closet(closetID)
 );
 
-CREATE TABLE NalaziSeU (
-	sifArtikla INTEGER,
-	brojLokacije INTEGER,
-	sifOrmara INTEGER,
-	PRIMARY KEY(sifArtikla, brojLokacije, sifOrmara),
-	FOREIGN KEY(brojLokacije, sifOrmara) REFERENCES lokacija(brojLokacije, sifOrmara)
---	FOREIGN KEY(sifOrmara) REFERENCES ormar(sifOrmara)
+CREATE TABLE LocatedAt (
+                           locatedAtID INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, -- Jedinstveni identifikator za svaki redak
+                           articleID INTEGER,
+                           locationID INTEGER,
+                           closetID INTEGER,
+                           FOREIGN KEY(articleID) REFERENCES Article(articleID),
+                           FOREIGN KEY(locationID) REFERENCES Location(locationID),
+                           FOREIGN KEY(closetID) REFERENCES Closet(closetID)
 );
 
 
---KORISNIK
---korisnik
-INSERT INTO public.korisnik (sifkorisnika, imekorisnika, email, lozinka)
-VALUES (100, 'Nikola Tesla', 'nikolatesla@gmail.com', 'password123');
+-- Users
+INSERT INTO Users (username, email, password)
+VALUES ('Nikola Tesla', 'nikolatesla@gmail.com', 'password123');
 
-INSERT INTO public.korisnik (sifkorisnika, imekorisnika, email, lozinka)
-VALUES (200, 'Halid Bešlić', 'halidbeslic@gmail.com', 'passwordhalidov123');
+INSERT INTO Users (username, email, password)
+VALUES ('Halid Bešlić', 'halidbeslic@gmail.com', 'passwordhalidov123');
 
-INSERT INTO public.korisnik (sifkorisnika, imekorisnika, email, lozinka)
-VALUES (300, 'Josipa Lisac', 'josipica@gmail.com', 'passwordjosipin123');
---oglasivaci
-INSERT INTO public.korisnik (sifkorisnika, imekorisnika, email, lozinka)
-VALUES (010, 'Pero Peric', 'peroperic1@gmail.com', 'passwordoglasivac123');
+INSERT INTO Users (username, email, password)
+VALUES ('Josipa Lisac', 'josipica@gmail.com', 'passwordjosipin123');
 
-INSERT INTO public.korisnik (sifkorisnika, imekorisnika, email, lozinka)
-VALUES (020, 'Anica Kabanica', 'anicakabanica@gmail.com', 'passwordoglasivac2123');
+-- Selleri
+INSERT INTO Users (username, email, password)
+VALUES ('Pero Peric', 'peroperic1@gmail.com', 'passwordseller123');
 
+INSERT INTO Users (username, email, password)
+VALUES ('Anica Kabanica', 'anicakabanica@gmail.com', 'passwordseller2123');
 
+-- Ormar
+INSERT INTO Closet (closetName, userID)
+VALUES ('Prvi Nikolin closet', 1);
 
---ORMAR
-INSERT INTO public.ormar (siformara, nazivormara, sifkorisnika)
-VALUES (001, 'Prvi Nikolin ormar', 100);
+INSERT INTO Closet (closetName, userID)
+VALUES ('Prvi Halidov closet', 2);
 
-INSERT INTO public.ormar (siformara, nazivormara, sifkorisnika)
-VALUES (002, 'Prvi Halidov ormar', 200);
+INSERT INTO Closet (closetName, userID)
+VALUES ('Prvi Josipin closet', 3);
 
-INSERT INTO public.ormar (siformara, nazivormara, sifkorisnika)
-VALUES (003, 'Prvi Josipin ormar', 300);
+-- Artikli
+-- Nikola Tesla
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Zimska jakna', NULL, 'Jackets', 'Winter', 'Casual', 'Blue', 'White', 'new', 250.00, 1);
 
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Džemper', NULL, 'Sweatshirts & hoodies', 'Winter', 'Casual', 'Yellow', 'White', 'new', 30.75, 1);
 
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Traperice', NULL, 'Jeans', 'Fall', 'Casual', 'Blue', 'Blue', 'new', 50.25, 1);
 
---ARTIKLI
---korisnik nikola tesla
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 101, 'Zimska jakna', NULL, 'Jakna', 'zima', 'ležerno', 'plava', 'bijela', 'novo', 100 );
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Košulja', NULL, 'Blouses', 'Spring', 'Business', 'Beige', 'Beige', 'new', 45.00, 1);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 102, 'Džemper', NULL, 'Puloveri i džemperi', 'zima', 'ležerno', 'žuta', 'bijela', 'novo', 100 );
+-- Halid Bešlić
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Šešir', NULL, 'Hats', 'Fall', 'Business', 'Grey', 'Grey', 'Used', 15.50, 2);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 103, 'Traperice', NULL, 'Hlače', 'jesen', 'ležerno', 'plava', 'plava', 'novo', 100 );
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Čizme', NULL, 'Boots', 'Fall', 'Casual', 'Green', 'Green', 'Used', 27.00, 2);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 104, 'Košulja', NULL, 'Košulje i bluze', 'proljeće', 'poslovno', 'bež', 'krem', 'novo', 100 );
+-- Josipa Lisac
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Haljina', NULL, 'Dresses', 'Summer', 'Formal', 'Green', 'Green', 'Used', 28.00, 3);
 
---korisnik halid beslic
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 401, 'Šešir', NULL, 'Šeširi i kape', 'jesen', 'poslovno', 'siva', 'siva', 'rabljeno', 200 );
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Štikle', NULL, 'Heels', 'Fall', 'Casual', 'Black', 'Black', 'Used', 15.00, 3);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 402, 'Čizme', NULL, 'Čizme', 'jesen', 'ležerno', 'zelena', 'zelena', 'rabljeno', 200 );
+-- Seller Pero Perić
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Jakna', NULL, 'Jackets', 'Fall', 'Casual', 'Grey', 'Black', 'new', 60.00, 4);
 
---korisnik josipa lisac
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 501, 'Haljina', NULL, 'Haljine', 'ljeto', 'svećano', 'zelena', 'zelena', 'rabljeno', 300 );
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Majica', NULL, 'Shirts', 'Winter', 'Business', 'Beige', 'Black', 'new', 26.50, 4);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 502, 'Štikle', NULL, 'Štikle', 'jesen', 'ležerno', 'crna', 'crna', 'rabljeno', 300 );
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Traperice', NULL, 'Jeans', 'Spring', 'Casual', 'Blue', 'Blue', 'new', 47.00, 4);
 
+-- Seller Anica Kabanica
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Kabanica', NULL, 'Jackets', 'Fall', 'Casual', 'Yellow', 'Yellow', 'new', 13.50, 5);
 
---oglasivac pero peric
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 201, 'Jakna', NULL, 'Jakna', 'jesen', 'ležerno', 'siva', 'crna', 'novo', 010 );
+INSERT INTO Article (articleName, articlePicture, category, seasonality, formality, mainColor, secondaryColor, availability, price, userID)
+VALUES ('Jaknica', NULL, 'Jackets', 'Fall', 'Business', 'Black', 'Black', 'Used', 25.50, 5);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 202, 'Majica', NULL, 'Majice', 'zima', 'poslovno', 'bež', 'crna', 'novo', 010 );
+-- Clothes
+INSERT INTO Clothes (articleID)
+VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 203, 'Traperice', NULL, 'Hlače', 'proljeće', 'ležerno', 'plava', 'tamno plava', 'novo', 010 );
+-- Footwear
+INSERT INTO Footwear (articleID, openness)
+VALUES (6, 'Rain'), (7, 'Closed');
 
---oglasivac anica kabanica
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 301, 'Kabanica', NULL, 'Jakna', 'jesen', 'ležerno', 'žuta', 'žuta', 'novo', 020 );
+-- Location
+INSERT INTO Location (closetID, locationType)
+VALUES (1, 'Hangers'), (1, 'Shelves'), (1, 'Drawers'), (2, 'Shelves'), (2, 'Hangers');
 
-INSERT INTO public.artikl ( sifartikla, nazivartikla, slikaartikla, opcakategorija, kategorijagoddoba, kategorijalezernosti, glavnaboja, sporednaboja, stanjeartikla, sifkorisnika )
-VALUES ( 302, 'Jakna', 'Jakna', 'Majice', 'jesen', 'poslovno', 'crna', 'crna', 'rabljeno', 020 );
+-- LocatedAt
+INSERT INTO LocatedAt (articleID, locationID, closetID)
+VALUES (1, 1, 1), (2, 2, 1), (3, 3, 1);
 
+-- Registered Users
+INSERT INTO RegisteredUser (userID, geolocation)
+VALUES (1, 'Zagreb'), (2, 'Sarajevo'), (3, 'Zagreb');
 
-
-
-
-
-
---ODJEĆA
---korisnik nikola tesla
-INSERT INTO public.odjeca(sifartikla)
-VALUES (101);
-
-INSERT INTO public.odjeca(sifartikla)
-VALUES (102);
-
-INSERT INTO public.odjeca(sifartikla)
-VALUES (103);
-
-INSERT INTO public.odjeca(sifartikla)
-VALUES (104);
-
---korisnik halid beslic
-INSERT INTO public.odjeca(sifartikla)
-VALUES (401);
-
---korisnik josipa lisac
-INSERT INTO public.odjeca(sifartikla)
-VALUES (501);
-
---oglasivac pero peric
-INSERT INTO public.odjeca(sifartikla)
-VALUES (201);
-
-INSERT INTO public.odjeca(sifartikla)
-VALUES (202);
-
-INSERT INTO public.odjeca(sifartikla)
-VALUES (203);
-
---oglasivac anica kabanica
-INSERT INTO public.odjeca(sifartikla)
-VALUES (301);
-
-INSERT INTO public.odjeca(sifartikla)
-VALUES (302);
-
-
-
---OBUĆA
---korisnik halid beslic
-INSERT INTO public.obuca(sifartikla, kategorijaotvorenosti)
-VALUES (401, 'za kišu');
-
---korisnik josipa lisac
-INSERT INTO public.obuca(sifartikla, kategorijaotvorenosti)
-VALUES (502, 'zatvoreno');
-
-
-
---LOKACIJA
---korisnik Nikola Tesla
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (1, 001, 'šipka');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (2, 001, 'šipka');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (3, 001, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (4, 001, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (5, 001, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (6, 001, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (7, 001, 'ladica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (8, 001, 'ladica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (9, 001, 'ladica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (10, 001, 'ladica');
-
---korisnik halid beslic
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (1, 002, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (2, 002, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (3, 002, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (4, 002, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (5, 002, 'ladica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (6, 002, 'šipka');
-
---korisnik josipa lisac
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (1, 003, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (2, 003, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (3, 003, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (4, 003, 'polica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (5, 003, 'ladica');
-
-INSERT INTO public.lokacija (brojlokacije, siformara, vrstalokacije)
-VALUES (6, 003, 'šipka');
-
-
-
---NALAZIZEU
---nikoa tesla
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (101, 1, 001);
-
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (102, 7, 001);
-
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (103, 8, 001);
-
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (104, 2, 001);
-
---halid beslic
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (401, 5, 002);
-
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (401, 1, 002);
-
---josipa lisac
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (501, 6, 003);
-
-INSERT INTO public.nalaziseu (sifArtikla, brojLokacije, sifOrmara)
-VALUES (502, 1, 003);
-
-
-
---REGISTRIRANI KORISNIK
-INSERT INTO public.registrirani_korisnik (sifkorisnika, geolokacija) VALUES (100, 'Zagreb');
-INSERT INTO public.registrirani_korisnik (sifkorisnika, geolokacija) VALUES (200, 'Sarajevo');
-INSERT INTO public.registrirani_korisnik (sifkorisnika, geolokacija) VALUES (300, 'Zagreb');
-
-
-
---OGLAŠIVAČ
-INSERT INTO public.oglasivac (sifkorisnika, logo) VALUES (010, NULL);
-INSERT INTO public.oglasivac (sifkorisnika, logo) VALUES (020, NULL);
+-- Sellers
+INSERT INTO Seller (userID, logo)
+VALUES (4, NULL), (5, NULL);
