@@ -105,20 +105,22 @@ public class Scrapper {
                         Random rand = new Random();
                         item.setUserid(rand.nextInt(10));
 
-                        Article newArticle = articleService.add(item);
+                        if (category != "unsorted") {
+                            Article newArticle = articleService.add(item);
 
-                        int id = newArticle.getId();
-                        items.add(newArticle);
+                            int id = newArticle.getId();
+                            items.add(newArticle);
 
-                        if (obuca.contains(category)) {
-                            Footwear footwear = new Footwear();
-                            footwear.setId(id);
-                            footwear.setOpenness(coverage);
-                            footwearService.add(footwear);
-                        } else {
-                            Clothes clothes = new Clothes();
-                            clothes.setId(id);
-                            clothesController.add(clothes);
+                            if (obuca.contains(category)) {
+                                Footwear footwear = new Footwear();
+                                footwear.setId(id);
+                                footwear.setOpenness(coverage);
+                                footwearService.add(footwear);
+                            } else {
+                                Clothes clothes = new Clothes();
+                                clothes.setId(id);
+                                clothesController.add(clothes);
+                            }
                         }
 
                     }
