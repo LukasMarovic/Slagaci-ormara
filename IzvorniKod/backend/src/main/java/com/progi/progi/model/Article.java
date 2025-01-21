@@ -10,13 +10,14 @@ import java.math.BigDecimal;
 @Table(name = "ARTICLE")
 public class Article {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ARTICLEID", nullable = false)
     private Integer id;
 
-    @Column(name = "ARTICLENAME", length = 50)
+    @Column(name = "ARTICLENAME", length = 250)
     private String articlename;
 
-    @Column(name = "ARTICLEPICTURE", length = 200)
+    @Column(name = "ARTICLEPICTURE", length = 250)
     private String articlepicture;
 
     @Column(name = "CATEGORY", length = 50)
@@ -37,7 +38,7 @@ public class Article {
     @Column(name = "AVAILABILITY", length = 50)
     private String availability;
 
-    @Column(name = "PRICE", precision = 5, scale = 2)
+    @Column(name = "PRICE", precision = 7, scale = 2)
     private BigDecimal price;
 
     @Column(name = "USERID")

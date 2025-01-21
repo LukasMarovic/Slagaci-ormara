@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS Users
 (
     userID   IDENTITY PRIMARY KEY,
-    username VARCHAR(50),
-    email    VARCHAR(50),
+    username VARCHAR(200),
+    email    VARCHAR(200),
     password VARCHAR(30)
 );
 
 CREATE TABLE IF NOT EXISTS Closet
 (
     closetID   IDENTITY PRIMARY KEY,
-    closetName VARCHAR(50),
+    closetName VARCHAR(200),
     userID     INTEGER,
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );
@@ -17,29 +17,29 @@ CREATE TABLE IF NOT EXISTS Closet
 CREATE TABLE IF NOT EXISTS RegisteredUser
 (
     userID      INTEGER PRIMARY KEY,
-    geolocation VARCHAR(50),
+    geolocation VARCHAR(200),
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );
 
 CREATE TABLE IF NOT EXISTS Seller
 (
     userID INTEGER PRIMARY KEY,
-    logo   VARCHAR(30),
+    logo   VARCHAR(200),
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );
 
 CREATE TABLE IF NOT EXISTS Article
 (
     articleID      IDENTITY PRIMARY KEY,
-    articleName    VARCHAR(50),
-    articlePicture VARCHAR(200),
+    articleName    VARCHAR(250),
+    articlePicture VARCHAR(250),
     category       VARCHAR(50),
     seasonality    VARCHAR(50),
     formality      VARCHAR(50),
     mainColor      VARCHAR(20),
     secondaryColor VARCHAR(20),
     availability   VARCHAR(50),
-    price          NUMERIC(5, 2),
+    price          NUMERIC(7, 2),
     userID         INTEGER,
     FOREIGN KEY (userID) REFERENCES Users (userID)
 );

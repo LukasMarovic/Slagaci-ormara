@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@CrossOrigin(origins = {"https://closetly-721y.onrender.com", "http://localhost:5173"})
 public class SellerController {
 
     @Autowired

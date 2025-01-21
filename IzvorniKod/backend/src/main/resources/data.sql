@@ -76,7 +76,7 @@ VALUES (1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
 
 -- Footwear
 INSERT INTO Footwear (articleID, openness)
-VALUES (6, 'Rain'), (7, 'Closed');
+VALUES (6, 'Rain'), (8, 'Closed');
 
 -- Location
 INSERT INTO Location (closetID, locationType)

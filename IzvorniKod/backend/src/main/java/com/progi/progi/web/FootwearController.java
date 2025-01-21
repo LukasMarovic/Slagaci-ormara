@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@CrossOrigin(origins = {"https://closetly-721y.onrender.com", "http://localhost:5173"})
 public class FootwearController {
 
     @Autowired
-    public FootwearService footwearService;
+    private FootwearService footwearService;
 
     @GetMapping("/getFootwear/{id}")
     public Footwear getFootwear(@PathVariable int id) { return footwearService.getById(id); }

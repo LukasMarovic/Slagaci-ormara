@@ -7,19 +7,34 @@ import java.util.Arrays;
 import java.util.Random;
 
 import com.progi.progi.service.ArticleService;
+import com.progi.progi.service.FootwearService;
 import com.progi.progi.service.UserService;
 import com.progi.progi.web.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 //import scala.actors.threadpool.Arrays;
 
+@Component
 public class Scrapper {
     private List<String> urls = new LinkedList<>();
 
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private FootwearService footwearService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ClothesController clothesController;
+
+
     public Scrapper() {
         List<String> urlSource = new LinkedList<>();
+
         urlSource.add("https://www.nabava.net/odjeca-muska");
         urlSource.add("https://www.nabava.net/odjeca-zenska");
         urlSource.add("https://www.nabava.net/obuca-muska");
@@ -44,21 +59,22 @@ public class Scrapper {
 
     public List<Article> getItems() throws IOException {
         List<Article> items = new LinkedList<>();
-        String price = "";
+        String priceString = "";
         for (String url : getUrls()) {
             try {
                 Document document = Jsoup.connect(url).get();
-                Elements products = document.select(".product__data");
+                Elements products = document.select(".product");
                 for (Element product : products) {
                     Element nameElement = product.selectFirst(".product__name-and-price .product__name");
                     Element priceElement = product.selectFirst(".product__name-and-price .product__price");
-                    String picture = "https://www.nabava.net" + product.selectFirst(".product__image").attr("src");
+                    String picture = "https://www.nabava.net" + (product.selectFirst(".product__image").attr("src"));
                     if (nameElement != null && priceElement != null) {
                         String name = nameElement.text(); //ime artikla
-                        price = priceElement.text(); //cijena artikla
-                        if (price.substring(0, 2).equals("od")) {
-                            price = price.substring(3);
-                        }
+                        priceString = priceElement.text(); //cijena artikla
+                        //parsiranje cijene
+                        String digits = priceString.replaceAll("\\D+", "");
+                        double price = digits.isEmpty() ? 0 : Integer.parseInt(digits);
+                        price = price / 100;
 
                         //analiza naziva artikla
                         String[] nameParts = name.toLowerCase().split("\\s+");
@@ -79,25 +95,18 @@ public class Scrapper {
                         item.setFormality(formality);
                         item.setCategory(category);
                         item.setArticlename(name);
-                        item.setPrice(new BigDecimal(price.split(" ")[0]));
+                        item.setPrice(new BigDecimal(String.format("%.2f", price)));
                         item.setAvailability("available");
                         item.setSeasonality(season);
                         item.setArticlepicture(picture);
 
-                        RegistereduserController registereduserController = new RegistereduserController();
+                        UserController uc = new UserController();
 
-                        List<Registereduser> users = registereduserController.getAllRegistered();
-                        List<Integer> ids = new ArrayList<>();
+                        Random rand = new Random();
+                        item.setUserid(rand.nextInt(10));
 
-                        for (Registereduser user : users) {
-                            ids.add(user.getId());
-                        }
+                        Article newArticle = articleService.add(item);
 
-                        Random rand =  new Random();
-                        item.setUserid(ids.get(rand.nextInt(ids.size())));
-
-                        ArticleController articleController = new ArticleController();
-                        Article newArticle = articleController.postArticle(item);
                         int id = newArticle.getId();
                         items.add(newArticle);
 
@@ -105,13 +114,10 @@ public class Scrapper {
                             Footwear footwear = new Footwear();
                             footwear.setId(id);
                             footwear.setOpenness(coverage);
-                            FootwearController footwearController = new FootwearController();
-                            footwearController.addFootwear(footwear);
-                        }
-                        else {
+                            footwearService.add(footwear);
+                        } else {
                             Clothes clothes = new Clothes();
                             clothes.setId(id);
-                            ClothesController clothesController = new ClothesController();
                             clothesController.add(clothes);
                         }
 
@@ -284,7 +290,7 @@ public class Scrapper {
             if (color[1] != "") {
                 colors = color[0] + "/" + color[1];
             } else {
-                colors = color[0];
+                colors = color[0] + "/unsorted";
             }
         }
         return colors;
@@ -481,31 +487,33 @@ public class Scrapper {
         List<String> notApplicable = new ArrayList<>(Arrays.asList("T-shirts", "Shirts", "Pants", "Jackets", "Suits", "Coats", "Dresses", "Skirts", "Sweatshirts & hoodies", "Sweaters & knitwear"));
         if (notApplicable.contains(category)) {
             return "N/A";
-        }
-        List<String> Open = new ArrayList<>(Arrays.asList("Sandals", "Heels"));
-        List<String> Closed = new ArrayList<>(Arrays.asList("Sandals", "Slippers", "Trainers", "Business shoes", "Boots"));
-        if (Open.contains(category)) {
-            category = "Open";
-        } else if (Closed.contains(category)) {
-            category = "Closed";
         } else {
-            category = "Rain";
+
+            List<String> Open = new ArrayList<>(Arrays.asList("Sandals", "Heels"));
+            List<String> Closed = new ArrayList<>(Arrays.asList("Sandals", "Slippers", "Trainers", "Business shoes", "Boots"));
+            if (Open.contains(category)) {
+                coverage = "Open";
+            } else if (Closed.contains(category)) {
+                coverage = "Closed";
+            } else {
+                coverage = "Rain";
+            }
+            if (
+                    words.contains("vodootporne") ||
+                            words.contains("vodootporan") ||
+                            words.contains("gležnjače") ||
+                            words.contains("planinarske")
+            ) {
+                coverage = "Rain";
+            }
+            if (
+                    words.contains("zimske") ||
+                            words.contains("snijeg")
+            ) {
+                coverage = "Snow";
+            }
+            return coverage;
         }
-        if (
-                words.contains("vodootporne") ||
-                        words.contains("vodootporan") ||
-                        words.contains("gležnjače") ||
-                        words.contains("planinarske")
-        ) {
-            category = "Rain";
-        }
-        if (
-                words.contains("zimske") ||
-                        words.contains("snijeg")
-        ) {
-            category = "Snow";
-        }
-        return coverage;
     }
 
     public String getSeason(String category, List<String> words) {
