@@ -1,6 +1,6 @@
 package com.progi.progi.web;
 
-import com.progi.progi.model.User;
+import com.progi.progi.model.Users;
 import com.progi.progi.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Cookie;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "https://closetly-721y.onrender.com")
+@CrossOrigin(origins = {"https://closetly-721y.onrender.com", "http://localhost:5173"})
 @RequestMapping("/auth")
 public class AuthController {
 
@@ -21,11 +21,11 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/sign-in")
-    public ResponseEntity<String> authenticateUser(@RequestBody User user, HttpServletResponse response) {
+    public ResponseEntity<String> authenticateUser(@RequestBody Users user, HttpServletResponse response) {
 
-        List<User> users = userService.getByEmail(user.getEmail());
+        List<Users> users = userService.getByEmail(user.getEmail());
         if (!users.isEmpty()) {
-            if (users.getFirst().getLozinka().equals(user.getLozinka())) {
+            if (users.getFirst().getPassword().equals(user.getPassword())) {
                 Cookie sessionCookie = new Cookie("SESSION_ID", UUID.randomUUID().toString());
                 sessionCookie.setAttribute("username", user.getEmail());
                 sessionCookie.setHttpOnly(false);
@@ -35,12 +35,12 @@ public class AuthController {
 
                 response.addCookie(sessionCookie);
                 return ResponseEntity.ok("Logged in");
-                //return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
+                //return new ResponseEntity<>("Users signed-in successfully!.", HttpStatus.OK);
             } else {
 
-                return new ResponseEntity<>("User signed-in failed.", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Users signed-in failed.", HttpStatus.UNAUTHORIZED);
             }
         }
-        return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Users not found!", HttpStatus.NOT_FOUND);
     }
 }

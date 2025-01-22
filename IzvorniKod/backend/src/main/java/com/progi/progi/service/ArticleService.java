@@ -21,17 +21,17 @@ public class ArticleService {
         return articleRepository.findById(id).orElse(null);
     }
 
-    public Article add(String nazivArtikla, byte[] slikaArtikla, String opcaKategorija, String kategorijaGoddoba, String kategorijaLezernosti, String glavnaBoja, String sporednaBoja, String stanjeArtikla, Integer sifKorisnika) {
+    public Article add(String nazivArtikla, String slikaArtikla, String opcaKategorija, String kategorijaGoddoba, String kategorijaLezernosti, String glavnaBoja, String sporednaBoja, String stanjeArtikla, Integer sifKorisnika) {
         Article article = new Article();
-        article.setNazivArtikla(nazivArtikla);
-        article.setSlikaArtikla(slikaArtikla);
-        article.setOpcaKategorija(opcaKategorija);
-        article.setKategorijaGoddoba(kategorijaGoddoba);
-        article.setKategorijaLezernosti(kategorijaLezernosti);
-        article.setGlavnaBoja(glavnaBoja);
-        article.setSporednaBoja(sporednaBoja);
-        article.setStanjeArtikla(stanjeArtikla);
-        article.setSifKorisnika(sifKorisnika);
+        article.setArticlename(nazivArtikla);
+        article.setArticlepicture(slikaArtikla);
+        article.setCategory(opcaKategorija);
+        article.setSeasonality(kategorijaGoddoba);
+        article.setFormality(kategorijaLezernosti);
+        article.setMaincolor(glavnaBoja);
+        article.setSecondarycolor(sporednaBoja);
+        article.setAvailability(stanjeArtikla);
+        article.setId(sifKorisnika);
         return articleRepository.save(article);
     }
 
@@ -63,6 +63,6 @@ public class ArticleService {
             }
         }
 
-        return randomArticles.stream().collect(Collectors.toMap(key -> key, key -> userService.get(key.getSifKorisnika()).getImeKorisnika()));
+        return randomArticles.stream().collect(Collectors.toMap(key -> key, key -> userService.get(key.getUserid()).getUsername()));
     }
 }
