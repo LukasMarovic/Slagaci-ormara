@@ -10,13 +10,13 @@ public class Users {
     @Column(name = "USERID", nullable = false)
     private Integer id;
 
-    @Column(name = "USERNAME", length = 50)
+    @Column(name = "USERNAME", length = 200)
     private String username;
 
-    @Column(name = "EMAIL", length = 50)
+    @Column(name = "EMAIL", length = 200)
     private String email;
 
-    @Column(name = "PASSWORD", length = 30)
+    @Column(name = "PASSWORD", length = 50)
     private String password;
 
     public Integer getId() {

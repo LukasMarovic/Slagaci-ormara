@@ -11,7 +11,7 @@ public class Seller {
     @Column(name = "USERID", nullable = false)
     private Integer id;
 
-    @Column(name = "LOGO", length = 30)
+    @Column(name = "LOGO", length = 200)
     private String logo;
 
     public Integer getId() {

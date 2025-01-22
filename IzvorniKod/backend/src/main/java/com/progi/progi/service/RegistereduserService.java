@@ -12,9 +12,14 @@ public class RegistereduserService {
 
     @Autowired
     private RegisteredUserRepository registeredUserRepository;
+    @Autowired
+    private UserService userService;
 
     public Registereduser getById(int id) { return registeredUserRepository.findById(id).orElse(null); }
     public List<Registereduser> getAll() { return (List<Registereduser>) registeredUserRepository.findAll(); }
-    public void delete(int id) { registeredUserRepository.deleteById(id); }
     public Registereduser add(Registereduser registereduser) { return registeredUserRepository.save(registereduser); }
+    public void delete(int id) {
+        registeredUserRepository.deleteById(id);
+        userService.delete(id);
+    }
 }

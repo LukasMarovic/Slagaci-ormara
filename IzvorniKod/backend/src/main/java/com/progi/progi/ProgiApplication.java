@@ -1,6 +1,7 @@
 package com.progi.progi;
 
 import com.progi.progi.model.Scrapper;
+import com.progi.progi.model.UsersGenerator;
 import com.progi.progi.service.ArticleService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,10 +13,12 @@ import java.io.IOException;
 public class ProgiApplication implements CommandLineRunner {
 
     private final Scrapper scrapper;
+    private final UsersGenerator usersGenerator;
 
     // Constructor injection za Scrapper
-    public ProgiApplication(Scrapper scrapper) {
+    public ProgiApplication(Scrapper scrapper, UsersGenerator usersGenerator) {
         this.scrapper = scrapper;
+        this.usersGenerator = usersGenerator;
     }
 
     public static void main(String[] args) {
@@ -24,6 +27,7 @@ public class ProgiApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws IOException {
+        usersGenerator.generataeUsers();
         scrapper.getItems();
     }
 }

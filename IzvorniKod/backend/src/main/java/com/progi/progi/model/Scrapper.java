@@ -100,12 +100,20 @@ public class Scrapper {
                         item.setSeasonality(season);
                         item.setArticlepicture(picture);
 
-                        UserController uc = new UserController();
-
-                        Random rand = new Random();
-                        item.setUserid(rand.nextInt(10));
 
                         if (category != "unsorted") {
+
+                            //dodavanje artikala korisnicima nasumično
+                            List<Users> users = new ArrayList<>();
+                            List<Integer> ids = new ArrayList<>();
+                            users = userService.getAllUsers();
+                            for (Users user : users) {
+                                ids.add(user.getId());
+                            }
+                            Random random = new Random();
+                            int index = random.nextInt(ids.size());
+                            item.setUserid(ids.get(index));
+
                             Article newArticle = articleService.add(item);
 
                             int id = newArticle.getId();

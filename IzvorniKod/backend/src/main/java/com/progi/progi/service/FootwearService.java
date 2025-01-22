@@ -12,9 +12,14 @@ public class FootwearService {
 
     @Autowired
     private FootwearRepository footwearRepository;
+    @Autowired
+    private ArticleService articleService;
 
     public Footwear add(Footwear footwear) { return footwearRepository.save(footwear); }
     public Footwear getById(int id) { return footwearRepository.findById(id).orElse(null); }
     public List<Footwear> getAll() { return (List<Footwear>) footwearRepository.findAll(); }
-    public void delete(int id) { footwearRepository.deleteById(id); }
+    public void delete(int id) {
+        footwearRepository.deleteById(id);
+        articleService.remove(id);
+    }
 }

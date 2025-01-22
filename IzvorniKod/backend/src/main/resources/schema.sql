@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Users
     userID   IDENTITY PRIMARY KEY,
     username VARCHAR(200),
     email    VARCHAR(200),
-    password VARCHAR(30)
+    password VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS Closet
@@ -75,3 +75,4 @@ CREATE TABLE IF NOT EXISTS LocatedAt
     FOREIGN KEY (locationID) REFERENCES Location (locationID),
     FOREIGN KEY (closetID) REFERENCES Closet (closetID)
 );
+
