@@ -67,7 +67,7 @@ function Register(){
               </Form.Group>
 
               <Form.Group controlId="formBasicEmail" className="mt-3">
-                <Form.Label> Grad </Form.Label>
+                <Form.Label> City </Form.Label>
                 <Form.Control 
                   type="text" 
                   placeholder="Enter your city" 
