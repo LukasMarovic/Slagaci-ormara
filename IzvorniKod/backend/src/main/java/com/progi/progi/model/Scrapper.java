@@ -5,11 +5,9 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 
-import com.progi.progi.service.ArticleService;
-import com.progi.progi.service.FootwearService;
-import com.progi.progi.service.UserService;
-import com.progi.progi.web.*;
+import com.progi.progi.service.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,6 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scrapper {
     private List<String> urls = new LinkedList<>();
+    private List<Registereduser> registeredusers = new ArrayList<>();
+    private List<Integer> regIDS = new ArrayList<>();
 
     @Autowired
     private ArticleService articleService;
@@ -29,7 +29,9 @@ public class Scrapper {
     @Autowired
     private UserService userService;
     @Autowired
-    private ClothesController clothesController;
+    private ClothesService clothesService;
+    @Autowired
+    private RegistereduserService registereduserService;
 
 
     public Scrapper() {
@@ -39,6 +41,7 @@ public class Scrapper {
         urlSource.add("https://www.nabava.net/odjeca-zenska");
         urlSource.add("https://www.nabava.net/obuca-muska");
         urlSource.add("https://www.nabava.net/obuca-zenska");
+
         try {
             for (String url : urlSource) {
                 Document doc = Jsoup.connect(url).get();
@@ -58,6 +61,10 @@ public class Scrapper {
     }
 
     public List<Article> getItems() throws IOException {
+        registeredusers = registereduserService.getAll();
+        regIDS = registeredusers.stream()
+                .map(Registereduser::getId)
+                .collect(Collectors.toList());
         List<Article> items = new LinkedList<>();
         String priceString = "";
         for (String url : getUrls()) {
@@ -96,7 +103,7 @@ public class Scrapper {
                         item.setCategory(category);
                         item.setArticlename(name);
                         item.setPrice(new BigDecimal(String.format("%.2f", price)));
-                        item.setAvailability("available");
+                        item.setAvailability("New");
                         item.setSeasonality(season);
                         item.setArticlepicture(picture);
 
@@ -110,9 +117,13 @@ public class Scrapper {
                             for (Users user : users) {
                                 ids.add(user.getId());
                             }
+
                             Random random = new Random();
-                            int index = random.nextInt(ids.size());
-                            item.setUserid(ids.get(index));
+                            item.setUserid(ids.get(random.nextInt(ids.size())));
+                            if (regIDS.contains(item.getUserid())) {
+                                item.setPrice(new BigDecimal("0"));
+                                item.setAvailability("Used");
+                            }
 
                             Article newArticle = articleService.add(item);
 
@@ -127,7 +138,7 @@ public class Scrapper {
                             } else {
                                 Clothes clothes = new Clothes();
                                 clothes.setId(id);
-                                clothesController.add(clothes);
+                                clothesService.add(clothes);
                             }
                         }
 

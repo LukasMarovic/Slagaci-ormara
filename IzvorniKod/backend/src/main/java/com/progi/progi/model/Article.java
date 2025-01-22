@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ARTICLE")
-public class Article {
+public class Article{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ARTICLEID", nullable = false)
@@ -43,6 +43,21 @@ public class Article {
 
     @Column(name = "USERID")
     private Integer userid;
+
+    public Article() {}
+    public Article(Article article) {
+        this.id = article.getId();
+        this.articlename = article.getArticlename();
+        this.articlepicture = article.getArticlepicture();
+        this.category = article.getCategory();
+        this.seasonality = article.getSeasonality();
+        this.formality = article.getFormality();
+        this.maincolor = article.getMaincolor();
+        this.secondarycolor = article.getSecondarycolor();
+        this.availability = article.getAvailability();
+        this.price = article.getPrice();
+        this.userid = article.getUserid();
+    }
 
     public Integer getId() {
         return id;

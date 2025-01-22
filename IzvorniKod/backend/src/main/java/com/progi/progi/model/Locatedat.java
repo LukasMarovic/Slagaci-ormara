@@ -8,23 +8,18 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "LOCATEDAT")
 public class Locatedat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCATEDATID", nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "ARTICLEID")
-    private Article articleid;
+    @Column(name = "ARTICLEID")
+    private Integer articleid;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "LOCATIONID")
-    private com.progi.progi.model.Location locationid;
+    @Column(name = "LOCATIONID")
+    private Integer locationid;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "CLOSETID")
-    private Closet closetid;
+    @Column(name = "CLOSETID")
+    private Integer closetid;
 
     public Integer getId() {
         return id;
@@ -34,27 +29,27 @@ public class Locatedat {
         this.id = id;
     }
 
-    public Article getArticleid() {
+    public Integer getArticleid() {
         return articleid;
     }
 
-    public void setArticleid(Article articleid) {
+    public void setArticleid(Integer articleid) {
         this.articleid = articleid;
     }
 
-    public com.progi.progi.model.Location getLocationid() {
+    public Integer getLocationid() {
         return locationid;
     }
 
-    public void setLocationid(com.progi.progi.model.Location locationid) {
+    public void setLocationid(Integer locationid) {
         this.locationid = locationid;
     }
 
-    public Closet getClosetid() {
+    public Integer getClosetid() {
         return closetid;
     }
 
-    public void setClosetid(Closet closetid) {
+    public void setClosetid(Integer closetid) {
         this.closetid = closetid;
     }
 
