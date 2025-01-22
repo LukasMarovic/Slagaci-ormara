@@ -38,7 +38,8 @@ public class AuthController {
 //
 //                response.addCookie(sessionCookie);
                 HttpSession session = request.getSession();
-                session.setAttribute("username", user.getEmail());
+                session.setAttribute("username", users.getFirst().getImeKorisnika());
+                session.setAttribute("sif_korisnika", users.getFirst().getSifKorisnika());
                 return ResponseEntity.ok("Logged in");
                 //return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
             } else {
@@ -62,5 +63,14 @@ public class AuthController {
             session.invalidate();
         }
         return ResponseEntity.ok("Logged out");
+    }
+
+    @GetMapping("/checkLogin")
+    public ResponseEntity<String> getUsername(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            return ResponseEntity.ok("Success!");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in!");
     }
 }

@@ -25,7 +25,14 @@ public class UserController {
     public List<User> getUsers(@PathVariable String email) { return userService.getByEmail(email); }
 
     @PostMapping("/addUser")
-    public User addUser(@RequestBody User user) { return userService.add(user); }
+    public ResponseEntity<String> addUser(@RequestBody User user) {
+        try {
+            User createdUser = userService.add(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser.getImeKorisnika());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
     @GetMapping("/user")
     public ResponseEntity<String> getUsername(HttpServletRequest request) {
