@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface OrmarRepository extends CrudRepository<Closet, Integer> {
     @Query("SELECT o FROM Closet o WHERE o.userid = :id")
-    public List<Closet> findByUser(@Param("id") Integer id);
+    public List<Closet> findByUserID(@Param("id") Integer id);
 }

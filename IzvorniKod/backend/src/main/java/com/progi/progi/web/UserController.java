@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = {"https://closetly-721y.onrender.com", "http://localhost:5173"})
@@ -28,7 +29,22 @@ public class UserController {
     public List<Users> getUsers(@PathVariable String email) { return userService.getByEmail(email); }
 
     @PostMapping("/addUser")
-    public Users addUser(@RequestBody Users user) { return userService.add(user); }
+    public Users addUser(@RequestBody Map<String, String> json) {
+        Users user = new Users();
+        user.setId(null);
+        user.setEmail(json.get("email"));
+        user.setPassword(json.get("password"));
+        user.setUsername(json.get("username"));
+        String role = json.get("role");
+        if (role.equals("seller")) {
+            String image = json.get("image");
+            return userService.addSeller(user, image);
+        } else if (role.equals("registereduser")) {
+            String geolocation = json.get("geolocation");
+            return userService.addRegistered(user, geolocation);
+        }
+        return null;
+    }
 
     @DeleteMapping("/deleteUser/{id}")
     public void removeUser(@PathVariable int id) { userService.delete(id); }

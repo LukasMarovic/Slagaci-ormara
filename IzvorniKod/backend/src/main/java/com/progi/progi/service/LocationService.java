@@ -1,5 +1,6 @@
 package com.progi.progi.service;
 
+import com.progi.progi.model.Closet;
 import com.progi.progi.model.Locatedat;
 import com.progi.progi.model.Location;
 import com.progi.progi.repository.LocationRepository;
@@ -20,11 +21,23 @@ public class LocationService {
     public List<Location> getAll() { return (List<Location>) locationRepository.findAll(); }
     public Location get(int id) { return locationRepository.findById(id).orElse(null); }
     public List<Location> getByClosetId(int id) { return locationRepository.findByClosetID(id); }
-//    public void delete(int id) {
-//        List<Locatedat> locatedats = locatedatService.getByLocation(id);
-//        for (Locatedat locatedat : locatedats) {
-//            locatedatService.delete(locatedat.getId().getLocationid());
-//        }
-//        locationRepository.deleteById(id);
-//    }
+    public void delete(int id) {
+        List<Locatedat> locatedats = locatedatService.getByLocation(id);
+        for (Locatedat locatedat : locatedats) {
+            locatedatService.delete(locatedat.getId());
+        }
+        locationRepository.deleteById(id);
+    }
+
+    public void addLocations(Closet ormar, Integer numberOfDrawers, Integer numberOfShelves, Integer numberOfHangers) {
+        for (int i = 0; i < numberOfDrawers; i++) {
+            locationRepository.save(new Location(null, ormar.getId(), "drawer"));
+        }
+        for (int i = 0; i < numberOfShelves; i++) {
+            locationRepository.save(new Location(null, ormar.getId(), "shelf"));
+        }
+        for (int i = 0; i < numberOfHangers; i++) {
+            locationRepository.save(new Location(null, ormar.getId(), "hanger"));
+        }
+    }
 }

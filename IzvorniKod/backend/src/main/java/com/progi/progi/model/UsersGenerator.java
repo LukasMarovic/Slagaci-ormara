@@ -40,9 +40,9 @@ public class UsersGenerator {
             int selector = r.nextInt(10);
             String role = "";
             if (selector < 2) {
-                role = "company";
+                role = "seller";
             } else {
-                role = "buyer";
+                role = "registereduser";
             }
             String name = names.get(index1);
             String surname = surnames.get(index2);
@@ -53,7 +53,7 @@ public class UsersGenerator {
             user.setUsername(removeDiacritics(String.format("%s.%s%d", name, surname, num).toLowerCase(Locale.ROOT)));
             user.setEmail(mail);
             user.setPassword(password);
-            Users newUser = userService.add(user);
+            Users newUser = userService.add(user, role);
 
             if (role == "company") {
                 String logo = getLogo();

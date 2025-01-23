@@ -27,6 +27,8 @@ function Register(){
           "username": f_name+" "+l_name,
           "email": email,
           "password": password,
+          "role": "registereduser",
+          "geolocation": city
         })
       }).then(() => navigate("/"))
     };

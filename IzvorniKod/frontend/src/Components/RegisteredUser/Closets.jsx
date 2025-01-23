@@ -40,11 +40,11 @@ function Closets() {
                     let numberOfShelves = 0;
                     let numberOfHangers = 0;
                     for (let lokacija of entry[1]) {
-                      if (lokacija["vrstaLokacije"] === "drawer") {
+                      if (lokacija["locationtype"] === "drawer") {
                         numberOfDrawers += 1;
-                      } else if (lokacija["vrstaLokacije"] === "shelf") {
+                      } else if (lokacija["locationtype"] === "shelf") {
                         numberOfShelves += 1;
-                      } else if (lokacija["vrstaLokacije"] === "hanger") {
+                      } else if (lokacija["locationtype"] === "hanger") {
                         numberOfHangers += 1;
                       }
                     }

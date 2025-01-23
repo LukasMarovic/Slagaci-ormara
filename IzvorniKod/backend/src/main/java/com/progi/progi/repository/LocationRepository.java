@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface LocationRepository extends CrudRepository<Location, Integer> {
-    @Query("SELECT l FROM Location l WHERE l.id.closetid =:id")
+    @Query("SELECT l FROM Location l WHERE l.closetid =:id")
     public List<Location> findByClosetID(@Param("id") Integer id);
 }
