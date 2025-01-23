@@ -211,3 +211,100 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
 };
 
 export default ClosetPreview;
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
+import "./registered_css/ArticleDetails.css";
+
+const ArticleDetailsModal = ({ show, handleClose, cardData, onForSharingChange }) => {
+  if (!cardData) return null;
+
+  const {
+    title,
+    image,
+    category,
+    season,
+    color,
+    secondaryColor,
+    formality,
+    condition,
+    description,
+    forSharing,
+  } = cardData;
+
+  const handleSwitchChange = () => {
+    console.log("Toggling forSharing for:", cardData.title);
+    console.log("Current forSharing value:", forSharing);
+    onForSharingChange(cardData, !forSharing);
+  };
+
+  return (
+    <Modal
+      show={show}
+      onHide={handleClose}
+      centered
+      size="lg"
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Body className="modal-body">
+        <Row>
+          <Col md={6} className="d-flex justify-content-center align-items-center">
+            <img
+              src={image}
+              alt={title}
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+                objectFit: "cover",
+                maxHeight: "700px",
+              }}
+            />
+          </Col>
+          <Col md={6} className="article-details position-relative">
+            {/* Button in top-right corner */}
+
+            
+            <Button
+              variant="primary"
+              size="md"
+              className="edit-button"
+                >
+              Edit
+            </Button>
+
+            <div style={{ overflowY: "auto", height: "100%" }}>
+              <h2>{title}</h2>
+              <p><strong>Category:</strong> {category}</p>
+              <p><strong>Season:</strong> {season}</p>
+              <p><strong>Color:</strong> {color}</p>
+              <p><strong>Secondary Color:</strong> {secondaryColor || "N/A"}</p>
+              <p><strong>Formality:</strong> {formality}</p>
+              <p><strong>Condition:</strong> {condition}</p>
+              <p><strong>Description:</strong> {description}</p>
+              <div className="d-flex flex-row align-items-center">
+                <label className="toggle-switch">
+                  <input
+                    type="checkbox"
+                    checked={forSharing}
+                    onChange={handleSwitchChange}
+                  />
+                  <div className="toggle-switch-background">
+                    <div className="toggle-switch-handle"></div>
+                  </div>
+                </label>
+                <div style={{ paddingLeft: "10px" }}>Share your article!</div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+export default ArticleDetailsModal;
+onClick={() => setIsEditing(true)}
