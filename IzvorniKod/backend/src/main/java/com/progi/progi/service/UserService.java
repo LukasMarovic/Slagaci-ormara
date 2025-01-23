@@ -2,6 +2,7 @@ package com.progi.progi.service;
 
 import com.progi.progi.model.Users;
 import com.progi.progi.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -28,6 +29,13 @@ public class UserService {
 
     public Users add(Users user) {
         return userRepository.save(user);
+    }
+
+    public static Integer getUserFromSession(HttpSession session) {
+        if (session != null) {
+            return (Integer) session.getAttribute("sif_korisnika");
+        }
+        return null;
     }
 
     public Users update(Users user) { return userRepository.save(user); }

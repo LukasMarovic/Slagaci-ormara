@@ -6,6 +6,7 @@ import com.progi.progi.repository.OrmarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -20,6 +21,15 @@ public class OrmarService {
         return ormarRepository.findById(id).orElse(null);
     }
 
+//    public HashMap<String, List<Location>> getByUser(Integer sifKorisnika) {
+//        List<Closet> ormari = ormarRepository.findByUser(sifKorisnika);
+//        HashMap<String, List<Location>> map = new HashMap<>();
+//        for (Closet ormar : ormari) {
+//            map.put(ormar.getNazivOrmara(), locationrepository.findByOrmar(ormar.getSifOrmara()));
+//        }
+//        return map;
+//    }
+
     public List<Closet> getAll() {
         return (List<Closet>) ormarRepository.findAll();
     }
@@ -33,10 +43,10 @@ public class OrmarService {
 
     public boolean delete(int id) {
         Closet closet = ormarRepository.findById(id).orElse(null);
-        List<Location> locations = locationService.getByClosetId(closet.getId());
-        for (Location location : locations) {
-            locationService.delete(location.getId());
-        }
+//        List<Location> locations = locationService.getByClosetId(closet.getId());
+//        for (Location location : locations) {
+//            locationService.delete(location.getId());
+//        }
         ormarRepository.delete(closet);
         return true;
     }

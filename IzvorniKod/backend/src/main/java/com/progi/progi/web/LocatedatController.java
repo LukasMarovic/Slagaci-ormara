@@ -23,31 +23,31 @@ public class LocatedatController {
         return locatedatService.get(id);
     }
 
-    @GetMapping("/getAllArticlesLocatedat/{locationId}")
-    public List<Article> getAllArticlesLocatedat(@PathVariable Integer locationId) {
-        List<Locatedat> locatedats = locatedatService.getByLocation(locationId);
-        List<Article> articles = new ArrayList<>();
-        for (Locatedat locatedat : locatedats) {
-            Article article = articleService.get(locatedat.getId());
-            articles.add(article);
-        }
-        return articles;
-    }
+//    @GetMapping("/getAllArticlesLocatedat/{locationId}")
+//    public List<Article> getAllArticlesLocatedat(@PathVariable Integer locationId) {
+//        List<Locatedat> locatedats = locatedatService.getByLocation(locationId);
+//        List<Article> articles = new ArrayList<>();
+//        for (Locatedat locatedat : locatedats) {
+//            Article article = articleService.get(locatedat.getId().getLocationid());
+//            articles.add(article);
+//        }
+//        return articles;
+//    }
 
-    @PostMapping("/addArticleToLocation/{locationID}")
-    public void addArticleToLocation(@PathVariable int locationID, @RequestBody int articleID) {
-        Locatedat locatedat = new Locatedat();
-        locatedat.setArticleid(articleID);
-        locatedat.setLocationid(locationID);
-        locatedatService.save(locatedat);
-    }
+//    @PostMapping("/addArticleToLocation/{locationID}")
+//    public void addArticleToLocation(@PathVariable int locationID, @RequestBody int articleID) {
+//        Locatedat locatedat = new Locatedat();
+//        locatedat.setArticleid(articleID);
+//        locatedat.setLocationid(locationID);
+//        locatedatService.save(locatedat);
+//    }
 
-    @DeleteMapping("/deleteArticleFromLocation/{locationID}")
-    public void deleteArticleFromLocation(@PathVariable int locationID, @RequestBody int articleID) {
-        List<Locatedat> locatedats = locatedatService.getByLocationAndArticleID(locationID, articleID);
-        if (locatedats.size() > 0) {
-            Locatedat locatedat = locatedats.get(0);
-            locatedatService.delete(locatedat.getId());
-        }
-    }
+//    @DeleteMapping("/deleteArticleFromLocation/{locationID}")
+//    public void deleteArticleFromLocation(@PathVariable int locationID, @RequestBody int articleID) {
+//        List<Locatedat> locatedats = locatedatService.getByLocationAndArticleID(locationID, articleID);
+//        if (locatedats.size() > 0) {
+//            Locatedat locatedat = locatedats.get(0);
+//            locatedatService.delete(locatedat.getId());
+//        }
+//    }
 }

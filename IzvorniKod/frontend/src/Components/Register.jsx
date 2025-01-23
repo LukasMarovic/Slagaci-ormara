@@ -24,10 +24,9 @@ function Register(){
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "imeKorisnika": f_name+" "+l_name,
+          "username": f_name+" "+l_name,
           "email": email,
-          "lozinka": password,
-          "geolokacija": city
+          "password": password,
         })
       }).then(() => navigate("/"))
     };
@@ -67,7 +66,7 @@ function Register(){
               </Form.Group>
 
               <Form.Group controlId="formBasicEmail" className="mt-3">
-                <Form.Label> Grad </Form.Label>
+                <Form.Label> City </Form.Label>
                 <Form.Control 
                   type="text" 
                   placeholder="Enter your city" 

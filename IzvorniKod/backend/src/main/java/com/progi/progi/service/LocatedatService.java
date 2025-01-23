@@ -15,10 +15,10 @@ public class LocatedatService {
 
     public Locatedat get(int id) { return locatedatRepository.findById(id).orElse(null); }
     public List<Locatedat> getAll() { return (List<Locatedat>) locatedatRepository.findAll(); }
-    public List<Locatedat> getByLocation(int id) { return locatedatRepository.findByLocationId(id); }
-    public List<Locatedat> getByLocationAndArticleID(int locationID, int articleID) {
-        return locatedatRepository.findByLocationAndArticleId(locationID, articleID);
-    }
+//    public List<Locatedat> getByLocation(int id) { return locatedatRepository.findByLocationId(id); }
+//    public List<Locatedat> getByLocationAndArticleID(int locationID, int articleID) {
+//        return locatedatRepository.findByLocationAndArticleId(locationID, articleID);
+//    }
     public void save(Locatedat locatedat) { locatedatRepository.save(locatedat); }
     public void delete(int id) { locatedatRepository.deleteById(id); }
 }

@@ -2,7 +2,11 @@ package com.progi.progi.web;
 
 import com.progi.progi.model.Users;
 import com.progi.progi.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,4 +33,13 @@ public class UserController {
     @DeleteMapping("/deleteUser/{id}")
     public void removeUser(@PathVariable int id) { userService.delete(id); }
 
+    @GetMapping("/user")
+    public ResponseEntity<String> getUsername(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            String username = session.getAttribute("username").toString();
+            return ResponseEntity.ok(username);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not logged in!");
+    }
 }

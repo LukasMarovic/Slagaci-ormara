@@ -19,6 +19,16 @@ public class Users {
     @Column(name = "PASSWORD", length = 50)
     private String password;
 
+    public Users() {
+    }
+
+    public Users(Integer id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     public Integer getId() {
         return id;
     }

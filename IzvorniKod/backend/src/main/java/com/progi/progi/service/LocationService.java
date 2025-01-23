@@ -20,11 +20,11 @@ public class LocationService {
     public List<Location> getAll() { return (List<Location>) locationRepository.findAll(); }
     public Location get(int id) { return locationRepository.findById(id).orElse(null); }
     public List<Location> getByClosetId(int id) { return locationRepository.findByClosetID(id); }
-    public void delete(int id) {
-        List<Locatedat> locatedats = locatedatService.getByLocation(id);
-        for (Locatedat locatedat : locatedats) {
-            locatedatService.delete(locatedat.getId());
-        }
-        locationRepository.deleteById(id);
-    }
+//    public void delete(int id) {
+//        List<Locatedat> locatedats = locatedatService.getByLocation(id);
+//        for (Locatedat locatedat : locatedats) {
+//            locatedatService.delete(locatedat.getId().getLocationid());
+//        }
+//        locationRepository.deleteById(id);
+//    }
 }

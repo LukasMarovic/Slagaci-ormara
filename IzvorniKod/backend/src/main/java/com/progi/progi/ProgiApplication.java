@@ -15,7 +15,7 @@ public class ProgiApplication implements CommandLineRunner {
     private final Scrapper scrapper;
     private final UsersGenerator usersGenerator;
 
-    // Constructor injection za Scrapper
+//     Constructor injection za Scrapper
     public ProgiApplication(Scrapper scrapper, UsersGenerator usersGenerator) {
         this.scrapper = scrapper;
         this.usersGenerator = usersGenerator;

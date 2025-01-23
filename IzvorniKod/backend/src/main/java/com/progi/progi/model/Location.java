@@ -7,39 +7,31 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "LOCATION")
 public class Location {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LOCATIONID", nullable = false)
-    private Integer id;
+    @EmbeddedId
+    private LocationKey id;
+    private String vrstaLokacije;
 
-    @Column(name = "CLOSETID")
-    private Integer closetid;
+    public Location() {
+    }
 
-    @Column(name = "LOCATIONTYPE", length = 20)
-    private String locationtype;
+    public Location(LocationKey id, String vrstaLokacije) {
+        this.id = id;
+        this.vrstaLokacije = vrstaLokacije;
+    }
 
-    public Integer getId() {
+    public LocationKey getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(LocationKey id) {
         this.id = id;
     }
 
-    public Integer getClosetid() {
-        return closetid;
+    public String getVrstaLokacije() {
+        return vrstaLokacije;
     }
 
-    public void setClosetid(Integer closetid) {
-        this.closetid = closetid;
+    public void setVrstaLokacije(String vrstaLokacije) {
+        this.vrstaLokacije = vrstaLokacije;
     }
-
-    public String getLocationtype() {
-        return locationtype;
-    }
-
-    public void setLocationtype(String locationtype) {
-        this.locationtype = locationtype;
-    }
-
 }

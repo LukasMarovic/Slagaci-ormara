@@ -26,16 +26,16 @@ public class LocationController {
         return locationService.getByClosetId(closetID);
     }
 
-    @PostMapping("/addLocation")
-    public Location addLocation(@RequestBody String type, @RequestBody int closetID) {
-        Location location = new Location();
-        location.setClosetid(closetID);
-        location.setLocationtype(type);
-        return locationService.add(location);
-    }
+//    @PostMapping("/addLocation")
+//    public Location addLocation(@RequestBody String type, @RequestBody int closetID) {
+//        Location location = new Location();
+//        location.setClosetid(closetID);
+//        location.setLocationtype(type);
+//        return locationService.add(location);
+//    }
 
-    @DeleteMapping("/deleteLocation/{id}")
-    public void deleteLocation(@PathVariable int id) {
-        locationService.delete(id);
-    }
+//    @DeleteMapping("/deleteLocation/{id}")
+//    public void deleteLocation(@PathVariable int id) {
+//        locationService.delete(id);
+//    }
 }
