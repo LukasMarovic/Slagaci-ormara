@@ -13,4 +13,7 @@ public interface LocatedatRepository extends CrudRepository<Locatedat, Integer> 
 
     @Query("SELECT la FROM Locatedat la WHERE la.locationid = :locationID AND la.articleid = :articleID")
     public List<Locatedat> findByLocationAndArticleId(@Param("locationID") Integer locationID, @Param("articleID") Integer articleID);
+
+    @Query("SELECT la FROM Locatedat la WHERE la.articleid = :articleID")
+    public List<Locatedat> findByArticleId(@Param("articleID") Integer articleID);
 }

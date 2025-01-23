@@ -8,16 +8,15 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "CLOSET")
 public class Closet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CLOSETID", nullable = false)
     private Integer id;
 
     @Column(name = "CLOSETNAME", length = 50)
     private String closetname;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "USERID")
-    private com.progi.progi.model.Users userid;
+    @Column(name = "USERID")
+    private Integer userid;
 
     public Integer getId() {
         return id;
@@ -35,11 +34,11 @@ public class Closet {
         this.closetname = closetname;
     }
 
-    public com.progi.progi.model.Users getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(com.progi.progi.model.Users userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 

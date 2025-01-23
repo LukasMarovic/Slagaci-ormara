@@ -47,8 +47,8 @@ public class ArticleController {
     }
 
     @PostMapping("/addArticle")
-    public Article postArticle(@RequestBody Article article) {
-        return articleService.add(article);
+    public Article postArticle(@RequestBody Article article, @RequestBody String type) {
+        return articleService.add(article, type);
     }
 
     @DeleteMapping("/removeArticle/{id}")

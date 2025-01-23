@@ -18,8 +18,8 @@ public class OrmarController {
     }
 
     @PostMapping("/addOrmar/{naziv}")
-    public Closet addOrmar(@PathVariable String naziv) {
-        return ormarService.add(naziv);
+    public Closet addOrmar(@PathVariable Closet closet) {
+        return ormarService.add(closet);
     }
 
 }

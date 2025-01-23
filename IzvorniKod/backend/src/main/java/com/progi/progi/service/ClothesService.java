@@ -20,7 +20,6 @@ public class ClothesService {
     public Clothes add(Clothes clothes) { return clothesRepository.save(clothes); }
     public Clothes update(Clothes clothes) { return clothesRepository.save(clothes); }
     public void delete(int id) {
-        clothesRepository.deleteById(id);
         articleService.remove(id);
     }
 }

@@ -24,7 +24,7 @@ public class UserController {
     public List<Users> getUsers(@PathVariable String email) { return userService.getByEmail(email); }
 
     @PostMapping("/addUser")
-    public Users addUser(@RequestBody Users user) { return userService.add(user); }
+    public Users addUser(@RequestBody Users user, @RequestBody String role) { return userService.add(user, role); }
 
     @DeleteMapping("/deleteUser/{id}")
     public void removeUser(@PathVariable int id) { userService.delete(id); }

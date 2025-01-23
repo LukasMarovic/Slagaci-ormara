@@ -35,6 +35,13 @@ public class Scrapper {
 
 
     public Scrapper() {
+    }
+
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public List<Article> getItems() throws IOException {
         List<String> urlSource = new LinkedList<>();
 
         urlSource.add("https://www.nabava.net/odjeca-muska");
@@ -48,19 +55,11 @@ public class Scrapper {
                 Elements productList = doc.select(".product-list--grid-style a");
                 for (Element product : productList) {
                     urls.add("https://www.nabava.net" + product.attr("href"));
-                    System.out.println("https://www.nabava.net" + product.attr("href"));
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public List<String> getUrls() {
-        return urls;
-    }
-
-    public List<Article> getItems() throws IOException {
         registeredusers = registereduserService.getAll();
         regIDS = registeredusers.stream()
                 .map(Registereduser::getId)
@@ -125,21 +124,14 @@ public class Scrapper {
                                 item.setAvailability("Used");
                             }
 
-                            Article newArticle = articleService.add(item);
-
-                            int id = newArticle.getId();
-                            items.add(newArticle);
-
+                            String type = "";
                             if (obuca.contains(category)) {
-                                Footwear footwear = new Footwear();
-                                footwear.setId(id);
-                                footwear.setOpenness(coverage);
-                                footwearService.add(footwear);
+                                type = "clothes";
                             } else {
-                                Clothes clothes = new Clothes();
-                                clothes.setId(id);
-                                clothesService.add(clothes);
+                                type = "footwear";
                             }
+
+                            Article newArticle = articleService.add(item, type);
                         }
 
                     }

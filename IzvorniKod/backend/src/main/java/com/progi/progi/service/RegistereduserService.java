@@ -17,9 +17,10 @@ public class RegistereduserService {
 
     public Registereduser getById(int id) { return registeredUserRepository.findById(id).orElse(null); }
     public List<Registereduser> getAll() { return (List<Registereduser>) registeredUserRepository.findAll(); }
-    public Registereduser add(Registereduser registereduser) { return registeredUserRepository.save(registereduser); }
+    public Registereduser add(Registereduser registereduser) {
+        return registeredUserRepository.save(registereduser);
+    }
     public void delete(int id) {
-        registeredUserRepository.deleteById(id);
         userService.delete(id);
     }
 }

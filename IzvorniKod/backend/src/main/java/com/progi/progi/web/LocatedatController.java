@@ -39,7 +39,7 @@ public class LocatedatController {
         Locatedat locatedat = new Locatedat();
         locatedat.setArticleid(articleID);
         locatedat.setLocationid(locationID);
-        locatedatService.save(locatedat);
+        locatedatService.add(locatedat);
     }
 
     @DeleteMapping("/deleteArticleFromLocation/{locationID}")

@@ -19,6 +19,7 @@ public class LocatedatService {
     public List<Locatedat> getByLocationAndArticleID(int locationID, int articleID) {
         return locatedatRepository.findByLocationAndArticleId(locationID, articleID);
     }
-    public void save(Locatedat locatedat) { locatedatRepository.save(locatedat); }
+    public Locatedat add(Locatedat locatedat) { return locatedatRepository.save(locatedat); }
+    public List<Locatedat> getByArticleID(int articleID) { return locatedatRepository.findByArticleId(articleID); }
     public void delete(int id) { locatedatRepository.deleteById(id); }
 }
