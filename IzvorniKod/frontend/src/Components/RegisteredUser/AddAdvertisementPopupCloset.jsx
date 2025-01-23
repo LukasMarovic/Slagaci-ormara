@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -14,7 +13,8 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
     const [secondaryColor, setSecondaryColor] = useState('');
     const [formality, setFormality] = useState('');
     const [condition, setCondition] = useState('');
-    const [description, setDescription] = useState(''); // New state for description
+    const [description, setDescription] = useState(''); // State for description
+    const [forSharing, setForSharing] = useState(false); // New state for sharing checkbox
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -35,15 +35,27 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
             !secondaryColor ||
             !formality ||
             !condition ||
-            !description // Ensure description is filled
+            !description
         ) {
             alert('Please fill in all fields.');
             return;
         }
 
-        handleAddItemCloset(articleName, category, image, season, color, secondaryColor, formality, condition, description);
+        handleAddItemCloset(
+            articleName,
+            category,
+            image,
+            season,
+            color,
+            secondaryColor,
+            formality,
+            condition,
+            description,
+            forSharing // Pass forSharing to parent function
+        );
         handleClose();
     };
+
 
 
     return (
@@ -176,10 +188,7 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
                                 Select Condition
                             </option>
                             <option value="New">New</option>
-                            <option value="Excellent">Excellent</option>
-                            <option value="Very Good">Very Good</option>
-                            <option value="Good">Good</option>
-                            <option value="Bad">Bad</option>
+                            <option value="Used">Used</option>
                         </Form.Select>
                     </Form.Group>
 
@@ -194,6 +203,15 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
                             required
                         />
                     </Form.Group>
+                    <Form.Group controlId="formForSharing" className="mb-3">
+                    <Form.Check
+                        type="checkbox"
+                        label="Share your article with others!"
+                        checked={forSharing}
+                        onChange={(e) => setForSharing(e.target.checked)}
+                        />
+                    </Form.Group>
+
 
                     <Form.Group controlId="formImage" className="mb-3">
                         <Form.Label className="modal-label">Upload Image</Form.Label>

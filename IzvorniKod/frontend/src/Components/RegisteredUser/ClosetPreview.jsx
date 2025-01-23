@@ -3,7 +3,7 @@ import { Container, Modal, Button, Card, Row, Col, Form } from "react-bootstrap"
 import "../CustomCss/Closet.css";
 import "../CustomCss/AddItemCloset.css";
 import AddAdvertisementPopupCloset from "./AddAdvertisementPopupCloset";
-
+import ArticleDetailsModal from "./ArticleDetailsModal";
 const ClosetPreview = ({ show, handleClose, closet }) => {
   if (!closet) return null;
 
@@ -14,10 +14,12 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   const [cardsData, setCardsData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedCardData, setSelectedCardData] = useState(null); 
 
-  const backendUrl = "https://your-backend-endpoint/api/cards"; // Replace with your actual backend URL
 
-  // Handle API POST on cardsData change
+  const backendUrl = "https://your-backend-endpoint/api/cards"; 
+
   useEffect(() => {
     const postCardsData = async () => {
       try {
@@ -46,60 +48,88 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   }, [cardsData]);
 
 
-  const handleCheckboxChange = (e) => {
-    if (activeCardIndex !== null) {
-      const updatedCards = [...cardsData];
-      updatedCards[activeCardIndex].forSharing = e.target.checked;
-      setCardsData(updatedCards);
-      setChecked(e.target.checked);
-      console.log("Updated cardsData:", updatedCards);
-    }
-  };
+
 
   const maxItems = 5;
 
-  const handleAddItemCloset = (articleName, category, image, season, color, secondaryColor, formality, condition, description) => {
+  const handleAddItemCloset = (articleName, category, image, season, color, secondaryColor, formality, condition, description, forSharing) => {
     const newItem = {
-      elementName: activeElement,
-      closetName: name,
-      title: articleName,
-      text: "Placeholder text",
-      image: image,
-      forSharing: false,
-      category,
-      season,
-      color,
-      secondaryColor,
-      formality,
-      condition,
-      description,
+        elementName: activeElement,
+        closetName: name,
+        title: articleName,
+        text: "Placeholder text",
+        image: image,
+        forSharing, 
+        category,
+        season,
+        color,
+        secondaryColor,
+        formality,
+        condition,
+        description,
     };
 
     setCardsData([...cardsData, newItem]);
     console.log("Updated cardsData:", [...cardsData, newItem]);
-  };
+};
+
 
   const handleAddItemClick = () => {
     setShowModal(true);
   };
 
-  const handleCardClick = (index) => {
-    if (activeCardIndex === index) {
-      setActiveCardIndex(null);
-      setChecked(false);
-    } else {
-      setActiveCardIndex(index);
-      setChecked(cardsData[index]?.forSharing || false);
+  const handleCardClick = (cardIndex, elementName) => {
+   
+    const card = cardsData.filter((card) => card.elementName === elementName)[cardIndex];
+    
+
+    console.log("Card clicked:", card); 
+  
+    if (card) {
+   
+      setSelectedCardData(card);
+      setShowEditModal(true);
+      console.log("Selected card data updated:", card); // Log after setting the selected card
+      
+    }
+    console.log("Updated cardsData after card click:", cardsData);
+
+  };
+  
+  const handleCardUpdate = (updatedCard) => {
+    setCardsData((prevCards) =>
+      prevCards.map((card) =>
+        card === selectedCardData ? { ...updatedCard } : card
+      )
+    );
+    setSelectedCardData(updatedCard); // Update modal's card data
+    console.log("Updated cardsData after card click:", cardsData);
+
+  };
+  
+
+  const handleForSharingChange = (card, newForSharingValue) => {
+    console.log("Before update:", cardsData);
+  
+    const updatedCards = cardsData.map((c) =>
+      c === card ? { ...c, forSharing: newForSharingValue } : c
+    );
+  
+    console.log("Updating card:", card);
+    console.log("New forSharing value:", newForSharingValue);
+  
+    setCardsData(updatedCards);
+  
+ 
+    console.log("After update:", updatedCards);
+  
+  
+    if (selectedCardData === card) {
+      const updatedCard = { ...card, forSharing: newForSharingValue };
+      setSelectedCardData(updatedCard);
+      console.log("Updated selectedCardData:", updatedCard);
     }
   };
-
-  const handlePageClick = (e) => {
-    if (!e.target.closest(".card")) {
-      setActiveCardIndex(null);
-      setChecked(false);
-    }
-  };
-
   const renderCard = (index, elementName) => {
     const card = cardsData.filter((card) => card.elementName === elementName)[index];
     if (!card) return null;
@@ -110,8 +140,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
       <Card
         className={`custom-card ${isActive ? "active-card" : ""}`}
         key={`${elementName}-${index}`}
-        onClick={() => handleCardClick(cardsData.indexOf(card))}
         style={{ border: isActive ? "2px solid blue" : "none" }}
+        onClick={() => handleCardClick(index, elementName)} 
       >
         <Card.Img
           variant="top"
@@ -228,7 +258,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   };
 
   return (
-    <div onClick={handlePageClick} style={{ height: "100%" }}>
+    <div style={{ height: "100%" }}>
       <Modal
         className="closet-modal"
         show={show}
@@ -286,16 +316,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
                   >
                     Add Item
                   </Button>
-                  <Form>
-                    <Form.Check
-                      type="checkbox"
-                      id="checkbox1"
-                      label="Share your article!"
-                      checked={checked}
-                      onChange={handleCheckboxChange}
-                      disabled={activeCardIndex === null}
-                    />
-                  </Form>
+
                 </div>
               </div>
             </div>
@@ -306,8 +327,18 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
       <AddAdvertisementPopupCloset
         showModal={showModal}
         handleClose={() => setShowModal(false)}
-        handleAddItemCloset={handleAddItemCloset} // Pass handleAddItemCloset as a prop
+        handleAddItemCloset={handleAddItemCloset} 
       />
+        {showEditModal && selectedCardData && (
+          <ArticleDetailsModal
+          show={showEditModal}
+          handleClose={() => setShowEditModal(false)}
+          cardData={selectedCardData}
+          onCardUpdate={handleCardUpdate} 
+          onForSharingChange={handleForSharingChange}
+        />
+      )}
+
     </div>
   );
 };
