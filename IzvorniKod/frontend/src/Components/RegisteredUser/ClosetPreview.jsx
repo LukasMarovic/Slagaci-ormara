@@ -20,6 +20,16 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
 
   const backendUrl = "https://your-backend-endpoint/api/cards"; 
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Determine if the user is on a mobile device
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    handleResize(); // Run on initial render
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const postCardsData = async () => {
       try {
@@ -150,7 +160,6 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
         />
         <Card.Body className="card-body-closet">
           <Card.Title className="custom-title">{card.title}</Card.Title>
-          <Card.Text className="custom-text">{card.text}</Card.Text>
         </Card.Body>
       </Card>
     );
@@ -159,7 +168,21 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   const renderActiveElementItems = () => {
     const filteredCards = cardsData.filter((card) => card.elementName === activeElement);
     const itemCount = Math.min(filteredCards.length, maxItems);
-
+  
+    if (isMobile) {
+      // Mobile layout: one column with 5 rows
+      return (
+        <div className="mobile-card-column">
+          {filteredCards.slice(0, itemCount).map((card, index) => (
+            <div key={`mobile-card-${index}`} className="mobile-card-row">
+              {renderCard(index, activeElement)}
+            </div>
+          ))}
+        </div>
+      );
+    }
+  
+    // Default (desktop) layout: 2 rows with up to 3 columns per row
     const rows = [0, 1].map((rowIndex) => (
       <Row className="custom-row" key={`row-${rowIndex}`}>
         {Array(3)
@@ -180,9 +203,10 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           })}
       </Row>
     ));
-
+  
     return rows;
   };
+  
 
   const renderShelves = () => {
     const shelves = [];
@@ -257,6 +281,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
     setChecked(false);
   };
 
+
+
   return (
     <div style={{ height: "100%" }}>
       <Modal
@@ -270,16 +296,18 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
         keyboard={false}
       >
         <Container fluid className="closet-container-modal">
-          <div className="modal-header-closet">
-            <h2 className="modal-name">{name}</h2>
-            <div className="modal-button">
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-            </div>
-          </div>
+
 
           {!showDetails ? (
+                  <>
+                  <div className="modal-header-closet">
+                      <h2 className="modal-name">{name}</h2>
+                      <div className="modal-button">
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                      </div>
+                    </div>
             <div className="just-closet-without-articles">
               <div className="modal-second-row">
                 <div className="modal-shelves">{renderShelves()}</div>
@@ -287,7 +315,62 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
               </div>
               <div className="modal-third-row">{renderModalDrawers()}</div>
             </div>
+            </>
+          ) : isMobile ? (
+            <>
+                <div className="modal-header-closet-mobile">
+                  <h2 className="modal-name">{name}</h2>
+                    <div className="modal-button">
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                    </div>
+                </div>
+            <div className="mobile-details-layout">
+              <div className="just-closet-without-articles-mobile">
+                <div className="modal-second-row">
+                  <div className="modal-shelves">{renderShelves()}</div>
+                  <div className="modal-hangers">{renderHangers()}</div>
+                </div>
+                <div className="modal-third-row">{renderModalDrawers()}</div>
+              </div>
+              <div className="modal-articles-mobile d-flex flex-column align-items-stretch">
+                <Container className="articles-background-mobile p-3">
+                  <div className="navigation-button-wrapper-closet">
+                    <Button
+                      className="navigation-button-closet left"
+                      onClick={handleNavigationButtonClick}
+                    >
+                      &#8249;
+                    </Button>
+                  </div>
+                  {renderActiveElementItems()}
+                </Container>
+                <div className="closet-button-and-share">
+                  <Button
+                    className="add-item-closet"
+                    onClick={handleAddItemClick}
+                    disabled={
+                      cardsData.filter((card) => card.elementName === activeElement).length >=
+                      maxItems
+                    }
+                  >
+                    Add Item
+                  </Button>
+                </div>
+              </div>
+            </div>
+            </>
           ) : (
+            <>
+                  <div className="modal-header-closet">
+                      <h2 className="modal-name">{name}</h2>
+                      <div className="modal-button">
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                      </div>
+                    </div>
             <div className="sec-and-third">
               <div className="just-closet">
                 <div className="modal-second-row">
@@ -312,18 +395,20 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
                   <Button
                     className="add-item-closet"
                     onClick={handleAddItemClick}
-                    disabled={cardsData.filter(card => card.elementName === activeElement).length >= maxItems}
+                    disabled={
+                      cardsData.filter((card) => card.elementName === activeElement).length >=
+                      maxItems
+                    }
                   >
                     Add Item
                   </Button>
-
                 </div>
               </div>
             </div>
+            </>
           )}
         </Container>
       </Modal>
-
       <AddAdvertisementPopupCloset
         showModal={showModal}
         handleClose={() => setShowModal(false)}
@@ -338,8 +423,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           onForSharingChange={handleForSharingChange}
         />
       )}
-
     </div>
+    
   );
 };
 
