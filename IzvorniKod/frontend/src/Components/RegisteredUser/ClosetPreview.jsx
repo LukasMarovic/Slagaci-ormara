@@ -245,7 +245,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           style={{ cursor: "pointer" }}
           onClick={() => {
             setActiveElement(`shelf-${i}`);
-            getArticles(`shelf-${i}`);
+            getArticles(`shelf-${i+1}`);
           }}
         ></div>
       );
