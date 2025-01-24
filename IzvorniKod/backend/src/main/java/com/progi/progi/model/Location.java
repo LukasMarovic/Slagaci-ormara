@@ -24,8 +24,7 @@ public class Location {
     public Location() {
     }
 
-    public Location(Integer id, Integer closetid, String locationtype, Integer locationnumber) {
-        this.id = id;
+    public Location(Integer closetid, String locationtype, Integer locationnumber) {
         this.closetid = closetid;
         this.locationtype = locationtype;
         this.locationnumber = locationnumber;

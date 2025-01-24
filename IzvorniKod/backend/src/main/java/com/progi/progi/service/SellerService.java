@@ -25,6 +25,10 @@ public class SellerService {
         seller.setLogo(logo);
         return sellerRepository.save(seller);
     }
+    public Seller add(Seller seller, String logo) {
+        seller.setLogo(logo);
+        return sellerRepository.save(seller);
+    }
     public void delete(int id) {
         userService.delete(id);
     }

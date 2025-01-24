@@ -34,9 +34,17 @@ public class OrmarService {
         return (List<Closet>) ormarRepository.findAll();
     }
 
-    public List<Closet> getByUserID(int userID) { return ormarRepository.findByUserID(userID); }
+    public List<Closet> getByUserID(int userID) {
+        return ormarRepository.findByUserID(userID);
+    }
 
-    public Closet add(Closet closet) { return ormarRepository.save(closet); }
+    public Closet add(Closet closet) {
+        List<Integer> userids = ormarRepository.findByClosetName(closet.getClosetname());
+        if (userids.contains(closet.getUserid())) {
+            return null;
+        }
+        return ormarRepository.save(closet);
+    }
 
     public Closet add(String naziv) {
         Closet closet = new Closet();
@@ -47,13 +55,17 @@ public class OrmarService {
 
     public boolean delete(int id) {
         Closet closet = ormarRepository.findById(id).orElse(null);
-        List<Location> locations = locationService.getByClosetId(closet.getId());
-        if (!locations.isEmpty()) {
-            for (Location location : locations) {
-                locationService.delete(location.getId());
+        if (closet != null) {
+
+            List<Location> locations = locationService.getByClosetId(closet.getId());
+            if (!locations.isEmpty()) {
+                for (Location location : locations) {
+                    locationService.delete(location.getId());
+                }
             }
+            ormarRepository.delete(closet);
+            return true;
         }
-        ormarRepository.delete(closet);
-        return true;
+        return false;
     }
 }
