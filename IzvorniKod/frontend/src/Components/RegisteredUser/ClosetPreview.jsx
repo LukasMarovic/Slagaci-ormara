@@ -23,9 +23,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Determine if the user is on a mobile device
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    handleResize(); // Run on initial render
+    handleResize(); 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -66,7 +65,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
     setCardsData((prevCards) =>
       prevCards.filter((card) => card !== cardToDelete)
     );
-    setShowEditModal(false); // Close the modal
+    setShowEditModal(false); 
   };
 
   const handleAddItemCloset = (articleName, category, image, season, color, secondaryColor, formality, condition, description, forSharing) => {
@@ -177,7 +176,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
     const itemCount = Math.min(filteredCards.length, maxItems);
   
     if (isMobile) {
-      // Mobile layout: one column with 5 rows
+
       return (
         <div className="mobile-card-column">
           {filteredCards.slice(0, itemCount).map((card, index) => (
@@ -189,7 +188,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
       );
     }
   
-    // Default (desktop) layout: 2 rows with up to 3 columns per row
+
     const rows = [0, 1].map((rowIndex) => (
       <Row className="custom-row" key={`row-${rowIndex}`}>
         {Array(3)
@@ -428,7 +427,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           cardData={selectedCardData}
           onCardUpdate={handleCardUpdate} 
           onForSharingChange={handleForSharingChange}
-          handleDelete={handleDeleteArticle} // Pass the delete handler
+          handleDelete={handleDeleteArticle} 
         />
       )}
     </div>
