@@ -1,6 +1,6 @@
 package com.progi.progi;
 
-import com.progi.progi.model.ClosetGenerator;
+//import com.progi.progi.model.ClosetGenerator;
 import com.progi.progi.model.Scrapper;
 import com.progi.progi.model.UsersGenerator;
 import com.progi.progi.service.ArticleService;
@@ -15,13 +15,13 @@ public class ProgiApplication implements CommandLineRunner {
 
     private final Scrapper scrapper;
     private final UsersGenerator usersGenerator;
-    private final ClosetGenerator closetGenerator;
+//    private final ClosetGenerator closetGenerator;
 
     // Constructor injection za Scrapper
-    public ProgiApplication(Scrapper scrapper, UsersGenerator usersGenerator, ClosetGenerator closetGenerator) {
+    public ProgiApplication(Scrapper scrapper, UsersGenerator usersGenerator/*, ClosetGenerator closetGenerator*/) {
         this.scrapper = scrapper;
         this.usersGenerator = usersGenerator;
-        this.closetGenerator = closetGenerator;
+//        this.closetGenerator = closetGenerator;
     }
 
     public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class ProgiApplication implements CommandLineRunner {
         scrapper.getItems();
         System.out.println("Done!");
         System.out.println("Filling up the closets...");
-        closetGenerator.generateClosets();
+//        closetGenerator.generateClosets();
         System.out.println("Done!");
         System.out.println("Database built!");
     }
