@@ -18,13 +18,17 @@ public class Location {
     @Column(name = "LOCATIONTYPE", length = 20)
     private String locationtype;
 
+    @Column(name = "LOCATIONNUMBER")
+    private Integer locationnumber;
+
     public Location() {
     }
 
-    public Location(Integer id, Integer closetid, String locationtype) {
+    public Location(Integer id, Integer closetid, String locationtype, Integer locationnumber) {
         this.id = id;
         this.closetid = closetid;
         this.locationtype = locationtype;
+        this.locationnumber = locationnumber;
     }
 
     public Integer getId() {
@@ -51,4 +55,11 @@ public class Location {
         this.locationtype = locationtype;
     }
 
+    public Integer getLocationnumber() {
+        return locationnumber;
+    }
+
+    public void setLocationnumber(Integer locationnumber) {
+        this.locationnumber = locationnumber;
+    }
 }

@@ -21,6 +21,9 @@ public class LocationService {
     public List<Location> getAll() { return (List<Location>) locationRepository.findAll(); }
     public Location get(int id) { return locationRepository.findById(id).orElse(null); }
     public List<Location> getByClosetId(int id) { return locationRepository.findByClosetID(id); }
+    public Location findLocation(Integer id, String locationtype, Integer locationnumber) {
+        return locationRepository.findLocation(id, locationtype, locationnumber);
+    }
     public void delete(int id) {
         List<Locatedat> locatedats = locatedatService.getByLocation(id);
         for (Locatedat locatedat : locatedats) {
@@ -31,13 +34,13 @@ public class LocationService {
 
     public void addLocations(Closet ormar, Integer numberOfDrawers, Integer numberOfShelves, Integer numberOfHangers) {
         for (int i = 0; i < numberOfDrawers; i++) {
-            locationRepository.save(new Location(null, ormar.getId(), "drawer"));
+            locationRepository.save(new Location(null, ormar.getId(), "drawer", i+1));
         }
         for (int i = 0; i < numberOfShelves; i++) {
-            locationRepository.save(new Location(null, ormar.getId(), "shelf"));
+            locationRepository.save(new Location(null, ormar.getId(), "shelf", i+1));
         }
         for (int i = 0; i < numberOfHangers; i++) {
-            locationRepository.save(new Location(null, ormar.getId(), "hanger"));
+            locationRepository.save(new Location(null, ormar.getId(), "hanger", i+1));
         }
     }
 }

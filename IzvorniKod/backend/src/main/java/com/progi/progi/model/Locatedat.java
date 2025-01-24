@@ -21,6 +21,15 @@ public class Locatedat {
     @Column(name = "CLOSETID")
     private Integer closetid;
 
+    public Locatedat() {
+    }
+
+    public Locatedat(Integer articleid, Integer locationid, Integer closetid) {
+        this.articleid = articleid;
+        this.locationid = locationid;
+        this.closetid = closetid;
+    }
+
     public Integer getId() {
         return id;
     }

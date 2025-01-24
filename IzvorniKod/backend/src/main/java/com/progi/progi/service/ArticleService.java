@@ -73,6 +73,10 @@ public class ArticleService {
         return newArticle;
     }
 
+    public Article add(Article article) {
+        return articleRepository.save(article);
+    }
+
     public boolean remove(Integer id) {
         Footwear footwear = footwearService.getById(id);
         Clothes clothes = clothesService.getById(id);

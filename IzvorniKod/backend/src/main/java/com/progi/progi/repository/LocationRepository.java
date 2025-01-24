@@ -10,4 +10,7 @@ import java.util.List;
 public interface LocationRepository extends CrudRepository<Location, Integer> {
     @Query("SELECT l FROM Location l WHERE l.closetid =:id")
     public List<Location> findByClosetID(@Param("id") Integer id);
+
+    @Query("SELECT l FROM Location l WHERE l.closetid =:id AND l.locationtype =:locationtype AND l.locationnumber =:locationnumber")
+    public Location findLocation(@Param("id") Integer id, @Param("locationtype") String locationtype, @Param("locationnumber") Integer locationnumber);
 }

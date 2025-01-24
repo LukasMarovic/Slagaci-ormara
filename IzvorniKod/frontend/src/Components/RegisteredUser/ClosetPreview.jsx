@@ -7,7 +7,7 @@ import ArticleDetailsModal from "./ArticleDetailsModal";
 const ClosetPreview = ({ show, handleClose, closet }) => {
   if (!closet) return null;
 
-  const { name, numberOfDrawers, numberOfShelves, numberOfHangers } = closet;
+  const { name, numberOfDrawers, numberOfShelves, numberOfHangers, closetID, locations } = closet;
   const [showDetails, setShowDetails] = useState(false);
   const [activeElement, setActiveElement] = useState(null);
   const [activeCardIndex, setActiveCardIndex] = useState(null);
@@ -20,43 +20,96 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
 
   const backendUrl = "https://your-backend-endpoint/api/cards"; 
 
+  // useEffect(() => {
+  //   const postCardsData = async () => {
+  //     try {
+  //       const response = await fetch("/api/addClothes", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ cards: cardsData }),
+  //       });
+
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+
+  //       const result = await response.json();
+  //       console.log("Successfully sent cardsData to backend:", result);
+  //     } catch (error) {
+  //       console.error("Error sending cardsData to backend:", error);
+  //     }
+  //   };
+
+  //   if (cardsData.length > 0) {
+  //     postCardsData();
+  //   }
+  // }, [cardsData]);
   useEffect(() => {
-    const postCardsData = async () => {
-      try {
-        const response = await fetch(backendUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ cards: cardsData }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("Successfully sent cardsData to backend:", result);
-      } catch (error) {
-        console.error("Error sending cardsData to backend:", error);
-      }
-    };
-
-    if (cardsData.length > 0) {
-      postCardsData();
+    if (activeElement !== null) {
+      getArticles(activeElement);
     }
-  }, [cardsData]);
+    
+  }, [activeElement]);
 
+  const postArticle = async (articleName, articlePicture, category, seasonality, formality, maincolor, secondarycolor, availability, activeElement, closetID) => {
+    const formData = new FormData();
+    formData.append("articleName", articleName);
+    formData.append("articlePicture", articlePicture);
+    formData.append("category", category);
+    formData.append("seasonality", seasonality);
+    formData.append("formality", formality);
+    formData.append("maincolor", maincolor);
+    formData.append("secondarycolor", secondarycolor);
+    formData.append("availability", availability);
+    formData.append("activeElement", activeElement);
+    formData.append("closetID", closetID);
+    try {
+      const response = await fetch("/api/addArticle", {
+        method: 'POST',
+        credentials: 'include',
+        body: formData
+      });
+  
+      if (!response.ok) {
+        throw new Error();
+      }
+    } catch (error) {
+      console.error("error adding article");
+    }
+  };
 
+  const getArticles = (element) => {
+    fetch(`/api/getUserArticles?activeElement=${element}&closetID=${closetID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
+    }).then((response) => {
+      return response.json()
+    }).then((data) => {
+      if (data !== null) {
+        data.map((el) => {
+          el["elementName"] = activeElement;
+        })
+      }
+      
+      setCardsData(data);
+      setShowDetails(true);
+    })
+  }
 
 
   const maxItems = 5;
 
-  const handleAddItemCloset = (articleName, category, image, season, color, secondaryColor, formality, condition, description, forSharing) => {
+  const handleAddItemCloset = (articleName, category, image, season, color, secondaryColor, formality, condition, description, forSharing, file) => {
     const newItem = {
         elementName: activeElement,
         closetName: name,
-        title: articleName,
+        articleName: articleName,
         text: "Placeholder text",
         image: image,
         forSharing, 
@@ -68,7 +121,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
         condition,
         description,
     };
-
+    console.log(file);
+    postArticle(articleName, file, category, season, formality, color, secondaryColor, condition, activeElement, closetID);
     setCardsData([...cardsData, newItem]);
     console.log("Updated cardsData:", [...cardsData, newItem]);
 };
@@ -135,7 +189,6 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
     if (!card) return null;
 
     const isActive = activeCardIndex === cardsData.indexOf(card);
-
     return (
       <Card
         className={`custom-card ${isActive ? "active-card" : ""}`}
@@ -145,11 +198,11 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
       >
         <Card.Img
           variant="top"
-          src={card.image}
+          src={card.articlepicture}
           alt={`Card ${index + 1}`}
         />
         <Card.Body className="card-body-closet">
-          <Card.Title className="custom-title">{card.title}</Card.Title>
+          <Card.Title className="custom-title">{card.articlename}</Card.Title>
           <Card.Text className="custom-text">{card.text}</Card.Text>
         </Card.Body>
       </Card>
@@ -194,8 +247,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           className={`shelf ${activeElement === `shelf-${i}` ? "active-element" : ""}`}
           style={{ cursor: "pointer" }}
           onClick={() => {
-            setShowDetails(true);
             setActiveElement(`shelf-${i}`);
+            getArticles(`shelf-${i+1}`);
           }}
         ></div>
       );
@@ -221,8 +274,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           className={`hanger${i + 1} ${activeElement === `hanger-${i}` ? "active-element" : ""}`}
           style={{ cursor: "pointer" }}
           onClick={() => {
-            setShowDetails(true);
             setActiveElement(`hanger-${i}`);
+            getArticles(`hanger-${i+1}`);
           }}
         ></div>
       );
@@ -239,8 +292,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           className={`modal-drawer1 ${activeElement === `drawer-${i}` ? "active-element" : ""}`}
           style={{ cursor: "pointer" }}
           onClick={() => {
-            setShowDetails(true);
             setActiveElement(`drawer-${i}`);
+            getArticles(`drawer-${i+1}`);
           }}
         >
           <div className="modal-handle"></div>

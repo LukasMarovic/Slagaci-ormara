@@ -15,10 +15,32 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
     const [condition, setCondition] = useState('');
     const [description, setDescription] = useState(''); // State for description
     const [forSharing, setForSharing] = useState(false); // New state for sharing checkbox
+    const [file, setFile] = useState(null);
 
+    // const postArticle = () => {
+    //     fetch("/api/addArticle", {
+    //       method: 'POST',
+    //       headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //       },
+    //       credentials: 'include',
+    //       body: JSON.stringify({
+    //         "articleName": articleName,
+    //         "articlePicture": image,
+    //         "category": category,
+    //         "seasonality": season,
+    //         "formality": formality,
+    //         "maincolor": color,
+    //         "secondarycolor": secondaryColor,
+    //         "availability": condition
+    //       })
+    //     })
+    // };
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
+            setFile(file);
             setImage(URL.createObjectURL(file));
         }
     };
@@ -51,7 +73,8 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
             formality,
             condition,
             description,
-            forSharing // Pass forSharing to parent function
+            forSharing, // Pass forSharing to parent function
+            file
         );
         handleClose();
     };

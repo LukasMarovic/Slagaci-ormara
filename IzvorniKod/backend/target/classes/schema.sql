@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS Location
     locationID   INTEGER,
     closetID     INTEGER,
     locationType VARCHAR(20),
+    locationNumber INTEGER,
     FOREIGN KEY (closetID) REFERENCES Closet (closetID),
     PRIMARY KEY (locationID, closetID)
 );

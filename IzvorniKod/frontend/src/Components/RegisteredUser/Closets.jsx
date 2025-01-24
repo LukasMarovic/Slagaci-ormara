@@ -8,11 +8,13 @@ import AddClosetPopup from './AddClosetPopup';
 import ClosetPreview from './ClosetPreview';
 
 class Closet {
-  constructor(name, numberOfDrawers, numberOfShelves, numberOfHangers) {
+  constructor(name, numberOfDrawers, numberOfShelves, numberOfHangers, closetID, locations) {
     this.name = name;
     this.numberOfDrawers = numberOfDrawers;
     this.numberOfShelves = numberOfShelves;
     this.numberOfHangers = numberOfHangers;
+    this.closetID = closetID;
+    this.locations = locations;
   }
 }
 
@@ -23,46 +25,50 @@ function Closets() {
 
   const [selectedCloset, setSelectedCloset] = useState(null);
   const [showClosetPreview, setShowClosetPreview] = useState(false);
+  const [postDone, setPostDone] = useState(false);
 
   useEffect(() => {
-    const fetchClosets = async () => {
-          try {
-              const response = await fetch('/api/getUserOrmari', {
-                  method: 'GET',
-                  credentials: 'include',
-              });
-  
-              if (response.ok) {
-                  const data = await response.json();
-                  let closetArray = [];
-                  for (let entry of Object.entries(data)) {
-                    let numberOfDrawers = 0;
-                    let numberOfShelves = 0;
-                    let numberOfHangers = 0;
-                    for (let lokacija of entry[1]) {
-                      if (lokacija["locationtype"] === "drawer") {
-                        numberOfDrawers += 1;
-                      } else if (lokacija["locationtype"] === "shelf") {
-                        numberOfShelves += 1;
-                      } else if (lokacija["locationtype"] === "hanger") {
-                        numberOfHangers += 1;
-                      }
-                    }
-                    closetArray.push(new Closet(entry[0], numberOfDrawers, numberOfShelves, numberOfHangers));
-                  }
-                  setClosets(closetArray);
-                  setNumOfClosets(closetArray.length);
-              } else {
-                  console.error('Failed to fetch closets');
-              }
-          } catch (error) {
-              console.error('Error:', error);
-          }
-      };
-
-      fetchClosets();
+    fetchClosets();
     }, 
-  []);
+  [postDone]);
+
+  const fetchClosets = async () => {
+    try {
+        const response = await fetch('/api/getUserOrmari', {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            let closetArray = [];
+            for (let entry of Object.entries(data)) {
+              let numberOfDrawers = 0;
+              let numberOfShelves = 0;
+              let numberOfHangers = 0;
+              let closetID = null;
+              let locations = entry[1];
+              for (let lokacija of locations) {
+                if (lokacija["locationtype"] === "drawer") {
+                  numberOfDrawers += 1;
+                } else if (lokacija["locationtype"] === "shelf") {
+                  numberOfShelves += 1;
+                } else if (lokacija["locationtype"] === "hanger") {
+                  numberOfHangers += 1;
+                }
+                closetID = lokacija["closetid"];
+              }
+              closetArray.push(new Closet(entry[0], numberOfDrawers, numberOfShelves, numberOfHangers, closetID, locations));
+            }
+            setClosets(closetArray);
+            setNumOfClosets(closetArray.length);
+        } else {
+            console.error('Failed to fetch closets');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  };
 
   const handleOpenClosetPreview = (closet) => {
     setSelectedCloset(closet);
@@ -99,6 +105,8 @@ function Closets() {
         "numberOfShelves": closet.numberOfShelves,
         "numberOfHangers": closet.numberOfHangers
       })
+    }).then((response) => {
+      setPostDone(!postDone);
     })
   };
 
@@ -115,13 +123,13 @@ function Closets() {
       return;
     }
 
-    const newCloset = new Closet(name, drawers, shelves, hangers);
+    const newCloset = new Closet(name, drawers, shelves, hangers, null, null);
     postCloset(newCloset);
 
     setNumOfClosets((prevNumOfClosets) => prevNumOfClosets + 1);
     setClosets((prevClosets) => [...prevClosets, newCloset]);
     console.log("Closet added successfully:", newCloset);
-    setShowModal(false); 
+    setShowModal(false);
   };
 
   const handleCloseModal = () => {
