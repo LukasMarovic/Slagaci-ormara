@@ -1,17 +1,13 @@
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Navbar from 'react-bootstrap/Navbar'
-import NavbarBrand from 'react-bootstrap/NavbarBrand'
 import Nav from 'react-bootstrap/Nav'
 import { FaUser } from 'react-icons/fa'
-
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { NavLink } from 'react-bootstrap'
 
-function Header(){
+import UserProfile from '../UserProfile'
+function HeaderAdv(){
     return(
-        <Navbar className="header" expand="lg">
+        <Navbar className="header-container" expand="lg">
             <Container className='d-flex justify-content-around'>
             <Navbar.Brand className='d-flex align-items-center fw-bold title' href="#home">
                     {
@@ -31,17 +27,7 @@ function Header(){
                     <Nav.Link className='nav-link' href="#footer">Contact</Nav.Link>
                 </Nav>
                 <Nav>
-                    { !document.cookie ? (
-                        <Nav.Link className='register' href="/login">
-                            Register or Log in
-                            <FaUser className="user-icon"></FaUser>
-                        </Nav.Link>
-                        ) : (
-                            <div className='nav-link'>
-                                <p>Welcome back <br></br>{document.cookie}</p>
-                            </div>
-                        )
-                    }
+                    <UserProfile />
                 </Nav>
             </Navbar.Collapse>
             </Container>
@@ -49,5 +35,5 @@ function Header(){
     );
 }
 
-export default Header
+export default HeaderAdv
 

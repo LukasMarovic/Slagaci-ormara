@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 function HeaderReg(){
     return(
-        <Navbar className="header" expand="lg">
+        <Navbar className="header-container" expand="lg">
             <Container className='d-flex justify-content-around'>
             <Navbar.Brand className='d-flex align-items-center fw-bold title' href="#home">
                     {

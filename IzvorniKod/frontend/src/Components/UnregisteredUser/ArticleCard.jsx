@@ -11,7 +11,9 @@ function ArticleCard(){
     useEffect(() => {
       fetch("/api/getFeatured")
         .then(response => response.json())
-        .then(data => setArticles(data))
+        .then(data => {setArticles(data);
+          console.log(data);
+        })
     }, []);
     
     return(
@@ -19,7 +21,7 @@ function ArticleCard(){
        {articles.map((artikl, idx) => (
          <Col key={idx}>
            <Card className='article-card'>
-             <Card.Img variant="top" src={"/api/getImage/" + artikl[5]} className='card-image' />
+             <Card.Img variant="top" src={artikl[5]} className='card-image' />
              <Card.Body className='card-body'>
                <Card.Title className='card-title'>{artikl[0]}</Card.Title>
                <Card.Text className='card-text'>

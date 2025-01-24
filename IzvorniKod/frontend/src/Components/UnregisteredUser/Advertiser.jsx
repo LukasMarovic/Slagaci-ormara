@@ -16,7 +16,7 @@ function Advertiser() {
                         Promote your articles on other user's pages. <br/>
                         Reach people who are actively interested in <br/> your products or services.
                     </p>
-                    <Button variant="warning" className="advertiser-button text-white mt-3">
+                    <Button variant="warning" className="advertiser-button text-white mt-3" href='/register_as_advertiser'>
                         Register as Advertiser
                     </Button>
                 </Col>

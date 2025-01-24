@@ -8,11 +8,13 @@ import com.progi.progi.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,7 +46,7 @@ public class ArticleController {
             list.add(el.getKey().getFormality());
             list.add(el.getKey().getAvailability());
             list.add(el.getValue());
-            list.add(el.getKey().getId().toString());
+            list.add(el.getKey().getArticlepicture());
             return list;
         }).collect(Collectors.toList());
     }
@@ -110,6 +112,45 @@ public class ArticleController {
                     articles.add(articleService.get(locatedat.getArticleid()));
                 }
                 return articles;
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("/search")
+    public List<Article> search(@RequestParam("query") String query) {
+        return articleService.startsWith(query);
+    }
+
+    @GetMapping("/searchUser")
+    public List<Article> searchUser(@RequestParam("query") String query, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            return articleService.startsWithAndBelongsTo(UserService.getUserFromSession(session), query);
+        }
+        return null;
+    }
+
+    @GetMapping("/sellerArticles")
+    public List<Article> sellerArticles() {
+        return articleService.getAllSellerArticles();
+    }
+
+    @PostMapping("/sellerAddArticle")
+    public Article postArticle(@RequestParam("articlePicture") MultipartFile file, @RequestParam("articleName") String articleName, @RequestParam("category") String category, @RequestParam("price") String price, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session != null) {
+            try {
+                Article article = new Article();
+                String imageUrl = cloudinaryService.uploadFile(file);
+                article.setArticlename(articleName);
+                article.setArticlepicture(imageUrl);
+                article.setCategory(category);
+                article.setPrice(new BigDecimal(price));
+                article.setUserid(UserService.getUserFromSession(session));
+                return articleService.add(article);
+            } catch (IOException e) {
+                return null;
             }
         }
         return null;

@@ -76,7 +76,7 @@ function AddAdvertisementPopupCloset({ showModal, handleClose, handleAddItemClos
             forSharing, // Pass forSharing to parent function
             file
         );
-        handleClose();
+        // handleClose();
     };
 
 

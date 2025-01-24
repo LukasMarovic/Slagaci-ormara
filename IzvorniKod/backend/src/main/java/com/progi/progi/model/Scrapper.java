@@ -101,7 +101,7 @@ public class Scrapper {
                         item.setFormality(formality);
                         item.setCategory(category);
                         item.setArticlename(name);
-                        item.setPrice(new BigDecimal(String.format("%.2f", price)));
+                        item.setPrice(new BigDecimal(String.format("%.2f", price).replace(",", ".")));
                         item.setAvailability("New");
                         item.setSeasonality(season);
                         item.setArticlepicture(picture);

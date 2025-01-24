@@ -1,6 +1,8 @@
 package com.progi.progi.web;
 
 import com.progi.progi.model.Users;
+import com.progi.progi.service.RegistereduserService;
+import com.progi.progi.service.SellerService;
 import com.progi.progi.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,12 +24,28 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RegistereduserService registereduserService;
+
+    @Autowired
+    private SellerService sellerService;
+
     @PostMapping("/sign-in")
     public ResponseEntity<String> authenticateUser(@RequestBody Users user, HttpServletRequest request) {
 
         List<Users> users = userService.getByEmail(user.getEmail());
         if (!users.isEmpty()) {
-            if (users.getFirst().getPassword().equals(user.getPassword())) {
+            Users foundUser = users.getFirst();
+            if (foundUser.getPassword().equals(user.getPassword())) {
+                HttpSession session = request.getSession();
+                String role;
+                if (registereduserService.getById(foundUser.getId()) != null) {
+                    role = "registereduser";
+                } else if (sellerService.getById(foundUser.getId()) != null) {
+                    role = "seller";
+                } else {
+                    return new ResponseEntity<>("Users signed-in failed.", HttpStatus.UNAUTHORIZED);
+                }
 //                String session_ID = UUID.randomUUID().toString();
 //                Cookie sessionCookie = new Cookie("SESSION_ID", UUID.randomUUID().toString());
 //                sessionCookie.setAttribute("username", user.getEmail());
@@ -37,10 +55,10 @@ public class AuthController {
 //                sessionCookie.setMaxAge(24 * 60 * 60);
 //
 //                response.addCookie(sessionCookie);
-                HttpSession session = request.getSession();
                 session.setAttribute("username", users.getFirst().getUsername());
                 session.setAttribute("sif_korisnika", users.getFirst().getId());
-                return ResponseEntity.ok("Logged in");
+                session.setAttribute("role", role);
+                return ResponseEntity.ok(role);
                 //return new ResponseEntity<>("Users signed-in successfully!.", HttpStatus.OK);
             } else {
 

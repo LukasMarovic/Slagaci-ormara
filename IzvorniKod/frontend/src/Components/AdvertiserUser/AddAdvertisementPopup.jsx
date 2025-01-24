@@ -9,17 +9,39 @@ function AddAdvertisementPopup({ showModal, handleClose, handleAddAdvertisement}
     const [category, setCategory] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState(null);
+    const [file, setFile] = useState();
+
+    const postArticle = async (articleName, articlePicture, category, price) => {
+        const formData = new FormData();
+        formData.append("articleName", articleName);
+        formData.append("articlePicture", articlePicture);
+        formData.append("category", category);
+        formData.append("price", price);
+        try {
+          const response = await fetch("/api/sellerAddArticle", {
+            method: 'POST',
+            credentials: 'include',
+            body: formData
+          });
+          if (!response.ok) {
+            throw new Error();
+          }
+        } catch (error) {
+          console.error("error adding article");
+        }
+      };
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
+            setFile(file);
             setImage(URL.createObjectURL(file)); 
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        postArticle(articleName, file, category, price);
         if (!articleName || !category || !price || !image) {
             alert('Please fill in all fields.');
             return;

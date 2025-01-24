@@ -17,9 +17,6 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCardData, setSelectedCardData] = useState(null); 
 
-
-  const backendUrl = "https://your-backend-endpoint/api/cards"; 
-
   // useEffect(() => {
   //   const postCardsData = async () => {
   //     try {
@@ -46,6 +43,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   //     postCardsData();
   //   }
   // }, [cardsData]);
+  
   useEffect(() => {
     if (activeElement !== null) {
       getArticles(activeElement);
@@ -71,7 +69,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
         credentials: 'include',
         body: formData
       });
-  
+      setShowModal(false);
       if (!response.ok) {
         throw new Error();
       }
@@ -96,7 +94,6 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           el["elementName"] = activeElement;
         })
       }
-      
       setCardsData(data);
       setShowDetails(true);
     })

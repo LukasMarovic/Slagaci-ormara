@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Container from "react-bootstrap/Container";
 
-function FooterAdv(){
+function FooterSearchRes(){
     return(
         <>
         <Container className="footer-container">
@@ -39,4 +39,4 @@ function FooterAdv(){
     );
 }
 
-export default FooterAdv
+export default FooterSearchRes

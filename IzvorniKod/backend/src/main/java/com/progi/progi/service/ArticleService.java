@@ -104,6 +104,14 @@ public class ArticleService {
         return articleRepository.getByUserID(id);
     }
 
+    public List<Article> startsWith(String text) {
+        return articleRepository.getByText(text);
+    }
+
+    public List<Article> startsWithAndBelongsTo(Integer userID, String text) {
+        return articleRepository.getByUserIDAndText(userID, text);
+    }
+
     public Map<Article, String> getFeatured() {
         List<Article> allArticles = (List<Article>) articleRepository.findAll();
 
@@ -126,5 +134,9 @@ public class ArticleService {
                                 key, key -> userRepository.findById(key.getUserid())
                                 .map(Users::getUsername).orElse("Unknown user")
                         ));
+    }
+
+    public List<Article> getAllSellerArticles() {
+        return articleRepository.getAllSellerArticles().subList(0,4);
     }
 }

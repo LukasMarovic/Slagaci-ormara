@@ -2,11 +2,9 @@ import Container from 'react-bootstrap/Container'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { FaUser } from 'react-icons/fa'
-import UserProfile from '../UserProfile'
-
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function Header(){
+function HeaderGall(){
     return(
         <Navbar className="header-container" expand="lg">
             <Container className='d-flex justify-content-around'>
@@ -28,7 +26,17 @@ function Header(){
                     <Nav.Link className='nav-link' href="#footer">Contact</Nav.Link>
                 </Nav>
                 <Nav>
-                    <UserProfile />
+                    { !document.cookie ? (
+                        <Nav.Link className='register' href="/login">
+                            Log out
+                            <FaUser className="user-icon"></FaUser>
+                        </Nav.Link>
+                        ) : (
+                            <div className='nav-link'>
+                                <p>Welcome back <br></br>{document.cookie}</p>
+                            </div>
+                        )
+                    }
                 </Nav>
             </Navbar.Collapse>
             </Container>
@@ -36,5 +44,5 @@ function Header(){
     );
 }
 
-export default Header
+export default HeaderGall
 

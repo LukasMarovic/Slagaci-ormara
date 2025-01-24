@@ -1,4 +1,4 @@
-.user-advertised-articles-container .advertiser-header {
+.advertiser-gallery-card-container .advertiser-header {
     font-family: 'Montserrat';
     font-size: 2.4rem;
     margin-top: 5rem;
@@ -6,16 +6,16 @@
 }
 
 
-.user-advertised-articles-container .card-container{
+.advertiser-gallery-card-container .card-container{
     margin-bottom: 6.5rem;
 }
 
-.user-advertised-articles-container .card-container .article-card {
+.advertiser-gallery-card-container .card-container .article-card {
     border: 0px;
     transition: transform 0.3s ease; 
 }
 
-.user-advertised-articles-container .card-container .article-card-body {
+.advertiser-gallery-card-container .card-container .article-card-body {
     background-color: #fcf8f3;
     font-family: 'Poppins';
     color: #666666;
@@ -25,24 +25,59 @@
     transition: transform 0.3s ease; 
 }
 
-.user-advertised-articles-container .card-container .article-card-title {
+.advertiser-gallery-card-container .card-container .article-card-title {
     color: black;
 }
 
-.user-advertised-articles-container .card-container .article-card-image {
+.advertiser-gallery-card-container .card-container .article-card-image {
     border: 1px solid #666666;
     border-radius: 0;
     min-height: 310px;
 }
 
-.user-advertised-articles-container .article-card:hover {
+.advertiser-gallery-card-container .article-card:hover {
     cursor: pointer;
     transform: scale(1.05); 
 }
 
-.user-advertised-articles-container .article-card:hover {
+.advertiser-gallery-card-container .article-card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.close-button{
+    background-color: white;
+    color: #b88e2f;
+    font-weight: bold;
+    border: 2px solid #b88e2f
+}
+  
+  .close-button:hover{
+    color: #6a4c10;
+    border-color: #6a4c10;
+    background-color: white;
+}
+
+.close-button:active{
+    background-color: #6a4c10 !important;
+    border-color: #6a4c10 !important;
+}
+  
+  .add-button{
+    background-color: #b88e2f;
+    color: white;
+    font-weight: bold;
+    border: 2px solid #b88e2f;
+  }
+  
+  .add-button:hover{
+    background-color: #6a4c10;
+    border-color: #6a4c10;
+  }
+
+  .add-button:active{
+    background-color: #6a4c10 !important;
+    border-color: #6a4c10 !important;
+  }
 
 
 

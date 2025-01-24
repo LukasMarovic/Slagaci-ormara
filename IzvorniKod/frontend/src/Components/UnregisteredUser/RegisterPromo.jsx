@@ -11,7 +11,7 @@ function RegisterPromo(){
             <p className='register-undertitle'>
                 Unlock the full capabilities of our app!
             </p>
-            <Button className='register-button p-3 my-4 fw-bold' href='#register'>
+            <Button className='register-button p-3 my-4 fw-bold' href='/register'>
                 Register
             </Button>
         </Container>

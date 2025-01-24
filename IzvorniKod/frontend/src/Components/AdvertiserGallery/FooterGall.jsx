@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Container from "react-bootstrap/Container";
 
-function Footer(){
+function FooterGall(){
     return(
         <>
         <Container className="footer-container">
@@ -39,4 +39,4 @@ function Footer(){
     );
 }
 
-export default Footer
+export default FooterGall

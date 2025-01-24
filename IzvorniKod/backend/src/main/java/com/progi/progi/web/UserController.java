@@ -1,6 +1,7 @@
 package com.progi.progi.web;
 
 import com.progi.progi.model.Users;
+import com.progi.progi.service.CloudinaryService;
 import com.progi.progi.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     @GetMapping("/getUser/{id}")
     public Users getUser(@PathVariable int id) { return userService.get(id); }
@@ -29,18 +35,20 @@ public class UserController {
     public List<Users> getUsers(@PathVariable String email) { return userService.getByEmail(email); }
 
     @PostMapping("/addUser")
-    public Users addUser(@RequestBody Map<String, String> json) {
+    public Users addUser(@RequestParam(value = "image", required = false) MultipartFile file, @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("username") String username, @RequestParam("role") String role, @RequestParam(value = "geolocation", required = false) String geolocation) {
         Users user = new Users();
         user.setId(null);
-        user.setEmail(json.get("email"));
-        user.setPassword(json.get("password"));
-        user.setUsername(json.get("username"));
-        String role = json.get("role");
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setUsername(username);
         if (role.equals("seller")) {
-            String image = json.get("image");
-            return userService.addSeller(user, image);
+            try {
+                String image = cloudinaryService.uploadFile(file);
+                return userService.addSeller(user, image);
+            } catch (IOException e) {
+                return null;
+            }
         } else if (role.equals("registereduser")) {
-            String geolocation = json.get("geolocation");
             return userService.addRegistered(user, geolocation);
         }
         return null;

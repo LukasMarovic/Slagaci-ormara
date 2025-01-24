@@ -4,9 +4,11 @@ import Nav from 'react-bootstrap/Nav'
 import { FaUser } from 'react-icons/fa'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import UserProfile from '../UserProfile'
+
 function HeaderAdv(){
     return(
-        <Navbar className="header" expand="lg">
+        <Navbar className="header-container" expand="lg">
             <Container className='d-flex justify-content-around'>
             <Navbar.Brand className='d-flex align-items-center fw-bold title' href="#home">
                     {
@@ -26,17 +28,7 @@ function HeaderAdv(){
                     <Nav.Link className='nav-link' href="#footer">Contact</Nav.Link>
                 </Nav>
                 <Nav>
-                    { !document.cookie ? (
-                        <Nav.Link className='register' href="/login">
-                            Log out
-                            <FaUser className="user-icon"></FaUser>
-                        </Nav.Link>
-                        ) : (
-                            <div className='nav-link'>
-                                <p>Welcome back <br></br>{document.cookie}</p>
-                            </div>
-                        )
-                    }
+                    <UserProfile />
                 </Nav>
             </Navbar.Collapse>
             </Container>
