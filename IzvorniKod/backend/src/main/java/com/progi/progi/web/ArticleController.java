@@ -1,6 +1,7 @@
 package com.progi.progi.web;
 
 import com.progi.progi.model.Article;
+import com.progi.progi.model.Closet;
 import com.progi.progi.model.Locatedat;
 import com.progi.progi.model.Location;
 import com.progi.progi.repository.ArticleRepository;
@@ -33,6 +34,8 @@ public class ArticleController {
     private LocationService locationService;
     @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private OrmarService ormarService;
 
     //vraća 8 nasumičnih artikala iz baze
     @GetMapping("/getFeatured")
@@ -99,19 +102,17 @@ public class ArticleController {
     }
 
     @GetMapping("/getUserArticles")
-    public List<Article> getUserArticles(@RequestParam String activeElement, @RequestParam String closetID, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (session != null) {
-            Location location = locationService.findLocation(Integer.parseInt(closetID), activeElement.split("-")[0], Integer.parseInt(activeElement.split("-")[1])+1);
-            if (location != null) {
-                List<Locatedat> locatedatList = locatedatService.getByLocation(location.getId());
-                ArrayList<Article> articles = new ArrayList<>();
-                for (Locatedat locatedat : locatedatList) {
-                    articles.add(articleService.get(locatedat.getArticleid()));
-                }
-                return articles;
-            }
+    public List<Article> getUserArticles(@RequestParam String activeElement, @RequestParam String closetID) {
+        List<Article> articles = new ArrayList<>();
+        Closet closet = ormarService.get(Integer.parseInt(closetID));
+        String type = activeElement.split("-")[0];
+        int locationNo = Integer.parseInt(activeElement.split("-")[1]);
+        Location location = locationService.findLocation(Integer.parseInt(closetID), type, locationNo);
+        List<Locatedat> locatedat = locatedatService.getByLocation(location.getId());
+        for (Locatedat locatedat1 : locatedat) {
+            int articleid = locatedat1.getArticleid();
+            articles.add(articleService.get(articleid));
         }
-        return null;
+        return articles;
     }
 }
