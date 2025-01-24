@@ -427,8 +427,29 @@ padding: 5px 5px 5px 5px;
     display: flex;
     flex-direction: column;
     height: fit-content;
+    min-height: 400px;
     width: 100%;
     min-width: fit-content;/* Allows scrolling if content exceeds container height */
     box-shadow: 8px 8px 11.4px 3px rgba(0, 0, 0, 0.29) inset;
+
+    }
+    .delete-article-button{
+      background-color: beige;
+      color: black;
+      border: 1px solid #ccc;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      width: fit-content;
+      height: 50px;
     }
     
+    .delete-article-button:hover{
+      background-color: #e0d7d7;
+      color: black;
+      border-color: #aaa;
+    }
+    .delete-article-button:active{
+      background:#e0e0e0 !important ;
+    }

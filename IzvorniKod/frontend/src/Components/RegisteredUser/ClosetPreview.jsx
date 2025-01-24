@@ -62,6 +62,13 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
 
   const maxItems = 5;
 
+  const handleDeleteArticle = (cardToDelete) => {
+    setCardsData((prevCards) =>
+      prevCards.filter((card) => card !== cardToDelete)
+    );
+    setShowEditModal(false); // Close the modal
+  };
+
   const handleAddItemCloset = (articleName, category, image, season, color, secondaryColor, formality, condition, description, forSharing) => {
     const newItem = {
         elementName: activeElement,
@@ -421,6 +428,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           cardData={selectedCardData}
           onCardUpdate={handleCardUpdate} 
           onForSharingChange={handleForSharingChange}
+          handleDelete={handleDeleteArticle} // Pass the delete handler
         />
       )}
     </div>

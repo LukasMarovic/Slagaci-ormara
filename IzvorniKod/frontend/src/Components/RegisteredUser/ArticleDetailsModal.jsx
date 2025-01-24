@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import "./registered_css/ArticleDetails.css";
 
-const ArticleDetailsModal = ({ show, handleClose, cardData, onCardUpdate, onForSharingChange }) => {
+const ArticleDetailsModal = ({ show, handleClose, cardData, onCardUpdate, onForSharingChange, handleDelete }) => {
     if (!cardData) return null;
   
     const [formData, setFormData] = useState({ ...cardData });
@@ -219,7 +219,16 @@ const ArticleDetailsModal = ({ show, handleClose, cardData, onCardUpdate, onForS
           </Col>
         </Row>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="details-modal-footer">
+        {!isEditing && ( // Only show delete button if not editing
+          <Button variant="secondary" 
+          className="delete-article-button"
+          onClick={() => handleDelete(cardData)} 
+          >
+            Delete article
+          </Button>
+          
+        )}
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
