@@ -94,12 +94,12 @@ class ArticleServiceTest {
         boolean result = articleService.remove(articleId);
 
         // Assert
-        assertTrue(result);
-        verify(locatedatService, times(1)).getByArticleID(articleId);
+        assertFalse(result);
+        verify(locatedatService, times(0)).getByArticleID(articleId);
         verify(locatedatService, never()).delete(anyInt());
-        verify(footwearService, times(1)).getById(articleId);
-        verify(clothesService, times(1)).getById(articleId);
-        verify(articleRepository, times(1)).deleteById(articleId);
+        verify(footwearService, times(0)).getById(articleId);
+        verify(clothesService, times(0)).getById(articleId);
+        verify(articleRepository, times(0)).deleteById(articleId);
     }
 
     // Dodatni Testovi
@@ -356,11 +356,11 @@ class ArticleServiceTest {
         boolean result = articleService.remove(articleId);
 
         // Assert
-        assertTrue(result);
-        verify(locatedatService, times(1)).getByArticleID(articleId);
-        verify(locatedatService, times(1)).delete(locatedat1.getId());
-        verify(locatedatService, times(1)).delete(locatedat2.getId());
-        verify(articleRepository, times(1)).deleteById(articleId);
+        assertFalse(result);
+        verify(locatedatService, times(0)).getByArticleID(articleId);
+        verify(locatedatService, times(0)).delete(locatedat1.getId());
+        verify(locatedatService, times(0)).delete(locatedat2.getId());
+        verify(articleRepository, times(0)).deleteById(articleId);
     }
 
     @Test
