@@ -61,14 +61,16 @@ public class ArticleService {
 
     public Article add(Article article, String type) {
         Article newArticle = articleRepository.save(article);
-        if (type.equals("footwear")) {
-            Footwear footwear = new Footwear();
-            footwear.setId(article.getId());
-            footwearService.add(footwear);
-        } else if (type.equals("clothes")) {
-            Clothes clothes = new Clothes();
-            clothes.setId(article.getId());
-            clothesService.add(clothes);
+        if (type != null) {
+            if (type.equals("footwear")) {
+                Footwear footwear = new Footwear();
+                footwear.setId(article.getId());
+                footwearService.add(footwear);
+            } else if (type.equals("clothes")) {
+                Clothes clothes = new Clothes();
+                clothes.setId(article.getId());
+                clothesService.add(clothes);
+            }
         }
         return newArticle;
     }
@@ -78,22 +80,26 @@ public class ArticleService {
     }
 
     public boolean remove(Integer id) {
-        Footwear footwear = footwearService.getById(id);
-        Clothes clothes = clothesService.getById(id);
-        List<Locatedat> locatedatList = locatedatService.getByArticleID(id);
-        if (!locatedatList.isEmpty()) {
-            for (Locatedat locatedat : locatedatList) {
-                locatedatService.delete(locatedat.getId());
+        if (articleRepository.existsById(id))
+        {
+            Footwear footwear = footwearService.getById(id);
+            Clothes clothes = clothesService.getById(id);
+            List<Locatedat> locatedatList = locatedatService.getByArticleID(id);
+            if (!locatedatList.isEmpty()) {
+                for (Locatedat locatedat : locatedatList) {
+                    locatedatService.delete(locatedat.getId());
+                }
             }
+            if (footwear != null) {
+                footwearService.delete(id);
+            }
+            if (clothes != null) {
+                clothesService.delete(id);
+            }
+            articleRepository.deleteById(id);
+            return true;
         }
-        if (footwear != null) {
-            footwearService.delete(id);
-        }
-        if (clothes != null) {
-            clothesService.delete(id);
-        }
-        articleRepository.deleteById(id);
-        return true;
+        else return false;
     }
 
     public Iterable<Article> getAll() {
@@ -104,27 +110,31 @@ public class ArticleService {
         return articleRepository.getByUserID(id);
     }
 
+    // ispravljeno nakon testiranja da vraća artikle čak iako ih ima manje od 8 u bazi
     public Map<Article, String> getFeatured() {
         List<Article> allArticles = (List<Article>) articleRepository.findAll();
 
-        List<Article> randomArticles = new ArrayList<>();
-        Random random = new Random();
-
-        while (randomArticles.size() < 8 && allArticles.size() >= 8) {
-            int randomIndex = random.nextInt(allArticles.size());
-            Article randomArticle = allArticles.get(randomIndex);
-
-            if (!randomArticles.contains(randomArticle)) {
-                randomArticles.add(randomArticle);
-            }
+        // Provjera postoji li barem jedan artikl
+        if (allArticles.isEmpty()) {
+            return Collections.emptyMap();
         }
 
-        return randomArticles
-                .stream()
-                .collect(Collectors
-                        .toMap(key ->
-                                key, key -> userRepository.findById(key.getUserid())
-                                .map(Users::getUsername).orElse("Unknown user")
-                        ));
+        // Shuffle liste kako bi nasumično rasporedili artikle
+        Collections.shuffle(allArticles, new Random());
+
+        // Odabir prvih 8 artikala ili manje ako ih nema dovoljno
+        List<Article> randomArticles = allArticles.stream()
+                .limit(8)
+                .collect(Collectors.toList());
+
+        // Kreiranje mape artikla i korisničkog imena
+        return randomArticles.stream()
+                .collect(Collectors.toMap(
+                        article -> article,
+                        article -> userRepository.findById(article.getUserid())
+                                .map(Users::getUsername)
+                                .orElse("Unknown user")
+                ));
     }
+
 }

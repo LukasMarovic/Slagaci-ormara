@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -50,6 +52,10 @@ public class UserService {
 //    }
 
     public Users add(Users user, String role) {
+        List<Users> tmp_user = userRepository.findByEmail(user.getEmail());
+        if (!tmp_user.isEmpty()) {
+            return tmp_user.get(0);
+        }
         Users newUser = userRepository.save(user);
         if (role.equals("seller")) {
             Seller seller = new Seller();
@@ -65,6 +71,10 @@ public class UserService {
     }
 
     public Users addRegistered(Users user, String geolocation) {
+        List<Users> tmp_user = userRepository.findByEmail(user.getEmail());
+        if (!tmp_user.isEmpty()) {
+            return tmp_user.get(0);
+        }
         Users newUser = userRepository.save(user);
         Registereduser registereduser = new Registereduser();
         registereduser.setId(newUser.getId());
@@ -74,10 +84,14 @@ public class UserService {
     }
 
     public Users addSeller(Users user, String image) {
+        List<Users> tmp_user = userRepository.findByEmail(user.getEmail());
+        if (!tmp_user.isEmpty()) {
+            return tmp_user.get(0);
+        }
         Users newUser = userRepository.save(user);
         Seller seller = new Seller();
         seller.setId(newUser.getId());
-        sellerService.add(seller);
+        sellerService.add(seller, image);
         return newUser;
     }
 

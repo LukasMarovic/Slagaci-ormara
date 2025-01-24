@@ -24,9 +24,20 @@ public class FootwearService {
         footwear.setOpenness(coverage);
         return footwearRepository.save(footwear);
     }
-    public Footwear getById(int id) { return footwearRepository.findById(id).orElse(null); }
-    public List<Footwear> getAll() { return (List<Footwear>) footwearRepository.findAll(); }
-    public void delete(int id) {
-        articleService.remove(id);
+
+    public Footwear getById(int id) {
+        return footwearRepository.findById(id).orElse(null);
+    }
+
+    public List<Footwear> getAll() {
+        return (List<Footwear>) footwearRepository.findAll();
+    }
+
+    public boolean delete(int id) {
+        if (footwearRepository.existsById(id)) {
+            articleService.remove(id);
+            return true;
+        }
+        return false;
     }
 }

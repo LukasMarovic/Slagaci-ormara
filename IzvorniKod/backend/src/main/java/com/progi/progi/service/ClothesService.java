@@ -15,12 +15,28 @@ public class ClothesService {
     @Autowired
     private ArticleService articleService;
 
-    public Clothes getById(int id) { return clothesRepository.findById(id).orElse(null); }
-    public List<Clothes> getAll() { return (List<Clothes>) clothesRepository.findAll(); }
-    public Clothes add(Clothes clothes) { return clothesRepository.save(clothes); }
-    public Clothes update(Clothes clothes) { return clothesRepository.save(clothes); }
-    public void delete(int id) {
-        clothesRepository.deleteById(id);
-        articleService.remove(id);
+    public Clothes getById(int id) {
+        return clothesRepository.findById(id).orElse(null);
+    }
+
+    public List<Clothes> getAll() {
+        return (List<Clothes>) clothesRepository.findAll();
+    }
+
+    public Clothes add(Clothes clothes) {
+        return clothesRepository.save(clothes);
+    }
+
+    public Clothes update(Clothes clothes) {
+        return clothesRepository.save(clothes);
+    }
+
+    public boolean delete(int id) {
+        if (clothesRepository.existsById(id)) {
+            clothesRepository.deleteById(id);
+            articleService.remove(id);
+            return true;
+        }
+        return false;
     }
 }
