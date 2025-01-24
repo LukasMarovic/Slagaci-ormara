@@ -1,0 +1,132 @@
+.user-advertised-articles-container .advertiser-header {
+    font-family: 'Montserrat';
+    font-size: 2.4rem;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+}
+
+
+.user-advertised-articles-container .card-container{
+    margin-bottom: 6.5rem;
+}
+
+.user-advertised-articles-container .card-container .article-card {
+    border: 0px;
+    transition: transform 0.3s ease; 
+}
+
+.user-advertised-articles-container .card-container .article-card-body {
+    background-color: #fcf8f3;
+    font-family: 'Poppins';
+    color: #666666;
+    border-left: 1px solid #666666;
+    border-right: 1px solid #666666;
+    border-bottom: 1px solid #666666;
+    transition: transform 0.3s ease; 
+}
+
+.user-advertised-articles-container .card-container .article-card-title {
+    color: black;
+}
+
+.user-advertised-articles-container .card-container .article-card-image {
+    border: 1px solid #666666;
+    border-radius: 0;
+    min-height: 310px;
+}
+
+.user-advertised-articles-container .article-card:hover {
+    cursor: pointer;
+    transform: scale(1.05); 
+}
+
+.user-advertised-articles-container .article-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+
+
+.page-item .page-link{
+    color: #666666;
+    font-family: 'Poppins';
+    border: none;
+    font-size: 1.2rem;
+}
+
+.page-item.active .page-link{
+    color: white;
+    background-color: black; 
+    border-radius: 10px;
+    padding-left: 14px;
+    padding-right: 14px;
+    font-family: 'Poppins';
+    border: none;
+    font-size: 1.2rem;
+}
+
+.add-advertisement-button{
+font-family: 'Poppins';
+  font-size: 1rem;
+  border: none;
+  border-radius: 0;
+  background-color: #b88e2f;
+  width: 15rem;
+  margin-top: 3rem;
+}
+
+.add-advertisement-button:hover{
+    background-color: #997520;
+}
+
+.add-advertisement-button:active{
+    background-color: #997520;
+}
+
+
+
+
+.add-advertisement-modal {
+    background-color: #fcf8f3;
+}
+
+.add-advertisement-modal .modal-title{
+    font-family: 'Montserrat';
+    font-size: 1.3rem;
+    
+}
+
+.add-advertisement-modal .modal-body{
+    font-family: 'Poppins';
+}
+
+.add-advertisement-modal .modal-label{
+    font-size: 1.1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
