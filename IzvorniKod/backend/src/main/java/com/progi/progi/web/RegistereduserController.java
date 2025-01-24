@@ -20,7 +20,7 @@ public class RegistereduserController {
     @GetMapping("/getAllRegistered")
     public List<Registereduser> getAllRegistered(){ return registereduserService.getAll(); }
 
-    @PostMapping
+    @PostMapping("/addRegistered")
     public Registereduser createRegisteredUser(@RequestBody Registereduser registereduser) { return registereduserService.add(registereduser); }
 
     @DeleteMapping("/deleteRegistered/{id}")

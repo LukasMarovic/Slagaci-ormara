@@ -8,16 +8,27 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "LOCATION")
 public class Location {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOCATIONID", nullable = false)
     private Integer id;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    @JoinColumn(name = "CLOSETID")
-    private Closet closetid;
+    @Column(name = "CLOSETID")
+    private Integer closetid;
 
     @Column(name = "LOCATIONTYPE", length = 20)
     private String locationtype;
+
+    @Column(name = "LOCATIONNUMBER")
+    private Integer locationnumber;
+
+    public Location() {
+    }
+
+    public Location(Integer closetid, String locationtype, Integer locationnumber) {
+        this.closetid = closetid;
+        this.locationtype = locationtype;
+        this.locationnumber = locationnumber;
+    }
 
     public Integer getId() {
         return id;
@@ -27,11 +38,11 @@ public class Location {
         this.id = id;
     }
 
-    public Closet getClosetid() {
+    public Integer getClosetid() {
         return closetid;
     }
 
-    public void setClosetid(Closet closetid) {
+    public void setClosetid(Integer closetid) {
         this.closetid = closetid;
     }
 
@@ -43,4 +54,11 @@ public class Location {
         this.locationtype = locationtype;
     }
 
+    public Integer getLocationnumber() {
+        return locationnumber;
+    }
+
+    public void setLocationnumber(Integer locationnumber) {
+        this.locationnumber = locationnumber;
+    }
 }

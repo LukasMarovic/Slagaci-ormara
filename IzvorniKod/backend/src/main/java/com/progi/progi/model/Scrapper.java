@@ -5,11 +5,9 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.Collectors;
 
-import com.progi.progi.service.ArticleService;
-import com.progi.progi.service.FootwearService;
-import com.progi.progi.service.UserService;
-import com.progi.progi.web.*;
+import com.progi.progi.service.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,6 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scrapper {
     private List<String> urls = new LinkedList<>();
+    private List<Registereduser> registeredusers = new ArrayList<>();
+    private List<Integer> regIDS = new ArrayList<>();
 
     @Autowired
     private ArticleService articleService;
@@ -29,28 +29,12 @@ public class Scrapper {
     @Autowired
     private UserService userService;
     @Autowired
-    private ClothesController clothesController;
+    private ClothesService clothesService;
+    @Autowired
+    private RegistereduserService registereduserService;
 
 
     public Scrapper() {
-        List<String> urlSource = new LinkedList<>();
-
-        urlSource.add("https://www.nabava.net/odjeca-muska");
-        urlSource.add("https://www.nabava.net/odjeca-zenska");
-        urlSource.add("https://www.nabava.net/obuca-muska");
-        urlSource.add("https://www.nabava.net/obuca-zenska");
-        try {
-            for (String url : urlSource) {
-                Document doc = Jsoup.connect(url).get();
-                Elements productList = doc.select(".product-list--grid-style a");
-                for (Element product : productList) {
-                    urls.add("https://www.nabava.net" + product.attr("href"));
-                    System.out.println("https://www.nabava.net" + product.attr("href"));
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public List<String> getUrls() {
@@ -58,6 +42,28 @@ public class Scrapper {
     }
 
     public List<Article> getItems() throws IOException {
+        List<String> urlSource = new LinkedList<>();
+
+        urlSource.add("https://www.nabava.net/odjeca-muska");
+        urlSource.add("https://www.nabava.net/odjeca-zenska");
+        urlSource.add("https://www.nabava.net/obuca-muska");
+        urlSource.add("https://www.nabava.net/obuca-zenska");
+
+        try {
+            for (String url : urlSource) {
+                Document doc = Jsoup.connect(url).get();
+                Elements productList = doc.select(".product-list--grid-style a");
+                for (Element product : productList) {
+                    urls.add("https://www.nabava.net" + product.attr("href"));
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        registeredusers = registereduserService.getAll();
+        regIDS = registeredusers.stream()
+                .map(Registereduser::getId)
+                .collect(Collectors.toList());
         List<Article> items = new LinkedList<>();
         String priceString = "";
         for (String url : getUrls()) {
@@ -95,32 +101,37 @@ public class Scrapper {
                         item.setFormality(formality);
                         item.setCategory(category);
                         item.setArticlename(name);
-                        item.setPrice(new BigDecimal(String.format("%.2f", price)));
-                        item.setAvailability("available");
+                        item.setPrice(new BigDecimal(String.format("%.2f", price).replace(",", ".")));
+                        item.setAvailability("New");
                         item.setSeasonality(season);
                         item.setArticlepicture(picture);
 
-                        UserController uc = new UserController();
-
-                        Random rand = new Random();
-                        item.setUserid(rand.nextInt(10));
 
                         if (category != "unsorted") {
-                            Article newArticle = articleService.add(item);
 
-                            int id = newArticle.getId();
-                            items.add(newArticle);
-
-                            if (obuca.contains(category)) {
-                                Footwear footwear = new Footwear();
-                                footwear.setId(id);
-                                footwear.setOpenness(coverage);
-                                footwearService.add(footwear);
-                            } else {
-                                Clothes clothes = new Clothes();
-                                clothes.setId(id);
-                                clothesController.add(clothes);
+                            //dodavanje artikala korisnicima nasumično
+                            List<Users> users = new ArrayList<>();
+                            List<Integer> ids = new ArrayList<>();
+                            users = userService.getAllUsers();
+                            for (Users user : users) {
+                                ids.add(user.getId());
                             }
+
+                            Random random = new Random();
+                            item.setUserid(ids.get(random.nextInt(ids.size())));
+                            if (regIDS.contains(item.getUserid())) {
+                                item.setPrice(new BigDecimal("0"));
+                                item.setAvailability("Used");
+                            }
+
+                            String type = "";
+                            if (obuca.contains(category)) {
+                                type = "clothes";
+                            } else {
+                                type = "footwear";
+                            }
+
+                            Article newArticle = articleService.add(item, type);
                         }
 
                     }

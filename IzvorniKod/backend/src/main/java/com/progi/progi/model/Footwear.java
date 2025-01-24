@@ -14,6 +14,11 @@ public class Footwear{
     @Column(name = "OPENNESS", length = 50)
     private String openness;
 
+    public Footwear() {}
+    public Footwear(Footwear footwear) {
+        this.openness = footwear.getOpenness();
+        this.id = footwear.getId();
+    }
     public Integer getId() {
         return id;
     }

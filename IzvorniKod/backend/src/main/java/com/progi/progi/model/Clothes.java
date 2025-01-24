@@ -11,6 +11,11 @@ public class Clothes{
     @Column(name = "ARTICLEID", nullable = false)
     private Integer id;
 
+    public Clothes() {}
+    public Clothes(Clothes clothes) {
+        this.id = clothes.id;
+    }
+
     public Integer getId() {
         return id;
     }
