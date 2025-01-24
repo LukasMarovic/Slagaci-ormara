@@ -25,6 +25,8 @@ public class ClosetGenerator {
     private FootwearService footwearService;
     @Autowired
     private LocatedatService locatedatService;
+    @Autowired
+    private ArticleService articleService;
 
     public ClosetGenerator() {
     }
@@ -49,14 +51,56 @@ public class ClosetGenerator {
                 closet.setUserid(userid);
                 closets.add(ormarService.add(closet));
             }
-            //popuni ormare lokacijama
+            //popuni ormare lokacijama, ali ne iznad granice za svaki tip lokacije
             for (Closet closet : closets) {
-                int noOfLocations = rand.nextInt(15) + 1;
+                Location sshelf = new Location();
+                Location hhanger = new Location();
+                sshelf.setLocationtype("shelf");
+                sshelf.setClosetid(closet.getId());
+                hhanger.setLocationtype("hanger");
+                hhanger.setClosetid(closet.getId());
+                locationService.add(sshelf);
+                locationService.add(hhanger);
+                int drawerCount = 0;
+                boolean drawerLimit = false;
+                int hangerCount = 1;
+                boolean hangerLimit = false;
+                int shelfCount = 1;
+                boolean shelfLimit = false;
+                int noOfLocations = rand.nextInt(6) + 1;
                 for (int i = 0; i < noOfLocations; i++) {
                     Location location = new Location();
                     location.setClosetid(closet.getId());
                     int randLocation = rand.nextInt(locationTypes.size());
                     location.setLocationtype(locationTypes.get(randLocation));
+                    switch (location.getLocationtype()) {
+                        case "drawer":
+                            drawerCount++;
+                            break;
+                        case "hanger":
+                            hangerCount++;
+                            break;
+                        case "shelf":
+                            shelfCount++;
+                            break;
+                    }
+                    if (drawerCount == 3) {
+                        drawerLimit = true;
+                    }
+                    if (hangerCount == 2) {
+                        hangerLimit = true;
+                    }
+                    if (shelfCount == 5) {
+                        shelfLimit = true;
+                    }
+                    if (
+                            (drawerLimit && location.getLocationtype() == "drawer")
+                                    || (hangerLimit && location.getLocationtype() == "hanger")
+                                    || (shelfLimit && location.getLocationtype() == "shelf")
+                    ) {
+                        i -= 1;
+                        continue;
+                    }
                     Location newLocation = locationService.add(location);
                     locations.add(newLocation);
                 }
@@ -70,6 +114,11 @@ public class ClosetGenerator {
                     locatedat.setClosetid(location.getClosetid());
                     switch (location.getLocationtype()) {
                         case "drawer":
+                            Clothes attire = clothes.get(rand.nextInt(clothes.size()));
+                            Article article = articleService.get(attire.getId());
+                            if (article.getCategory() != "Jackets" && article.getCategory() != "Coats") {
+                                locatedat.setClosetid(attire.getId());
+                            }
                             break;
                         case "hanger":
                             Clothes articleC = clothes.get(rand.nextInt(clothes.size()));
