@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 
 function AdvertisedArticlesCard() {
   const [advertisements, setAdvertisements] = useState([/*
-    { title: "Article 17", description: "Description 17", author: "100", image: "/public/vite.svg", advertised: true, logo: "/public/vite.svg" },
-    { title: "Article 18", description: "Description 18", author: "101", image: "/public/vite.svg", advertised: true, logo: "/public/vite.svg" },
-    { title: "Article 19", description: "Description 19", author: "102", image: "/public/vite.svg", advertised: true, logo: "/public/vite.svg" },
-    { title: "Article 20", description: "Description 20", author: "103", image: "/public/vite.svg", advertised: true, logo: "/public/vite.svg" },
+    { title: "Article 17", description: "Description 17", author: "100", image: "/vite.svg", advertised: true, logo: "/vite.svg" },
+    { title: "Article 18", description: "Description 18", author: "101", image: "/vite.svg", advertised: true, logo: "/vite.svg" },
+    { title: "Article 19", description: "Description 19", author: "102", image: "/vite.svg", advertised: true, logo: "/vite.svg" },
+    { title: "Article 20", description: "Description 20", author: "103", image: "/vite.svg", advertised: true, logo: "/vite.svg" },
   */]);
 
   console.log(advertisements);
