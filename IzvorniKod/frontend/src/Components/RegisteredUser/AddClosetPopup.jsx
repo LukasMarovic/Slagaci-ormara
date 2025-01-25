@@ -23,7 +23,7 @@ function AddClosetPopup({ show, handleClose, handleAddCloset }) {
     }
 
     handleAddCloset(name, drawers, shelves, hangers);
-    handleClose();
+    // handleClose();
   };
   return (
     <Modal className='closet-popup'

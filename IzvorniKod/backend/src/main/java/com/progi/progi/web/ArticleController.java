@@ -1,6 +1,7 @@
 package com.progi.progi.web;
 
 import com.progi.progi.model.Article;
+import com.progi.progi.model.ArticleFront;
 import com.progi.progi.model.Closet;
 import com.progi.progi.model.Locatedat;
 import com.progi.progi.model.Location;
@@ -155,5 +156,32 @@ public class ArticleController {
             }
         }
         return null;
+    }
+
+    @GetMapping("/getClosetArticles")
+    public List<ArticleFront> getClosetArticles(@RequestParam Integer closetID) {
+        List<ArticleFront> closetArticles = new ArrayList<ArticleFront>();
+        List<Locatedat> locatedats = locatedatService.getByClosetID(closetID);
+        for (Locatedat locatedat : locatedats) {
+            ArticleFront closetArticle = new ArticleFront();
+            Location location = locationService.get(locatedat.getLocationid());
+            String element = location.getLocationtype().concat("-").concat(String.valueOf(location.getLocationnumber()-1));
+            Article article = articleService.get(locatedat.getArticleid());
+            closetArticle.setArticleName(article.getArticlename());
+            closetArticle.setCategory(article.getCategory());
+            closetArticle.setFormality(article.getFormality());
+            closetArticle.setColor(article.getMaincolor());
+            closetArticle.setSecondaryColor(article.getSecondarycolor());
+            closetArticle.setClosetName(ormarService.get(closetID).getClosetname());
+            closetArticle.setCondition(article.getAvailability());
+            closetArticle.setElementName(element);
+            closetArticle.setText(null);
+            closetArticle.setImage(article.getArticlepicture());
+            closetArticle.setForSharing(true);
+            closetArticle.setSeason(article.getSeasonality());
+            closetArticle.setDescription(null);
+            closetArticles.add(closetArticle);
+        }
+        return closetArticles;
     }
 }
