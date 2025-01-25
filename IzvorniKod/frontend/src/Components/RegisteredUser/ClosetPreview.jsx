@@ -4,18 +4,20 @@ import "../CustomCss/Closet.css";
 import "../CustomCss/AddItemCloset.css";
 import AddAdvertisementPopupCloset from "./AddAdvertisementPopupCloset";
 import ArticleDetailsModal from "./ArticleDetailsModal";
+import SpinningWheel from "../SpinningWheel"
 const ClosetPreview = ({ show, handleClose, closet }) => {
   if (!closet) return null;
 
-  const { name, numberOfDrawers, numberOfShelves, numberOfHangers, closetID, locations } = closet;
+  const { name, numberOfDrawers, numberOfShelves, numberOfHangers, closetID, articles } = closet;
   const [showDetails, setShowDetails] = useState(false);
   const [activeElement, setActiveElement] = useState(null);
   const [activeCardIndex, setActiveCardIndex] = useState(null);
-  const [cardsData, setCardsData] = useState([]);
+  const [cardsData, setCardsData] = useState(articles);
   const [showModal, setShowModal] = useState(false);
   const [checked, setChecked] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedCardData, setSelectedCardData] = useState(null); 
+  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   const postCardsData = async () => {
@@ -44,14 +46,15 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   //   }
   // }, [cardsData]);
   
-  useEffect(() => {
-    if (activeElement !== null) {
-      getArticles(activeElement);
-    }
+  // useEffect(() => {
+  //   if (activeElement !== null) {
+  //     getArticles(activeElement);
+  //   }
     
-  }, [activeElement]);
+  // }, [activeElement]);
 
   const postArticle = async (articleName, articlePicture, category, seasonality, formality, maincolor, secondarycolor, availability, activeElement, closetID) => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("articleName", articleName);
     formData.append("articlePicture", articlePicture);
@@ -75,29 +78,31 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
       }
     } catch (error) {
       console.error("error adding article");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const getArticles = (element) => {
-    fetch(`/api/getUserArticles?activeElement=${element}&closetID=${closetID}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include'
-    }).then((response) => {
-      return response.json()
-    }).then((data) => {
-      if (data !== null) {
-        data.map((el) => {
-          el["elementName"] = activeElement;
-        })
-      }
-      setCardsData(data);
-      setShowDetails(true);
-    })
-  }
+  // const getArticles = (element) => {
+  //   fetch(`/api/getUserArticles?activeElement=${element}&closetID=${closetID}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     credentials: 'include'
+  //   }).then((response) => {
+  //     return response.json()
+  //   }).then((data) => {
+  //     if (data !== null) {
+  //       data.map((el) => {
+  //         el["elementName"] = activeElement;
+  //       })
+  //     }
+  //     setCardsData(data);
+  //     setShowDetails(true);
+  //   })
+  // }
 
 
   const maxItems = 5;
@@ -107,7 +112,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
         elementName: activeElement,
         closetName: name,
         articleName: articleName,
-        text: "Placeholder text",
+        text: "",
         image: image,
         forSharing, 
         category,
@@ -195,11 +200,11 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
       >
         <Card.Img
           variant="top"
-          src={card.articlepicture}
+          src={card.image}
           alt={`Card ${index + 1}`}
         />
         <Card.Body className="card-body-closet">
-          <Card.Title className="custom-title">{card.articlename}</Card.Title>
+          <Card.Title className="custom-title">{card.articleName}</Card.Title>
           <Card.Text className="custom-text">{card.text}</Card.Text>
         </Card.Body>
       </Card>
@@ -209,7 +214,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
   const renderActiveElementItems = () => {
     const filteredCards = cardsData.filter((card) => card.elementName === activeElement);
     const itemCount = Math.min(filteredCards.length, maxItems);
-
+    console.log(activeElement);
     const rows = [0, 1].map((rowIndex) => (
       <Row className="custom-row" key={`row-${rowIndex}`}>
         {Array(3)
@@ -244,8 +249,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           className={`shelf ${activeElement === `shelf-${i}` ? "active-element" : ""}`}
           style={{ cursor: "pointer" }}
           onClick={() => {
+            setShowDetails(true);
             setActiveElement(`shelf-${i}`);
-            getArticles(`shelf-${i+1}`);
           }}
         ></div>
       );
@@ -271,8 +276,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           className={`hanger${i + 1} ${activeElement === `hanger-${i}` ? "active-element" : ""}`}
           style={{ cursor: "pointer" }}
           onClick={() => {
+            setShowDetails(true);
             setActiveElement(`hanger-${i}`);
-            getArticles(`hanger-${i+1}`);
           }}
         ></div>
       );
@@ -289,8 +294,8 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
           className={`modal-drawer1 ${activeElement === `drawer-${i}` ? "active-element" : ""}`}
           style={{ cursor: "pointer" }}
           onClick={() => {
+            setShowDetails(true);
             setActiveElement(`drawer-${i}`);
-            getArticles(`drawer-${i+1}`);
           }}
         >
           <div className="modal-handle"></div>
@@ -309,6 +314,7 @@ const ClosetPreview = ({ show, handleClose, closet }) => {
 
   return (
     <div style={{ height: "100%" }}>
+      {loading && (<SpinningWheel />)}
       <Modal
         className="closet-modal"
         show={show}

@@ -15,6 +15,7 @@ function AdvertisedArticlesCard() {
     { title: "Article 20", description: "Description 20", author: "103", image: "/public/vite.svg", advertised: true, logo: "/public/vite.svg" },
   */]);
 
+  console.log(advertisements);
   useEffect(() => {
     fetch("/api/sellerArticles")
       .then(response => response.json())

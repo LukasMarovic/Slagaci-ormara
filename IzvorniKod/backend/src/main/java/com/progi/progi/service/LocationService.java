@@ -34,15 +34,15 @@ public class LocationService {
 
     public void addLocations(Closet ormar, Integer numberOfDrawers, Integer numberOfShelves, Integer numberOfHangers) {
         for (int i = 0; i < numberOfDrawers; i++) {
-            Location location = new Location(ormar.getId(), "drawer", i);
+            Location location = new Location(ormar.getId(), "drawer", i+1);
             locationRepository.save(location);
         }
         for (int i = 0; i < numberOfShelves; i++) {
-            Location location = new Location(ormar.getId(), "shelf", i);
+            Location location = new Location(ormar.getId(), "shelf", i+1);
             locationRepository.save(location);
         }
         for (int i = 0; i < numberOfHangers; i++) {
-            Location location = new Location(ormar.getId(), "hanger", i);
+            Location location = new Location(ormar.getId(), "hanger", i+1);
             locationRepository.save(location);
         }
     }

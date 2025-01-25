@@ -145,6 +145,10 @@ public class ArticleService {
     }
 
     public List<Article> getAllSellerArticles() {
-        return articleRepository.getAllSellerArticles().subList(0,4);
+        List<Article> articles = articleRepository.getAllSellerArticles();
+        if (articles.size() > 4) {
+            articles = articles.subList(0,4);
+        }
+        return articles;
     }
 }

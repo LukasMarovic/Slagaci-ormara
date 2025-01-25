@@ -6,15 +6,16 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import AddClosetPopup from './AddClosetPopup';
 import ClosetPreview from './ClosetPreview';
+import SpinningWheel from '../SpinningWheel'
 
 class Closet {
-  constructor(name, numberOfDrawers, numberOfShelves, numberOfHangers, closetID, locations) {
+  constructor(name, numberOfDrawers, numberOfShelves, numberOfHangers, closetID, articles) {
     this.name = name;
     this.numberOfDrawers = numberOfDrawers;
     this.numberOfShelves = numberOfShelves;
     this.numberOfHangers = numberOfHangers;
     this.closetID = closetID;
-    this.locations = locations;
+    this.articles = articles;
   }
 }
 
@@ -22,18 +23,39 @@ function Closets() {
   const [numOfClosets, setNumOfClosets] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [closets, setClosets] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [selectedCloset, setSelectedCloset] = useState(null);
   const [showClosetPreview, setShowClosetPreview] = useState(false);
   const [postDone, setPostDone] = useState(false);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     fetchClosets();
     }, 
   [postDone]);
+  
+  const getArticles = (closet) => {
+    setLoading(true);
+    fetch(`/api/getClosetArticles?closetID=${closet.closetID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
+    }).then((response) => {
+      return response.json()
+    }).then((data) => {
+      closet.articles = data;
+      console.log(data);
+      handleOpenClosetPreview(closet)
+      setLoading(false);
+    })
+  }
 
   const fetchClosets = async () => {
     try {
+        setLoading(true);
         const response = await fetch('/api/getUserOrmari', {
             method: 'GET',
             credentials: 'include',
@@ -62,11 +84,14 @@ function Closets() {
             }
             setClosets(closetArray);
             setNumOfClosets(closetArray.length);
+            setShowModal(false);
         } else {
             console.error('Failed to fetch closets');
         }
     } catch (error) {
         console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,6 +117,7 @@ function Closets() {
   };
 
   const postCloset = (closet) => {
+    setLoading(true);
     fetch("/api/addOrmar", {
       method: 'POST',
       headers: {
@@ -129,7 +155,7 @@ function Closets() {
     setNumOfClosets((prevNumOfClosets) => prevNumOfClosets + 1);
     setClosets((prevClosets) => [...prevClosets, newCloset]);
     console.log("Closet added successfully:", newCloset);
-    setShowModal(false);
+    // setShowModal(false);
   };
 
   const handleCloseModal = () => {
@@ -141,6 +167,7 @@ function Closets() {
       <div className="closets-container pt-4 pb-3">
         <Container className="d-flex flex-column align-items-center">
           <p className="closets-title fw-bold">My Closets</p>
+          {loading && (<SpinningWheel />)}
           <div>
             {numOfClosets === 0 ? (
               <div className="d-flex flex-column align-items-center">
@@ -157,7 +184,7 @@ function Closets() {
                       <li
                         key={index}
                         className="closet-element m-0 p-0"
-                        onClick={() => handleOpenClosetPreview(closet)}
+                        onClick={() => getArticles(closet)}
                       >
                         <img
                           src="public/assets/images/closet.png"

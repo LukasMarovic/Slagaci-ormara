@@ -41,7 +41,7 @@ const ArticleDetailsModal = ({ show, handleClose, cardData, onCardUpdate, onForS
         <Row>
           <Col md={6} className="d-flex justify-content-center align-items-center">
             <img
-              src={formData.articlepicture}
+              src={formData.image}
               alt={formData.title}
               style={{
                 maxWidth: "100%",
