@@ -187,7 +187,7 @@ function Closets() {
                         onClick={() => getArticles(closet)}
                       >
                         <img
-                          src="public/assets/images/closet.png"
+                          src="/assets/images/closet.png"
                           className="closet-image mb-3"
                           alt="Closet"
                         />
