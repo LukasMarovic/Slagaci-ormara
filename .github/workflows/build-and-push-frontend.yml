@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - deployment
     paths:
       - 'IzvorniKod/frontend/**'      # Trigger only on changes in the /frontend directory
   workflow_dispatch:
