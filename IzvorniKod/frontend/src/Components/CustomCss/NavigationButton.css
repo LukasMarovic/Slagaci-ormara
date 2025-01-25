@@ -1,0 +1,23 @@
+
+.navigation-button {
+  background-color: #fff;
+  border: 1px solid #d3d3d3;
+  color: #b88e2f;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.374), 0px 4px 16px rgba(0, 0, 0, 0.374);
+  cursor: pointer;
+}
+
+.navigation-button:hover {
+  background-color: #f0f0f0;
+}
+
+.navigation-button:active {
+  background-color: #e0e0e0;
+}

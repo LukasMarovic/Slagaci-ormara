@@ -1,0 +1,464 @@
+.closet-modal{
+  background-color: #FCF8F3;
+}
+
+.modal-open {
+  overflow: hidden; /* Prevents body scroll */
+  padding-right: 0 !important; /* Fixes padding added by Bootstrap */
+}
+
+.modal {
+  margin: 0 auto; /* Centers modal */
+  padding: 0;
+  width: 100%;
+}
+
+
+
+.closet-container-modal {
+  background-color: #FCF8F3;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: 100vh; /* Maintain full height */
+  width: 100vw; /* Maintain full width */
+  box-sizing: border-box; /* Account for padding inside the container */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-header-closet {
+  position: fixed; /* Stick the header to the top */
+  background-color: #d8cfc4;
+  width: 100vw; /* Ensure it spans the entire viewport width */
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-bottom-width: 0px;
+  z-index: 1000;
+  left: 0; /* Align with the left edge of the viewport */
+  top: 0; /* Align with the top edge */
+}
+
+.modal-button{
+margin-left: auto; 
+}
+.modal-name {  
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+text-align: center;
+margin: 0;
+font-size: 70;
+font-weight: bold;
+color: #333; 
+}
+
+.drawer-input {
+padding: 8px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 5px;
+outline: none;
+}
+
+.modal-second-row {
+height: fit-content;
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+gap: 0; 
+margin: 0; 
+padding: 0; 
+}
+
+.modal-shelves {
+height: 500px;
+width: 60%;
+margin-right: 10px;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+border: none; 
+outline: none; 
+box-shadow: none; 
+}
+
+.shelf {
+background-color: #c1aa8e; 
+height: 18%;
+margin-top: 0;
+margin-bottom: 2.5%;
+box-shadow: 8px 8px 11.4px 3px rgba(0, 0, 0, 0.29) inset;
+}
+
+
+
+
+.big-square {
+  background-color: #c1aa8e; 
+  flex-grow: 1; 
+
+}
+
+.modal-hangers {
+height: 500px;
+width: 40%;
+display: flex;
+flex-direction: column;
+background-color: #c1aa8e;
+box-shadow: 8px 8px 11.4px 3px rgba(0, 0, 0, 0.29) inset;
+}
+.shelf:last-child {
+flex-grow: 1 ; 
+margin-bottom: 0; 
+}
+
+.hanger1{
+width: 100%;
+height: 12px;
+flex-shrink: 0;
+margin-top: 40px;
+background: #565353;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.hanger2{
+width: 100%;
+height: 12px;
+flex-shrink: 0;
+margin-top: 20px;
+background: #565353;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.modal-third-row{
+position: relative;
+width: 1;
+height:fit-content;
+}
+
+.modal-drawer1{
+background-color: #c1aa8e;
+width: 100%;
+height: 80px;
+margin-top: 1.6%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.modal-handle{
+width: 20%;
+height: 20%;
+background: #565353;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.sec-and-third{
+margin-top: 100px;
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+width: 100%;
+height: fit-content;
+
+}
+.just-closet{
+display: flex;
+flex-direction: column;
+width: 30%;
+height: fit-content;
+margin-left: 5vw;
+min-width: 400px;
+margin-right: 20px;
+}
+.just-closet-without-articles{
+  min-width: 450px;
+  width: 650px;
+  margin-top: 100px;
+}
+
+.modal-articles{
+overflow-x: auto; 
+white-space: nowrap; 
+height: 100%; 
+width: 70%;
+min-width: 500px;
+box-sizing: border-box; 
+padding-bottom: 0px;
+padding-left: 50px;
+padding-right: 50px;
+}
+
+
+.custom-row {
+display: flex;
+flex-wrap: nowrap; /* Prevents wrapping into multiple rows */
+gap: 10px; /* Adds space between columns */
+justify-content: space-between; /* Even spacing */
+height: auto; /* Ensures rows expand as needed */
+width:100%;
+}
+
+.custom-col-closet{
+  width: 40%;
+}
+
+.custom-card {
+display: flex;
+flex-direction: column;
+justify-content: flex-start; /* Ensure content flows inside the card */
+height: auto; /* Adapts to the content */
+border: 1px solid #ddd;
+border-radius: 0; /* Removes rounded corners */
+padding: 0.5rem; /* Adjust padding inside cards */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visuals */
+transition: transform 0.2s;
+background-color: #FCF8F3;
+min-width: 180px; /* Set the minimum width */
+min-height: 240px;
+margin-bottom: 10px;
+overflow: hidden; 
+position: relative; /* Ensures z-index applies properly */
+z-index: 1; /* Prevents overlap from other elements */
+
+}
+.articles-background {
+position:relative;
+background-color: #c1aa8e;
+display: flex;
+flex-direction: column;
+height: 700px;
+width: 100%;
+min-width: fit-content;/* Allows scrolling if content exceeds container height */
+box-shadow: 8px 8px 11.4px 3px rgba(0, 0, 0, 0.29) inset;
+}
+
+
+.custom-card:hover {
+transform: scale(1.05); /* Hover effect */
+}
+
+
+
+/* Optional: Add spacing between rows */
+.mb-4 {
+margin-bottom: 1rem !important;
+}
+
+.custom-title {
+font-weight: bold;
+font-size: 1.25rem;
+text-align: center;
+margin-top: 0.5rem;
+}
+
+.custom-text {
+font-size: 1rem;
+text-align: center;
+color: #555;
+}
+
+.custom-card img {
+height: 180px;
+object-fit:contain;
+}
+
+.card-body-closet{
+padding: 5px 5px 5px 5px;
+}
+
+.mobile-closet-container{
+  padding: 0 0 0 0;
+}
+
+.mobile-header-closet {
+  background-color: #FCF8F3;
+  height: auto; /* Adjusts to content size */
+  width: 100%; /* Ensures it spans the full width */
+  padding: 10px 0; /* Adds spacing for visibility */
+}
+
+.mobile-header-name{
+  
+  left: 50%;
+  text-align: center;
+  margin: 0;
+  font-size: 34px;
+  font-weight: bold;
+  color: #333; 
+    
+}
+.mobile-header-closet-col{
+  padding: 0 0 0 0;
+}
+
+.mobile-closet-col{
+  padding: 0 0 0 0;
+  background-color: #FCF8F3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-second-row-mobile {
+  height: 60vh;
+  width: 70vw;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  margin: 0 auto; /* Center horizontally */
+  padding: 0;
+  justify-content: center; /* Centers children horizontally */
+  align-items: center; /* Centers children vertically */
+}
+
+.modal-shelves-mobile{
+  width: 60%;
+  height: 100%;
+  margin-right: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: none; 
+  outline: none; 
+  box-shadow: none; 
+}
+.modal-hangers-mobile{
+  padding: 0 0 0 0;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #c1aa8e;
+  box-shadow: 8px 8px 11.4px 3px rgba(0, 0, 0, 0.29) inset;
+}
+
+.modal-third-row-mobile {
+  width: 70vw; /* Make it span the full width of the container */
+  height: 30vh;
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack its content vertically */
+  justify-content: flex-start; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  border: none; 
+  outline: none; 
+  box-shadow: none; 
+  margin: 0 auto; /* Ensure it stays horizontally centered */
+  padding-left: 12px;
+}
+
+.overlay-button-closet{
+
+    background-color: #b88e2f;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    pointer-events: all;
+    width: 50px;
+    height: 50px;
+    margin-left: 0; 
+    border-radius: 0;
+
+  
+}
+.navigation-button-wrapper-closet {
+  position: absolute;
+  top: 10px; /* Adjust to your desired vertical position */
+  left: 10px; /* Adjust to your desired horizontal position */
+  z-index: 500; /* Ensure the button is above other content */
+
+}
+
+.navigation-button-closet {
+  background-color: #fff;
+  border: 1px solid #d3d3d3;
+  color: #b88e2f;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.374), 0px 4px 16px rgba(0, 0, 0, 0.374);
+  cursor: pointer;
+}
+
+.navigation-button-closet:hover {
+  background-color: #f0f0f0;
+}
+
+.navigation-button-wrapper-closet .navigation-button-closet:active {
+  background-color: #e0e0e0 !important;
+}
+
+.add-item-closet{
+  background-color: beige;
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+  height: 50px;
+}
+
+.add-item-closet:hover{
+  background-color: #e0d7d7;
+  color: black;
+  border-color: #aaa;
+}
+.add-item-closet:active{
+  background:#e0e0e0 !important ;
+}
+
+
+.active-element {
+  background-color: #544737;
+}
+
+.closet-button-and-share{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-wheel {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
