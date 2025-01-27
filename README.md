@@ -1,6 +1,10 @@
 # Slagači ormara
 Projekt virtualni ormar
 
+front-end: https://closetly-721y.onrender.com/
+
+back-end: https://ormarbackend.onrender.com/
+
 # Opis projekta
 Ovaj projekt je reultat timskog rada u sklopu projeknog zadatka kolegija [Programsko inženjerstvo](https://www.fer.unizg.hr/predmet/proinz) na Fakultetu elektrotehnike i računarstva Sveučilišta u Zagrebu.
 
